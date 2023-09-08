@@ -1,0 +1,318 @@
+﻿
+
+.parti .mainWrapper .thirdModule .title {
+    width: 600px  !important;
+    margin: 0 auto;
+    position: relative;
+	}
+	
+	.botong{
+	 padding: 10px 20px;
+    background: #1BCADB;
+    border-radius: 20px;
+    color: #fff;
+    position: relative;
+	display:inline-block;
+	margin:20px;
+  }
+  
+  .docg h2 {
+    color: #00499a;
+    font-size: 1.3rem;
+    margin-top: 50px;
+	text-align:left;
+}
+
+.docg ul li{
+	text-align:left;
+	}
+
+.docg ul li:before{
+	width: 15px;
+    height: 15px;
+    content: "";
+    background: url(../images/itemIcon1.png);
+    display: block;
+    position: absolute;
+
+	}
+	
+	.docg ul li a{
+		padding:20px;
+	}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #95c2d2;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4faaca;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/*select*/
+styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.styled-select select {
+   background-color: #17a9c7;
+   border-radius: 15px;
+   border: none;
+   font-size: 14px;
+   height: 33px;
+   padding: 5px;
+    max-width: 120px;
+   
+}
+
+.styled-select.slate {
+   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+   height: 34px;
+   width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
+
+/* -------------------- Rounded Corners */
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+/* -------------------- Colors: Background */
+.slate   { background-color: #ddd; }
+.green   { background-color: rgba(43, 158, 198, 0.74); }
+.blue    { background-color: #3b8ec2; }
+.yellow  { background-color: #eec111; }
+.black   { background-color: #000; }
+
+/* -------------------- Colors: Text */
+.slate select   { color: #000; }
+.green select   { color: #fff; }
+.blue select    { color: #fff; }
+.yellow select  { color: #000; }
+.black select   { color: #fff; }
+
+
+/* -------------------- Select Box Styles: danielneumann.com Method */
+/* -------------------- Source: http://danielneumann.com/blog/how-to-style-dropdown-with-css-only/ */
+#mainselection select {
+   border: 0;
+   color: #EEE;
+   background: transparent;
+   font-size: 20px;
+   font-weight: bold;
+   padding: 2px 10px;
+   width: 378px;
+   *width: 350px;
+   *background: #58B14C;
+   -webkit-appearance: none;
+}
+
+#mainselection {
+   overflow:hidden;
+   width:350px;
+   -moz-border-radius: 9px 9px 9px 9px;
+   -webkit-border-radius: 9px 9px 9px 9px;
+   border-radius: 9px 9px 9px 9px;
+   box-shadow: 1px 1px 11px #330033;
+   background: #58B14C url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
+}
+
+
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+select#soflow, select#soflow-color {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: inherit;
+   margin: 20px;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 300px;
+}
+
+select#soflow-color {
+   color: #fff;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
+   background-color: #779126;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+   padding-left: 15px;
+}
+
+/*end select*/
+
+
+
+/* line 23, ../sass/_reset.scss */
+header {
+	padding: 0 !important;
+    /*position: fixed;*/
+    width: 100%;
+    z-index: 999;
+    top: 0;
+}
+
+@font-face {
+  font-family: 'DinRegular';
+  src: url("../fonts/din-regular.eot");
+  src: url("../fonts/din-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DinBold';
+  src: url("../fonts/din-bold.eot");
+  src: url("../fonts/din-bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 2, ../sass/_header.scss */
+header .headerWrapper {
+  background: #ffffff;
+  border-top: 4px solid #8d2387;
+  padding: 10px;
+}
+/* line 6, ../sass/_header.scss */
+header .headerWrapper .first {
+  width: 70%;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 10, ../sass/_header.scss */
+header .headerWrapper .first img {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 14, ../sass/_header.scss */
+header .headerWrapper .first img:last-child {
+  margin-right: 0;
+}
+/* line 19, ../sass/_header.scss */
+header .headerWrapper .second {
+  width: 28%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+}
+/* line 24, ../sass/_header.scss */
+header .headerWrapper .second img {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  width:30px;
+}
+/* line 31, ../sass/_header.scss */
+header .headerWrapper .second #menuIcon {
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  display: inline-block;
+}
+/* line 36, ../sass/_header.scss */
+header .headerWrapper .second #menuIcon img {
+ /* width: 100%;*/
+}
+
+/*RESPONSIVE STYLES*/
+
+@media (max-width: 700px) {
+  header .headerWrapper .first{
+    width: 100%;
+  }
+  header .headerWrapper .first img{
+    width: 30%;
+  }
+  header .headerWrapper .second{
+    width: 100%;
+    text-align: center;
+  }
+  header .headerWrapper .second #menuIcon{
+    margin: 0 auto;
+    display: block;
+    width: 80px;
+  }
+
+}

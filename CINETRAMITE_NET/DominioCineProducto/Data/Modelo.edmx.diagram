@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="40906706cb9148e18352f4a429b6910f" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="cineModel.adjunto_projecto" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.annotation" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.attachment" Width="1.5" PointX="6" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.configuration" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.correo" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.firma_tramite" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.format" Width="1.5" PointX="3" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.format_type" Width="1.5" PointX="0.75" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.formato_captura" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.identification_type" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.idioma" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.letter" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.localization" Width="1.5" PointX="3.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.permission" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.person_type" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.personal_type" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.position" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.producer_company_type" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.producer_type" Width="1.5" PointX="3.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.production_type" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_attachment" Width="1.5" PointX="8.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_format" Width="1.5" PointX="5.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_genre" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_optional_staff" Width="1.5" PointX="8.25" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_responsable" Width="1.5" PointX="5.25" PointY="35.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_status" Width="1.5" PointX="11.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.project_type" Width="1.5" PointX="0.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.request_form" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.resolution" Width="1.5" PointX="5.25" PointY="49.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.role" Width="1.5" PointX="5.75" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.role_assignment" Width="1.5" PointX="8" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.role_permission" Width="1.5" PointX="8" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.section" Width="1.5" PointX="9" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.staff_option" Width="1.5" PointX="6" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.staff_option_detail" Width="1.5" PointX="11.25" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.state" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.tooltip" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.ZONA_COLOMBIA" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.attachment_validation" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cineModel.attachment_view" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="cineModel.FK_project_attachment_attachment" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_format_format_type" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_project_format_format" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_project_optional_staff_position" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_staff_option_detail_position" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_staff_option_production_type" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_project_status_section" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_staff_option_project_type" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_role_assignment_role" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_role_permission_role" ManuallyRouted="false" />
+        <AssociationConnector Association="cineModel.FK_staff_option_detail_staff_option" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="cineModel.etnia" Width="1.5" PointX="3.75" PointY="13.875" />
+        <EntityTypeShape EntityType="cineModel.genero" Width="1.5" PointX="14.375" PointY="7.875" />
+        <EntityTypeShape EntityType="cineModel.project_staff" Width="1.5" PointX="16.5" PointY="18.125" />
+        <AssociationConnector Association="cineModel.FK_project_staff_localization" />
+        <AssociationConnector Association="cineModel.FK_project_staff_position" />
+        <EntityTypeShape EntityType="cineModel.grupo_poblacional" Width="1.5" PointX="14.375" PointY="10.75" />
+        <EntityTypeShape EntityType="cineModel.estimulo" Width="1.5" PointX="16.5" PointY="26.75" />
+        <EntityTypeShape EntityType="cineModel.tipo_estimulo" Width="1.5" PointX="14.25" PointY="37.25" />
+        <AssociationConnector Association="cineModel.FK_estimulo_tipo_estimulo" />
+        <EntityTypeShape EntityType="cineModel.project_producer" Width="1.5" PointX="16.5" PointY="14.875" />
+        <EntityTypeShape EntityType="cineModel.dia_feriado" Width="1.5" PointX="13.375" PointY="4.75" />
+        <EntityTypeShape EntityType="cineModel.especialidad_cargo" Width="1.5" PointX="8.25" PointY="25.375" />
+        <AssociationConnector Association="cineModel.FK_especialidad_cargo_position" />
+        <EntityTypeShape EntityType="cineModel.producer" Width="1.5" PointX="19.625" PointY="9.5" />
+        <AssociationConnector Association="cineModel.FK_producer_etnia" />
+        <AssociationConnector Association="cineModel.FK_producer_genero" />
+        <AssociationConnector Association="cineModel.FK_producer_identification_type" />
+        <AssociationConnector Association="cineModel.FK_producer_localization" />
+        <AssociationConnector Association="cineModel.FK_producer_person_type" />
+        <AssociationConnector Association="cineModel.FK_producer_producer_company_type" />
+        <AssociationConnector Association="cineModel.FK_producer_producer_type" />
+        <AssociationConnector Association="cineModel.FK_project_producer_producer" />
+        <EntityTypeShape EntityType="cineModel.usuario" Width="1.5" PointX="0.75" PointY="28.125" />
+        <AssociationConnector Association="cineModel.FK_role_assignment_usuario" />
+        <EntityTypeShape EntityType="cineModel.project" Width="1.5" PointX="14.25" PointY="13.125" />
+        <AssociationConnector Association="cineModel.FK_adjunto_projecto_project" />
+        <AssociationConnector Association="cineModel.FK_estimulo_project" />
+        <AssociationConnector Association="cineModel.FK_project_firma_tramite" />
+        <AssociationConnector Association="cineModel.FK_project_idioma" />
+        <AssociationConnector Association="cineModel.FK_project_production_type" />
+        <AssociationConnector Association="cineModel.FK_project_attachment_project" />
+        <AssociationConnector Association="cineModel.FK_project_format_project" />
+        <AssociationConnector Association="cineModel.FK_project_genre" />
+        <AssociationConnector Association="cineModel.FK_project_optional_staff_project" />
+        <AssociationConnector Association="cineModel.FK_project_producer_project" />
+        <AssociationConnector Association="cineModel.FK_project_responsable_project" />
+        <AssociationConnector Association="cineModel.FK_project_staff_option" />
+        <AssociationConnector Association="cineModel.FK_project_staff_project" />
+        <AssociationConnector Association="cineModel.FK_project_status_project" />
+        <AssociationConnector Association="cineModel.FK_project_type" />
+        <AssociationConnector Association="cineModel.FK_project_usuario" />
+        <AssociationConnector Association="cineModel.FK_resolution_project" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

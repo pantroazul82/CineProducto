@@ -1,0 +1,14 @@
+﻿#wrapper1,#wrapper2
+{
+    display:inline-block;
+    width:40%;
+    height:100%;
+}
+#wrapper2
+{
+    margin-left:10%;
+}
+.flexpaper_bttnFullScreen
+{
+    display:none !important;    
+}
