@@ -178,6 +178,7 @@
     <Content Include="images\boton_paso_2.png" />
     <Content Include="images\boton_paso_3.png" />
     <Content Include="images\boton_paso_4.png" />
+    <Content Include="images\btn_GestionDocumental.png" />
     <Content Include="images\btn_registro.gif" />
     <Content Include="images\certificacion.gif" />
     <Content Include="images\collapse.png" />
@@ -262,6 +263,7 @@
     <Content Include="lib\EPPlus.XML" />
     <Content Include="lib\ServiceStack\MsgPack.dll" />
     <Content Include="lib\ServiceStack\ServiceStack.Authentication.OpenId.dll" />
+    <Content Include="ListaHojaTransferencia.aspx" />
     <Content Include="ListProjectos.aspx" />
     <Content Include="login.aspx" />
     <Content Include="ProductoresAdicionales2.aspx" />
@@ -531,6 +533,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bussines\AppConfiguration.cs" />
+    <Compile Include="Bussines\HojaTransferencia.cs" />
     <Compile Include="Bussines\JQGridpersonalPosition.cs" />
     <Compile Include="Bussines\Letter.cs" />
     <Compile Include="Bussines\position.cs" />
@@ -768,6 +771,13 @@
     </Compile>
     <Compile Include="HojaControl.aspx.designer.cs">
       <DependentUpon>HojaControl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaHojaTransferencia.aspx.cs">
+      <DependentUpon>ListaHojaTransferencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaHojaTransferencia.aspx.designer.cs">
+      <DependentUpon>ListaHojaTransferencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListProjectos.aspx.cs">
       <DependentUpon>ListProjectos.aspx</DependentUpon>

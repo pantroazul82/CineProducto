@@ -292,6 +292,76 @@ namespace CineProducto
             }
         }
 
+        public static string proccessHojaTransferencia(int project_id, string filename)
+        {
+            String rootPath = HttpContext.Current.Server.MapPath("~");
+
+            /* Obtenemos la extensión del archivo cargado */
+            string[] uploadedfilenamesplit = filename.Split('.');
+            string extension = uploadedfilenamesplit[(uploadedfilenamesplit.Count() - 1)];
+            String uploadFolderName = "/uploads/";
+            String savepath = @rootPath + "uploads\\" + project_id + "\\HojaTransferencia\\";
+            String sourcePath = @rootPath + "uploads\\" + project_id + "\\" + filename;
+            string nameDestino = "HojaTransferencia-" + project_id + "-" + DateTime.Now.Ticks.ToString().Substring(8) + ".pdf";
+            String destinationPath = @rootPath + "uploads\\" + project_id + "\\HojaTransferencia\\" + nameDestino;
+            String destinationURL = @uploadFolderName + project_id + "/HojaTransferencia/" + nameDestino;
+            bool showAdvancedForm = false;
+            if (HttpContext.Current.Session["user_id"] != null && Convert.ToInt32(HttpContext.Current.Session["user_id"]) > 0)
+            {
+                /* Si el usuario está autenticado verificamos el rol y el permiso asignado para la visualización del listado */
+                User userObj = new User();
+                userObj.user_id = Convert.ToInt32(HttpContext.Current.Session["user_id"]);
+
+                if (userObj.checkPermission("ver-formulario-gestion-solicitud"))
+                {
+                    showAdvancedForm = true;
+                }
+            }
+            try
+            {
+                /* Se verifica si el archivo ya existe en la carpeta y de ser así se elimina
+                 * para permitir la carga del nuevo archivo */
+                // Ensure that the target does not exist.
+
+                if (!Directory.Exists(savepath))
+                    Directory.CreateDirectory(savepath);
+
+                if (File.Exists(destinationPath))
+                {
+                    File.Delete(destinationPath);
+                }
+
+                /* renombramos el archivo recien cargado */
+                File.Move(sourcePath, destinationPath);
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+            
+            
+            
+            HojaTransferencia form = new HojaTransferencia(project_id);
+            if (form.path == "" || form.path == null || form.path != destinationURL)
+            {
+                form.path = destinationURL;
+                form.projectID = project_id;
+                form.Save();
+            }
+            if (showAdvancedForm)
+            {
+                /* Devuelve el checkbox de aprobacion y el vínculo de acceso al archivo recien cargado */
+                return "<a target=\"_blank\" href=\"" + destinationURL + " \">Hoja de Transferencia</a>";
+            }
+            else
+            {
+                /* Devuelve el vínculo de acceso al archivo recien cargado */
+                return "<a target=\"_blank\" href=\"" + destinationURL + " \">Hoja de Transferencia</a>";
+            }
+        }
+
+
+
         [WebMethod]
         public static string GetTooltip()
         {
