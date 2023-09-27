@@ -20,7 +20,7 @@ namespace DominioCineProducto.Data
         public Nullable<double> project_producer_participation_percentage { get; set; }
         public int project_producer_requester { get; set; }
     
-        public virtual producer producer { get; set; }
         public virtual project project { get; set; }
+        public virtual producer producer { get; set; }
     }
 }

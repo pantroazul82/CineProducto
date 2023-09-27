@@ -196,10 +196,10 @@ namespace DominioCineProducto
         {
             Data.project registro = model.project.Find(project_id);
             int? UltimoUsuarioAsigado = model.project.Where(x => x.responsable != null).OrderByDescending(x => x.project_request_date).First().responsable;
-            Data.usuario siguienteUsuario = model.usuario.Where(c => c.es_responsable == true).OrderBy(c => c.fecha_asignacion).FirstOrDefault();
+            Data.usuario siguienteUsuario = model.usuario.Where(c => c.es_responsable == true).OrderBy(c => c.FECHA_ASIGNACION).FirstOrDefault();
             if (siguienteUsuario != null) {
                 registro.responsable = siguienteUsuario.idusuario;
-                siguienteUsuario.fecha_asignacion = DateTime.Now;
+                siguienteUsuario.FECHA_ASIGNACION = DateTime.Now;
             }
             else {
                 siguienteUsuario = model.usuario.Where(c => c.es_responsable == true).OrderBy(c => c.idusuario).FirstOrDefault();
@@ -284,7 +284,7 @@ namespace DominioCineProducto
                 objP.producer_localization_id = pToUpdate.producer_localization_id;
             }
             
-            objP.productor_localizacion_contacto_id = pToUpdate.productor_localizacion_contacto_id;
+            objP.PRODUCTOR_LOCALIZACION_CONTACTO_ID = pToUpdate.PRODUCTOR_LOCALIZACION_CONTACTO_ID;
             objP.producer_phone = pToUpdate.producer_phone;
             objP.producer_movil = pToUpdate.producer_movil;
             objP.producer_email = pToUpdate.producer_email;
@@ -312,9 +312,9 @@ namespace DominioCineProducto
             objP.identification_type_id_sup = pToUpdate.identification_type_id_sup;
 
             objP.producer_country = pToUpdate.producer_country;
-            objP.productor_pais_contacto = pToUpdate.productor_pais_contacto;
+            objP.PRODUCTOR_PAIS_CONTACTO = pToUpdate.PRODUCTOR_PAIS_CONTACTO;
             objP.producer_city = pToUpdate.producer_city;
-            objP.productor_ciudad_contacto = pToUpdate.productor_ciudad_contacto;
+            objP.PRODUCTOR_CIUDAD_CONTACTO = pToUpdate.PRODUCTOR_CIUDAD_CONTACTO;
             objP.abreviatura = pToUpdate.abreviatura;
 
             model.SaveChanges();

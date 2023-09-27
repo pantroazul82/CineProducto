@@ -54,9 +54,9 @@ namespace DominioCineProducto.Data
         public string segundo_apellido_sup { get; set; }
         public string num_id_sup { get; set; }
         public Nullable<int> identification_type_id_sup { get; set; }
-        public string productor_pais_contacto { get; set; }
-        public string productor_ciudad_contacto { get; set; }
-        public string productor_localizacion_contacto_id { get; set; }
+        public string PRODUCTOR_PAIS_CONTACTO { get; set; }
+        public string PRODUCTOR_CIUDAD_CONTACTO { get; set; }
+        public string PRODUCTOR_LOCALIZACION_CONTACTO_ID { get; set; }
     
         public virtual etnia etnia { get; set; }
         public virtual genero genero { get; set; }

@@ -70,17 +70,6 @@
         <EntityTypeShape EntityType="cineModel.dia_feriado" Width="1.5" PointX="13.375" PointY="4.75" />
         <EntityTypeShape EntityType="cineModel.especialidad_cargo" Width="1.5" PointX="8.25" PointY="25.375" />
         <AssociationConnector Association="cineModel.FK_especialidad_cargo_position" />
-        <EntityTypeShape EntityType="cineModel.producer" Width="1.5" PointX="19.625" PointY="9.5" />
-        <AssociationConnector Association="cineModel.FK_producer_etnia" />
-        <AssociationConnector Association="cineModel.FK_producer_genero" />
-        <AssociationConnector Association="cineModel.FK_producer_identification_type" />
-        <AssociationConnector Association="cineModel.FK_producer_localization" />
-        <AssociationConnector Association="cineModel.FK_producer_person_type" />
-        <AssociationConnector Association="cineModel.FK_producer_producer_company_type" />
-        <AssociationConnector Association="cineModel.FK_producer_producer_type" />
-        <AssociationConnector Association="cineModel.FK_project_producer_producer" />
-        <EntityTypeShape EntityType="cineModel.usuario" Width="1.5" PointX="0.75" PointY="28.125" />
-        <AssociationConnector Association="cineModel.FK_role_assignment_usuario" />
         <EntityTypeShape EntityType="cineModel.project" Width="1.5" PointX="14.25" PointY="13.125" />
         <AssociationConnector Association="cineModel.FK_adjunto_projecto_project" />
         <AssociationConnector Association="cineModel.FK_estimulo_project" />
@@ -97,8 +86,19 @@
         <AssociationConnector Association="cineModel.FK_project_staff_project" />
         <AssociationConnector Association="cineModel.FK_project_status_project" />
         <AssociationConnector Association="cineModel.FK_project_type" />
-        <AssociationConnector Association="cineModel.FK_project_usuario" />
         <AssociationConnector Association="cineModel.FK_resolution_project" />
+        <EntityTypeShape EntityType="cineModel.producer" Width="1.5" PointX="19.625" PointY="9.5" />
+        <AssociationConnector Association="cineModel.FK_producer_etnia" />
+        <AssociationConnector Association="cineModel.FK_producer_genero" />
+        <AssociationConnector Association="cineModel.FK_producer_identification_type" />
+        <AssociationConnector Association="cineModel.FK_producer_localization" />
+        <AssociationConnector Association="cineModel.FK_producer_person_type" />
+        <AssociationConnector Association="cineModel.FK_producer_producer_company_type" />
+        <AssociationConnector Association="cineModel.FK_producer_producer_type" />
+        <AssociationConnector Association="cineModel.FK_project_producer_producer" />
+        <EntityTypeShape EntityType="cineModel.usuario" Width="1.5" PointX="0.75" PointY="27.625" />
+        <AssociationConnector Association="cineModel.FK_project_usuario" />
+        <AssociationConnector Association="cineModel.FK_role_assignment_usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

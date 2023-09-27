@@ -75,8 +75,8 @@ namespace DominioCineProducto.Data
         public virtual DbSet<project_producer> project_producer { get; set; }
         public virtual DbSet<dia_feriado> dia_feriado { get; set; }
         public virtual DbSet<especialidad_cargo> especialidad_cargo { get; set; }
+        public virtual DbSet<project> project { get; set; }
         public virtual DbSet<producer> producer { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<project> project { get; set; }
     }
 }

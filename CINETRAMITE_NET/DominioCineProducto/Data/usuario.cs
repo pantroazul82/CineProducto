@@ -17,8 +17,8 @@ namespace DominioCineProducto.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public usuario()
         {
-            this.role_assignment = new HashSet<role_assignment>();
             this.project = new HashSet<project>();
+            this.role_assignment = new HashSet<role_assignment>();
         }
     
         public int idusuario { get; set; }
@@ -54,11 +54,11 @@ namespace DominioCineProducto.Data
         public string sms_numero_pin { get; set; }
         public string telefono_movil { get; set; }
         public Nullable<bool> es_responsable { get; set; }
-        public Nullable<System.DateTime> fecha_asignacion { get; set; }
+        public Nullable<System.DateTime> FECHA_ASIGNACION { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<role_assignment> role_assignment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<project> project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<role_assignment> role_assignment { get; set; }
     }
 }
