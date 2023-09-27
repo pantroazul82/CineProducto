@@ -77,11 +77,11 @@ namespace CineProducto
                 cmbMunicipio.DataBind();
                 cmbMunicipio.SelectedValue = objP.producer.producer_localization_id;
 
-                if (objP.producer.productor_localizacion_contacto_id != null)
+                if (objP.producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID != null)
                 {
-                    if (objP.producer.productor_localizacion_contacto_id.Trim() != string.Empty)
+                    if (objP.producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID.Trim() != string.Empty)
                     {
-                        localization objL = neg.getDepartamentobyId(objP.producer.productor_localizacion_contacto_id);
+                        localization objL = neg.getDepartamentobyId(objP.producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID);
                         cmbDepartamentoContacto.SelectedValue = objL.localization_father_id;
 
                         cmbMunicipioContacto.DataBind();
@@ -106,10 +106,11 @@ namespace CineProducto
                 lblNumDocumentoRepLegalSup.Text = "ID Representante Legal Suplente: ";
                 //txtPais.Text= objP.producer.producer_country;
                 cmbPais.SelectedValue = objP.producer.producer_country;
-                cmbPaisContacto.SelectedValue = objP.producer.productor_pais_contacto;
+                cmbPaisContacto.SelectedValue = objP.producer.PRODUCTOR_PAIS_CONTACTO;
                 txtCiudad.Text = objP.producer.producer_city;
-                txtCiudadContacto.Text = objP.producer.productor_ciudad_contacto;
+                txtCiudadContacto.Text = objP.producer.PRODUCTOR_CIUDAD_CONTACTO;
                 txtNitDigVerificacion.Visible = false;
+                filterDocumento.Enabled = false;
                 RequiredFieldValidatorNitDigVerif.Enabled = false;
                 lblSeparadorNIt.Visible = false;
                 RangeValidatorNumDocRepLegal.Enabled = false;
@@ -199,13 +200,13 @@ namespace CineProducto
 
             if (objPp.producer.producer_type_id == 1) { //1 es colombiano
                 objP.producer_localization_id = cmbMunicipio.SelectedValue;
-                objP.productor_localizacion_contacto_id = cmbMunicipioContacto.SelectedValue;
+                objP.PRODUCTOR_LOCALIZACION_CONTACTO_ID = cmbMunicipioContacto.SelectedValue;
             }
             else {
                 objP.producer_country = cmbPais.SelectedValue;
-                objP.productor_pais_contacto = cmbPaisContacto.SelectedValue;
+                objP.PRODUCTOR_PAIS_CONTACTO = cmbPaisContacto.SelectedValue;
                 objP.producer_city = txtCiudad.Text;
-                objP.productor_ciudad_contacto = txtCiudadContacto.Text;
+                objP.PRODUCTOR_CIUDAD_CONTACTO = txtCiudadContacto.Text;
             }            
 
             objP.producer_phone = txtTelefono.Text;
@@ -328,12 +329,15 @@ namespace CineProducto
                     pnPersonaNatural.Visible = true;
                     pnlCiudadContacto.Visible = true;
                     pnlDepMunNacimiento.Visible = true;
+                    pnDatosOrigenExt.Visible = false;
                 }
                 else
                 {
                     pnPersonaJuridica.Visible = false;
                     pnPersonaNatural.Visible = true;
                     pnlCiudadContacto.Visible = false;
+                    pnlDepMunNacimiento.Visible = false;
+                    pnDatosOrigenExt.Visible = true;
                 }
                 
             }
@@ -345,6 +349,7 @@ namespace CineProducto
                     pnPersonaNatural.Visible = false;
                     pnlCiudadContacto.Visible = true;
                     pnlDepMunNacimiento.Visible = false;
+                    pnDatosOrigenExt.Visible = false;
                 }
                 else
                 {
@@ -352,6 +357,7 @@ namespace CineProducto
                     pnPersonaNatural.Visible = false;
                     pnlCiudadContacto.Visible = false;
                     pnlDepMunNacimiento.Visible = false;
+                    pnDatosOrigenExt.Visible = false;
                 }
             }
             else

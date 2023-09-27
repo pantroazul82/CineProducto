@@ -273,9 +273,9 @@ warning 6002: The table/view 'cine.dbo.attachment_validation' does not have a pr
           <Property Name="segundo_apellido_sup" Type="varchar" MaxLength="200" />
           <Property Name="num_id_sup" Type="varchar" MaxLength="200" />
           <Property Name="identification_type_id_sup" Type="int" />
-          <Property Name="productor_pais_contacto" Type="nvarchar" MaxLength="100" />
-          <Property Name="productor_ciudad_contacto" Type="nvarchar" MaxLength="100" />
-          <Property Name="productor_localizacion_contacto_id" Type="char" MaxLength="5" />
+          <Property Name="PRODUCTOR_PAIS_CONTACTO" Type="nvarchar" MaxLength="100" />
+          <Property Name="PRODUCTOR_CIUDAD_CONTACTO" Type="nvarchar" MaxLength="100" />
+          <Property Name="PRODUCTOR_LOCALIZACION_CONTACTO_ID" Type="char" MaxLength="5" />
         </EntityType>
         <EntityType Name="producer_company_type">
           <Key>
@@ -401,6 +401,7 @@ warning 6002: The table/view 'cine.dbo.attachment_validation' does not have a pr
           <Property Name="OBSERVACIONES_SUBSANACION" Type="nvarchar" MaxLength="500" />
           <Property Name="FECHA_ENVIO_SUBSANACION" Type="datetime" />
           <Property Name="SUBSANACION_ENVIADA" Type="bit" />
+          <Property Name="HOJA_TRANSFERENCIA" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="project_attachment">
           <Key>
@@ -690,7 +691,7 @@ warning 6002: The table/view 'cine.dbo.attachment_validation' does not have a pr
           <Property Name="sms_numero_pin" Type="nvarchar" MaxLength="50" />
           <Property Name="telefono_movil" Type="nvarchar" MaxLength="50" />
           <Property Name="es_responsable" Type="bit" />
-          <Property Name="fecha_asignacion" Type="datetime" />
+          <Property Name="FECHA_ASIGNACION" Type="datetime" />
         </EntityType>
         <EntityType Name="ZONA_COLOMBIA">
           <Key>
@@ -2146,44 +2147,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <End Role="position" EntitySet="position" />
             <End Role="especialidad_cargo" EntitySet="especialidad_cargo" />
           </AssociationSet>
-          <EntitySet Name="producer" EntityType="cineModel.producer" />
-          <AssociationSet Name="FK_producer_etnia" Association="cineModel.FK_producer_etnia">
-            <End Role="etnia" EntitySet="etnia" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_genero" Association="cineModel.FK_producer_genero">
-            <End Role="genero" EntitySet="genero" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_identification_type" Association="cineModel.FK_producer_identification_type">
-            <End Role="identification_type" EntitySet="identification_type" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_localization" Association="cineModel.FK_producer_localization">
-            <End Role="localization" EntitySet="localization" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_person_type" Association="cineModel.FK_producer_person_type">
-            <End Role="person_type" EntitySet="person_type" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_producer_company_type" Association="cineModel.FK_producer_producer_company_type">
-            <End Role="producer_company_type" EntitySet="producer_company_type" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producer_producer_type" Association="cineModel.FK_producer_producer_type">
-            <End Role="producer_type" EntitySet="producer_type" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_producer_producer" Association="cineModel.FK_project_producer_producer">
-            <End Role="producer" EntitySet="producer" />
-            <End Role="project_producer" EntitySet="project_producer" />
-          </AssociationSet>
-          <EntitySet Name="usuario" EntityType="cineModel.usuario" />
-          <AssociationSet Name="FK_role_assignment_usuario" Association="cineModel.FK_role_assignment_usuario">
-            <End Role="usuario" EntitySet="usuario" />
-            <End Role="role_assignment" EntitySet="role_assignment" />
-          </AssociationSet>
           <EntitySet Name="project" EntityType="cineModel.project" />
           <AssociationSet Name="FK_adjunto_projecto_project" Association="cineModel.FK_adjunto_projecto_project">
             <End Role="project" EntitySet="project" />
@@ -2245,13 +2208,51 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <End Role="project_type" EntitySet="project_type" />
             <End Role="project" EntitySet="project" />
           </AssociationSet>
+          <AssociationSet Name="FK_resolution_project" Association="cineModel.FK_resolution_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="resolution" EntitySet="resolution" />
+          </AssociationSet>
+          <EntitySet Name="producer" EntityType="cineModel.producer" />
+          <AssociationSet Name="FK_producer_etnia" Association="cineModel.FK_producer_etnia">
+            <End Role="etnia" EntitySet="etnia" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_genero" Association="cineModel.FK_producer_genero">
+            <End Role="genero" EntitySet="genero" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_identification_type" Association="cineModel.FK_producer_identification_type">
+            <End Role="identification_type" EntitySet="identification_type" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_localization" Association="cineModel.FK_producer_localization">
+            <End Role="localization" EntitySet="localization" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_person_type" Association="cineModel.FK_producer_person_type">
+            <End Role="person_type" EntitySet="person_type" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_producer_company_type" Association="cineModel.FK_producer_producer_company_type">
+            <End Role="producer_company_type" EntitySet="producer_company_type" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producer_producer_type" Association="cineModel.FK_producer_producer_type">
+            <End Role="producer_type" EntitySet="producer_type" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_producer_producer" Association="cineModel.FK_project_producer_producer">
+            <End Role="producer" EntitySet="producer" />
+            <End Role="project_producer" EntitySet="project_producer" />
+          </AssociationSet>
+          <EntitySet Name="usuario" EntityType="cineModel.usuario" />
           <AssociationSet Name="FK_project_usuario" Association="cineModel.FK_project_usuario">
             <End Role="usuario" EntitySet="usuario" />
             <End Role="project" EntitySet="project" />
           </AssociationSet>
-          <AssociationSet Name="FK_resolution_project" Association="cineModel.FK_resolution_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="resolution" EntitySet="resolution" />
+          <AssociationSet Name="FK_role_assignment_usuario" Association="cineModel.FK_role_assignment_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="role_assignment" EntitySet="role_assignment" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="etnia">
@@ -2380,8 +2381,8 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <Property Name="project_id" Type="Int32" Nullable="false" />
           <Property Name="project_producer_participation_percentage" Type="Double" />
           <Property Name="project_producer_requester" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="producer" Relationship="cineModel.FK_project_producer_producer" FromRole="project_producer" ToRole="producer" />
           <NavigationProperty Name="project" Relationship="cineModel.FK_project_producer_project" FromRole="project_producer" ToRole="project" />
+          <NavigationProperty Name="producer" Relationship="cineModel.FK_project_producer_producer" FromRole="project_producer" ToRole="producer" />
         </EntityType>
         <EntityType Name="dia_feriado">
           <Key>
@@ -2408,205 +2409,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Principal>
             <Dependent Role="especialidad_cargo">
               <PropertyRef Name="position_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="producer">
-          <Key>
-            <PropertyRef Name="producer_id" />
-          </Key>
-          <Property Name="producer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="person_type_id" Type="Int32" />
-          <Property Name="identification_type_id" Type="Int32" />
-          <Property Name="producer_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="producer_nit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="producer_company_type_id" Type="Int32" />
-          <Property Name="producer_type_id" Type="Int32" />
-          <Property Name="producer_identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="producer_firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_localization_id" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="producer_country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="producer_fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="producer_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="producer_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_website" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="producer_user_id" Type="Int32" />
-          <Property Name="producer_firstname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="producer_lastname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="id_genero" Type="Int32" />
-          <Property Name="id_etnia" Type="Int32" />
-          <Property Name="producer_nit_dig_verif" Type="Int32" />
-          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
-          <Property Name="id_grupo_poblacional" Type="Int32" />
-          <Property Name="abreviatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="primer_nombre_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="segundo_nombre_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="primer_apellido_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="segundo_apellido_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="num_id_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="identification_type_id_sup" Type="Int32" />
-          <Property Name="productor_pais_contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="productor_ciudad_contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="productor_localizacion_contacto_id" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="etnia" Relationship="cineModel.FK_producer_etnia" FromRole="producer" ToRole="etnia" />
-          <NavigationProperty Name="genero" Relationship="cineModel.FK_producer_genero" FromRole="producer" ToRole="genero" />
-          <NavigationProperty Name="identification_type" Relationship="cineModel.FK_producer_identification_type" FromRole="producer" ToRole="identification_type" />
-          <NavigationProperty Name="localization" Relationship="cineModel.FK_producer_localization" FromRole="producer" ToRole="localization" />
-          <NavigationProperty Name="person_type" Relationship="cineModel.FK_producer_person_type" FromRole="producer" ToRole="person_type" />
-          <NavigationProperty Name="producer_company_type" Relationship="cineModel.FK_producer_producer_company_type" FromRole="producer" ToRole="producer_company_type" />
-          <NavigationProperty Name="producer_type" Relationship="cineModel.FK_producer_producer_type" FromRole="producer" ToRole="producer_type" />
-          <NavigationProperty Name="project_producer" Relationship="cineModel.FK_project_producer_producer" FromRole="producer" ToRole="project_producer" />
-        </EntityType>
-        <Association Name="FK_producer_etnia">
-          <End Type="cineModel.etnia" Role="etnia" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="etnia">
-              <PropertyRef Name="id_etnia" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="id_etnia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_genero">
-          <End Type="cineModel.genero" Role="genero" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genero">
-              <PropertyRef Name="id_genero" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="id_genero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_identification_type">
-          <End Type="cineModel.identification_type" Role="identification_type" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="identification_type">
-              <PropertyRef Name="identification_type_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="identification_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_localization">
-          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="localization">
-              <PropertyRef Name="localization_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="producer_localization_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_person_type">
-          <End Type="cineModel.person_type" Role="person_type" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="person_type">
-              <PropertyRef Name="person_type_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="person_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_producer_company_type">
-          <End Type="cineModel.producer_company_type" Role="producer_company_type" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producer_company_type">
-              <PropertyRef Name="producer_company_type_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="producer_company_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producer_producer_type">
-          <End Type="cineModel.producer_type" Role="producer_type" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producer_type">
-              <PropertyRef Name="producer_type_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="producer_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_producer_producer">
-          <End Type="cineModel.producer" Role="producer" Multiplicity="1" />
-          <End Type="cineModel.project_producer" Role="project_producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producer">
-              <PropertyRef Name="producer_id" />
-            </Principal>
-            <Dependent Role="project_producer">
-              <PropertyRef Name="producer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="usuario">
-          <Key>
-            <PropertyRef Name="idusuario" />
-          </Key>
-          <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
-          <Property Name="idzona" Type="Int32" />
-          <Property Name="nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="validacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cod_ciudad" Type="Int32" />
-          <Property Name="empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="tipoidentificacion" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="identificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="profesion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="hash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="activo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="personalizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sitio_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="eliminado" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="hash_restauracion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="timestamp_restauracion" Type="DateTime" Precision="3" />
-          <Property Name="color_pagina" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="telefono_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="telefono_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sms_autoriza" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sms_validado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sms_numero_pin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="telefono_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="es_responsable" Type="Boolean" />
-          <Property Name="fecha_asignacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="role_assignment" Relationship="cineModel.FK_role_assignment_usuario" FromRole="usuario" ToRole="role_assignment" />
-          <NavigationProperty Name="project" Relationship="cineModel.FK_project_usuario" FromRole="usuario" ToRole="project" />
-        </EntityType>
-        <Association Name="FK_role_assignment_usuario">
-          <End Type="cineModel.usuario" Role="usuario" Multiplicity="1" />
-          <End Type="cineModel.role_assignment" Role="role_assignment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usuario">
-              <PropertyRef Name="idusuario" />
-            </Principal>
-            <Dependent Role="role_assignment">
-              <PropertyRef Name="idusuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2710,6 +2512,7 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <Property Name="OBSERVACIONES_SUBSANACION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FECHA_ENVIO_SUBSANACION" Type="DateTime" Precision="3" />
           <Property Name="SUBSANACION_ENVIADA" Type="Boolean" />
+          <Property Name="HOJA_TRANSFERENCIA" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="adjunto_projecto" Relationship="cineModel.FK_adjunto_projecto_project" FromRole="project" ToRole="adjunto_projecto" />
           <NavigationProperty Name="estimulo" Relationship="cineModel.FK_estimulo_project" FromRole="project" ToRole="estimulo" />
           <NavigationProperty Name="firma_tramite" Relationship="cineModel.FK_project_firma_tramite" FromRole="project" ToRole="firma_tramite" />
@@ -2725,8 +2528,8 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_project" FromRole="project" ToRole="project_staff" />
           <NavigationProperty Name="project_status" Relationship="cineModel.FK_project_status_project" FromRole="project" ToRole="project_status" />
           <NavigationProperty Name="project_type" Relationship="cineModel.FK_project_type" FromRole="project" ToRole="project_type" />
-          <NavigationProperty Name="usuario" Relationship="cineModel.FK_project_usuario" FromRole="project" ToRole="usuario" />
           <NavigationProperty Name="resolution" Relationship="cineModel.FK_resolution_project" FromRole="project" ToRole="resolution" />
+          <NavigationProperty Name="usuario" Relationship="cineModel.FK_project_usuario" FromRole="project" ToRole="usuario" />
         </EntityType>
         <Association Name="FK_adjunto_projecto_project">
           <End Type="cineModel.project" Role="project" Multiplicity="0..1" />
@@ -2908,6 +2711,205 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_resolution_project">
+          <End Type="cineModel.project" Role="project" Multiplicity="1" />
+          <End Type="cineModel.resolution" Role="resolution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="resolution">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="producer">
+          <Key>
+            <PropertyRef Name="producer_id" />
+          </Key>
+          <Property Name="producer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="person_type_id" Type="Int32" />
+          <Property Name="identification_type_id" Type="Int32" />
+          <Property Name="producer_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="producer_nit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="producer_company_type_id" Type="Int32" />
+          <Property Name="producer_type_id" Type="Int32" />
+          <Property Name="producer_identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="producer_firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_localization_id" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="producer_country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="producer_fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="producer_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="producer_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_website" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="producer_user_id" Type="Int32" />
+          <Property Name="producer_firstname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="producer_lastname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_genero" Type="Int32" />
+          <Property Name="id_etnia" Type="Int32" />
+          <Property Name="producer_nit_dig_verif" Type="Int32" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="id_grupo_poblacional" Type="Int32" />
+          <Property Name="abreviatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="primer_nombre_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_nombre_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="num_id_sup" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="identification_type_id_sup" Type="Int32" />
+          <Property Name="PRODUCTOR_PAIS_CONTACTO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTOR_CIUDAD_CONTACTO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTOR_LOCALIZACION_CONTACTO_ID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="etnia" Relationship="cineModel.FK_producer_etnia" FromRole="producer" ToRole="etnia" />
+          <NavigationProperty Name="genero" Relationship="cineModel.FK_producer_genero" FromRole="producer" ToRole="genero" />
+          <NavigationProperty Name="identification_type" Relationship="cineModel.FK_producer_identification_type" FromRole="producer" ToRole="identification_type" />
+          <NavigationProperty Name="localization" Relationship="cineModel.FK_producer_localization" FromRole="producer" ToRole="localization" />
+          <NavigationProperty Name="person_type" Relationship="cineModel.FK_producer_person_type" FromRole="producer" ToRole="person_type" />
+          <NavigationProperty Name="producer_company_type" Relationship="cineModel.FK_producer_producer_company_type" FromRole="producer" ToRole="producer_company_type" />
+          <NavigationProperty Name="producer_type" Relationship="cineModel.FK_producer_producer_type" FromRole="producer" ToRole="producer_type" />
+          <NavigationProperty Name="project_producer" Relationship="cineModel.FK_project_producer_producer" FromRole="producer" ToRole="project_producer" />
+        </EntityType>
+        <Association Name="FK_producer_etnia">
+          <End Type="cineModel.etnia" Role="etnia" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="etnia">
+              <PropertyRef Name="id_etnia" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="id_etnia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_genero">
+          <End Type="cineModel.genero" Role="genero" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genero">
+              <PropertyRef Name="id_genero" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="id_genero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_identification_type">
+          <End Type="cineModel.identification_type" Role="identification_type" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="identification_type">
+              <PropertyRef Name="identification_type_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="identification_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_localization">
+          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="localization">
+              <PropertyRef Name="localization_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="producer_localization_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_person_type">
+          <End Type="cineModel.person_type" Role="person_type" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person_type">
+              <PropertyRef Name="person_type_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="person_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_producer_company_type">
+          <End Type="cineModel.producer_company_type" Role="producer_company_type" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producer_company_type">
+              <PropertyRef Name="producer_company_type_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="producer_company_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producer_producer_type">
+          <End Type="cineModel.producer_type" Role="producer_type" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producer_type">
+              <PropertyRef Name="producer_type_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="producer_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_producer_producer">
+          <End Type="cineModel.producer" Role="producer" Multiplicity="1" />
+          <End Type="cineModel.project_producer" Role="project_producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producer">
+              <PropertyRef Name="producer_id" />
+            </Principal>
+            <Dependent Role="project_producer">
+              <PropertyRef Name="producer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="idzona" Type="Int32" />
+          <Property Name="nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pais" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="validacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cod_ciudad" Type="Int32" />
+          <Property Name="empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tipoidentificacion" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="identificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="profesion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="personalizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sitio_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="eliminado" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="hash_restauracion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="timestamp_restauracion" Type="DateTime" Precision="3" />
+          <Property Name="color_pagina" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sms_autoriza" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sms_validado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sms_numero_pin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="es_responsable" Type="Boolean" />
+          <Property Name="FECHA_ASIGNACION" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="project" Relationship="cineModel.FK_project_usuario" FromRole="usuario" ToRole="project" />
+          <NavigationProperty Name="role_assignment" Relationship="cineModel.FK_role_assignment_usuario" FromRole="usuario" ToRole="role_assignment" />
+        </EntityType>
         <Association Name="FK_project_usuario">
           <End Type="cineModel.usuario" Role="usuario" Multiplicity="0..1" />
           <End Type="cineModel.project" Role="project" Multiplicity="*" />
@@ -2920,15 +2922,15 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_resolution_project">
-          <End Type="cineModel.project" Role="project" Multiplicity="1" />
-          <End Type="cineModel.resolution" Role="resolution" Multiplicity="*" />
+        <Association Name="FK_role_assignment_usuario">
+          <End Type="cineModel.usuario" Role="usuario" Multiplicity="1" />
+          <End Type="cineModel.role_assignment" Role="role_assignment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
             </Principal>
-            <Dependent Role="resolution">
-              <PropertyRef Name="project_id" />
+            <Dependent Role="role_assignment">
+              <PropertyRef Name="idusuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3506,92 +3508,10 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="producer">
-            <EntityTypeMapping TypeName="cineModel.producer">
-              <MappingFragment StoreEntitySet="producer">
-                <ScalarProperty Name="productor_localizacion_contacto_id" ColumnName="productor_localizacion_contacto_id" />
-                <ScalarProperty Name="productor_ciudad_contacto" ColumnName="productor_ciudad_contacto" />
-                <ScalarProperty Name="productor_pais_contacto" ColumnName="productor_pais_contacto" />
-                <ScalarProperty Name="identification_type_id_sup" ColumnName="identification_type_id_sup" />
-                <ScalarProperty Name="num_id_sup" ColumnName="num_id_sup" />
-                <ScalarProperty Name="segundo_apellido_sup" ColumnName="segundo_apellido_sup" />
-                <ScalarProperty Name="primer_apellido_sup" ColumnName="primer_apellido_sup" />
-                <ScalarProperty Name="segundo_nombre_sup" ColumnName="segundo_nombre_sup" />
-                <ScalarProperty Name="primer_nombre_sup" ColumnName="primer_nombre_sup" />
-                <ScalarProperty Name="abreviatura" ColumnName="abreviatura" />
-                <ScalarProperty Name="id_grupo_poblacional" ColumnName="id_grupo_poblacional" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="producer_nit_dig_verif" ColumnName="producer_nit_dig_verif" />
-                <ScalarProperty Name="id_etnia" ColumnName="id_etnia" />
-                <ScalarProperty Name="id_genero" ColumnName="id_genero" />
-                <ScalarProperty Name="producer_lastname2" ColumnName="producer_lastname2" />
-                <ScalarProperty Name="producer_firstname2" ColumnName="producer_firstname2" />
-                <ScalarProperty Name="producer_user_id" ColumnName="producer_user_id" />
-                <ScalarProperty Name="producer_website" ColumnName="producer_website" />
-                <ScalarProperty Name="producer_email" ColumnName="producer_email" />
-                <ScalarProperty Name="producer_movil" ColumnName="producer_movil" />
-                <ScalarProperty Name="producer_fax" ColumnName="producer_fax" />
-                <ScalarProperty Name="producer_phone" ColumnName="producer_phone" />
-                <ScalarProperty Name="producer_address" ColumnName="producer_address" />
-                <ScalarProperty Name="producer_city" ColumnName="producer_city" />
-                <ScalarProperty Name="producer_country" ColumnName="producer_country" />
-                <ScalarProperty Name="producer_localization_id" ColumnName="producer_localization_id" />
-                <ScalarProperty Name="producer_lastname" ColumnName="producer_lastname" />
-                <ScalarProperty Name="producer_firstname" ColumnName="producer_firstname" />
-                <ScalarProperty Name="producer_identification_number" ColumnName="producer_identification_number" />
-                <ScalarProperty Name="producer_type_id" ColumnName="producer_type_id" />
-                <ScalarProperty Name="producer_company_type_id" ColumnName="producer_company_type_id" />
-                <ScalarProperty Name="producer_nit" ColumnName="producer_nit" />
-                <ScalarProperty Name="producer_name" ColumnName="producer_name" />
-                <ScalarProperty Name="identification_type_id" ColumnName="identification_type_id" />
-                <ScalarProperty Name="person_type_id" ColumnName="person_type_id" />
-                <ScalarProperty Name="producer_id" ColumnName="producer_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usuario">
-            <EntityTypeMapping TypeName="cineModel.usuario">
-              <MappingFragment StoreEntitySet="usuario">
-                <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
-                <ScalarProperty Name="es_responsable" ColumnName="es_responsable" />
-                <ScalarProperty Name="telefono_movil" ColumnName="telefono_movil" />
-                <ScalarProperty Name="sms_numero_pin" ColumnName="sms_numero_pin" />
-                <ScalarProperty Name="sms_validado" ColumnName="sms_validado" />
-                <ScalarProperty Name="sms_autoriza" ColumnName="sms_autoriza" />
-                <ScalarProperty Name="telefono_3" ColumnName="telefono_3" />
-                <ScalarProperty Name="telefono_2" ColumnName="telefono_2" />
-                <ScalarProperty Name="color_pagina" ColumnName="color_pagina" />
-                <ScalarProperty Name="timestamp_restauracion" ColumnName="timestamp_restauracion" />
-                <ScalarProperty Name="hash_restauracion" ColumnName="hash_restauracion" />
-                <ScalarProperty Name="eliminado" ColumnName="eliminado" />
-                <ScalarProperty Name="sitio_registro" ColumnName="sitio_registro" />
-                <ScalarProperty Name="personalizacion" ColumnName="personalizacion" />
-                <ScalarProperty Name="activo" ColumnName="activo" />
-                <ScalarProperty Name="hash" ColumnName="hash" />
-                <ScalarProperty Name="profesion" ColumnName="profesion" />
-                <ScalarProperty Name="identificacion" ColumnName="identificacion" />
-                <ScalarProperty Name="tipoidentificacion" ColumnName="tipoidentificacion" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-                <ScalarProperty Name="cod_ciudad" ColumnName="cod_ciudad" />
-                <ScalarProperty Name="validacion" ColumnName="validacion" />
-                <ScalarProperty Name="cargo" ColumnName="cargo" />
-                <ScalarProperty Name="pais" ColumnName="pais" />
-                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="nombres" ColumnName="nombres" />
-                <ScalarProperty Name="idzona" ColumnName="idzona" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="project">
             <EntityTypeMapping TypeName="cineModel.project">
               <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="HOJA_TRANSFERENCIA" ColumnName="HOJA_TRANSFERENCIA" />
                 <ScalarProperty Name="SUBSANACION_ENVIADA" ColumnName="SUBSANACION_ENVIADA" />
                 <ScalarProperty Name="FECHA_ENVIO_SUBSANACION" ColumnName="FECHA_ENVIO_SUBSANACION" />
                 <ScalarProperty Name="OBSERVACIONES_SUBSANACION" ColumnName="OBSERVACIONES_SUBSANACION" />
@@ -3688,6 +3608,89 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
                 <ScalarProperty Name="project_name" ColumnName="project_name" />
                 <ScalarProperty Name="production_type_id" ColumnName="production_type_id" />
                 <ScalarProperty Name="project_id" ColumnName="project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producer">
+            <EntityTypeMapping TypeName="cineModel.producer">
+              <MappingFragment StoreEntitySet="producer">
+                <ScalarProperty Name="PRODUCTOR_LOCALIZACION_CONTACTO_ID" ColumnName="PRODUCTOR_LOCALIZACION_CONTACTO_ID" />
+                <ScalarProperty Name="PRODUCTOR_CIUDAD_CONTACTO" ColumnName="PRODUCTOR_CIUDAD_CONTACTO" />
+                <ScalarProperty Name="PRODUCTOR_PAIS_CONTACTO" ColumnName="PRODUCTOR_PAIS_CONTACTO" />
+                <ScalarProperty Name="identification_type_id_sup" ColumnName="identification_type_id_sup" />
+                <ScalarProperty Name="num_id_sup" ColumnName="num_id_sup" />
+                <ScalarProperty Name="segundo_apellido_sup" ColumnName="segundo_apellido_sup" />
+                <ScalarProperty Name="primer_apellido_sup" ColumnName="primer_apellido_sup" />
+                <ScalarProperty Name="segundo_nombre_sup" ColumnName="segundo_nombre_sup" />
+                <ScalarProperty Name="primer_nombre_sup" ColumnName="primer_nombre_sup" />
+                <ScalarProperty Name="abreviatura" ColumnName="abreviatura" />
+                <ScalarProperty Name="id_grupo_poblacional" ColumnName="id_grupo_poblacional" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="producer_nit_dig_verif" ColumnName="producer_nit_dig_verif" />
+                <ScalarProperty Name="id_etnia" ColumnName="id_etnia" />
+                <ScalarProperty Name="id_genero" ColumnName="id_genero" />
+                <ScalarProperty Name="producer_lastname2" ColumnName="producer_lastname2" />
+                <ScalarProperty Name="producer_firstname2" ColumnName="producer_firstname2" />
+                <ScalarProperty Name="producer_user_id" ColumnName="producer_user_id" />
+                <ScalarProperty Name="producer_website" ColumnName="producer_website" />
+                <ScalarProperty Name="producer_email" ColumnName="producer_email" />
+                <ScalarProperty Name="producer_movil" ColumnName="producer_movil" />
+                <ScalarProperty Name="producer_fax" ColumnName="producer_fax" />
+                <ScalarProperty Name="producer_phone" ColumnName="producer_phone" />
+                <ScalarProperty Name="producer_address" ColumnName="producer_address" />
+                <ScalarProperty Name="producer_city" ColumnName="producer_city" />
+                <ScalarProperty Name="producer_country" ColumnName="producer_country" />
+                <ScalarProperty Name="producer_localization_id" ColumnName="producer_localization_id" />
+                <ScalarProperty Name="producer_lastname" ColumnName="producer_lastname" />
+                <ScalarProperty Name="producer_firstname" ColumnName="producer_firstname" />
+                <ScalarProperty Name="producer_identification_number" ColumnName="producer_identification_number" />
+                <ScalarProperty Name="producer_type_id" ColumnName="producer_type_id" />
+                <ScalarProperty Name="producer_company_type_id" ColumnName="producer_company_type_id" />
+                <ScalarProperty Name="producer_nit" ColumnName="producer_nit" />
+                <ScalarProperty Name="producer_name" ColumnName="producer_name" />
+                <ScalarProperty Name="identification_type_id" ColumnName="identification_type_id" />
+                <ScalarProperty Name="person_type_id" ColumnName="person_type_id" />
+                <ScalarProperty Name="producer_id" ColumnName="producer_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="cineModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="FECHA_ASIGNACION" ColumnName="FECHA_ASIGNACION" />
+                <ScalarProperty Name="es_responsable" ColumnName="es_responsable" />
+                <ScalarProperty Name="telefono_movil" ColumnName="telefono_movil" />
+                <ScalarProperty Name="sms_numero_pin" ColumnName="sms_numero_pin" />
+                <ScalarProperty Name="sms_validado" ColumnName="sms_validado" />
+                <ScalarProperty Name="sms_autoriza" ColumnName="sms_autoriza" />
+                <ScalarProperty Name="telefono_3" ColumnName="telefono_3" />
+                <ScalarProperty Name="telefono_2" ColumnName="telefono_2" />
+                <ScalarProperty Name="color_pagina" ColumnName="color_pagina" />
+                <ScalarProperty Name="timestamp_restauracion" ColumnName="timestamp_restauracion" />
+                <ScalarProperty Name="hash_restauracion" ColumnName="hash_restauracion" />
+                <ScalarProperty Name="eliminado" ColumnName="eliminado" />
+                <ScalarProperty Name="sitio_registro" ColumnName="sitio_registro" />
+                <ScalarProperty Name="personalizacion" ColumnName="personalizacion" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="hash" ColumnName="hash" />
+                <ScalarProperty Name="profesion" ColumnName="profesion" />
+                <ScalarProperty Name="identificacion" ColumnName="identificacion" />
+                <ScalarProperty Name="tipoidentificacion" ColumnName="tipoidentificacion" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+                <ScalarProperty Name="cod_ciudad" ColumnName="cod_ciudad" />
+                <ScalarProperty Name="validacion" ColumnName="validacion" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="idzona" ColumnName="idzona" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

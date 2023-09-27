@@ -125,6 +125,7 @@ namespace DominioCineProducto.Data
         public string OBSERVACIONES_SUBSANACION { get; set; }
         public Nullable<System.DateTime> FECHA_ENVIO_SUBSANACION { get; set; }
         public Nullable<bool> SUBSANACION_ENVIADA { get; set; }
+        public string HOJA_TRANSFERENCIA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<adjunto_projecto> adjunto_projecto { get; set; }
@@ -150,8 +151,8 @@ namespace DominioCineProducto.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<project_status> project_status { get; set; }
         public virtual project_type project_type { get; set; }
-        public virtual usuario usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<resolution> resolution { get; set; }
+        public virtual usuario usuario { get; set; }
     }
 }
