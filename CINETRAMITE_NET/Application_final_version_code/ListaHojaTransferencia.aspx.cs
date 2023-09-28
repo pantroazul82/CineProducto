@@ -27,7 +27,7 @@ namespace CineProducto
     public partial class ListaHojaTransferencia : System.Web.UI.Page
     {
         public bool showAdvancedForm = false;
-        public int user_role = 0;
+        public int user_role = 0; 
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {

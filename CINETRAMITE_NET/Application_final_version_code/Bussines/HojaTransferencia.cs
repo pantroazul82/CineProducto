@@ -26,25 +26,12 @@ namespace CineProducto.Bussines
             }
         }
 
-        //public void LoadById(int resID)
-        //{
-        //    DB db = new DB();
-        //    DataSet ds = db.Select("SELECT HOJA_TRANSFERENCIA, "
-        //                         + "project_id, "
-        //                         + "FROM project WHERE project_id=" + resID.ToString());
-        //    if (ds.Tables[0].Rows.Count == 1)
-        //    {
-        //        this.requestID = (int)ds.Tables[0].Rows[0]["request_form_id"];
-        //        this.path = ds.Tables[0].Rows[0]["request_form_path"].ToString();
-        //        this.projectID = (int)ds.Tables[0].Rows[0]["request_form_project_id"];
-        //    }
-        //}
         public void LoadByProject(int ProjectID)
         {
 
             DB db = new DB();
             DataSet ds = db.Select("SELECT HOJA_TRANSFERENCIA, "
-                                 + "project_id, "
+                                 + "project_id "
                                  + "FROM project WHERE project_id=" + ProjectID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
@@ -77,11 +64,12 @@ namespace CineProducto.Bussines
             }
             if (this.requestID == 0)
             {
-                result = db.Execute("INSERT INTO project (HOJA_TRANSFERENCIA) values ('" + this.path + "')");
+                result = db.Execute("UPDATE project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
+
             }
             else
             {
-                result = db.Execute("UPDATE project SET HOJA_TRANSFERENCIA = '" + this.path + "' where request_form_project_id=" + this.projectID);
+                result = db.Execute("UPDATE project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
             }
             return result;
         }

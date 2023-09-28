@@ -92,7 +92,6 @@
 
             //funcion para cargar formulario de solicitud firmado
             $(function () {
-
                 $('#FileUpload_formulario_solicitud').fileupload({
                     url: 'FileUploadHandler.ashx?upload=start&folder=<%= Page.ResolveClientUrl("~/uploads")%>' + '/<%=project_id %>/' + '&attachment_id=0',
                     add: function (e, data) {
@@ -178,7 +177,7 @@
 
             //funcion para cargar Hoja de Tranferncia
             $(function () {
-
+  
                 $('#FileUpload_Hoja_Transferencia').fileupload({
                     url: 'FileUploadHandler.ashx?upload=start&folder=<%= Page.ResolveClientUrl("~/uploads")%>' + '/<%=project_id %>/' + '&attachment_id=0',
                     add: function (e, data) {
@@ -244,7 +243,10 @@
                                 success: function (msg) {
                                     // Replace the div's content with the page method's return.
                                     $('#name_hoja_tansferencia').html(msg.d);
-                                }
+                                },
+                                error: function (request, error) {
+                                    console.log(" Can't do because: " + error);
+                                },
                             });
                             $('#aspnetForm').submit();
                         }
@@ -1057,9 +1059,9 @@
                         </div>
                         <div>
                             <div id='divFileUpload_hoja_Transferencia'>
-                                <input type='file' name='file' id='FileUpload_hoja_Transferencia' style='display: none' />
+                                <input type='file' name='file' id='FileUpload_Hoja_Transferencia' style='display: none' />
                                 <input type='button' style='width: 110px; height: 30px; background-color: darkblue; color: white;' id='btnFileUploadText'
-                                    runat="server" value='Seleccionar' onclick="FileUpload_Hoja_Transferencia.click();" />
+                                  value='Seleccionar' onclick="FileUpload_Hoja_Transferencia.click();" />
                             </div>
                             <div class='progressbar' id='progressbar' style='width: 100px; display: none;'>
                                 <div></div>

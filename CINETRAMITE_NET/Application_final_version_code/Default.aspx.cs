@@ -292,6 +292,7 @@ namespace CineProducto
             }
         }
 
+        [WebMethod()]
         public static string proccessHojaTransferencia(int project_id, string filename)
         {
             String rootPath = HttpContext.Current.Server.MapPath("~");

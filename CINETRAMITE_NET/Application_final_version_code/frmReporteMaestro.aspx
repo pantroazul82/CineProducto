@@ -189,7 +189,11 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
 
                 <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" FieldName="Fecha_Envio_Aclaraciones" Caption="Fecha Envio Aclaraciones" >
                 <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" Height="30" /></dx:GridViewDataDateColumn>
-
+                                <dx:GridViewDataColumn Settings-AutoFilterCondition="Contains" Caption="Hoja De Tansferencia" FieldName="HojaTransferencia" VisibleIndex="5">
+                        <DataItemTemplate>
+                            <asp:HyperLink Target="_blank" NavigateUrl='<%#Eval("HOJA_TRANSFERENCIA") %>' runat="server" Text='<%# Eval("HOJA_TRANSFERENCIA").ToString() == "" ||Eval("HOJA_TRANSFERENCIA") == null  ? "": "Hoja de transferencia" %>' />
+                        </DataItemTemplate>
+                    </dx:GridViewDataColumn>
 
 
                 <dx:GridViewDataTextColumn Settings-AutoFilterCondition="Contains" Settings-AllowGroup="True" FieldName="Tipo_persona_productor" Caption="Tipo Persona Productor"  />

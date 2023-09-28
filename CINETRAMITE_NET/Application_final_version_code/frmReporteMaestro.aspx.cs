@@ -139,7 +139,7 @@ namespace CineProducto
 set dateformat dmy
 select
 
-p.project_id, p.project_name Titulo,[Titulo_provisional],
+p.project_id,p.HOJA_TRANSFERENCIA ,p.project_name Titulo,[Titulo_provisional],
 production_type.production_type_name 'Tipo_Produccion',
 project_genre.project_genre_name 'Tipo_Obra',
 project_type.project_type_name 'Clasificacion_Duracion',

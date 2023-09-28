@@ -609,15 +609,6 @@ namespace CineProducto
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FSHojaTransferencia;
 
         /// <summary>
-        /// Control btnFileUploadText.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnFileUploadText;
-
-        /// <summary>
         /// Control btnEnviarSubsanacion.
         /// </summary>
         /// <remarks>
