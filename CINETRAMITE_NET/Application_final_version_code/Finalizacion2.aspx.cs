@@ -1923,7 +1923,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
 
         }
 
-        private void generarNuevoPDF()
+        protected void generarNuevoPDF(object sender, EventArgs e)
         {
             Project project = new Project();
             project.LoadProject(this.project_id);
@@ -1962,18 +1962,21 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 {
                     if (producer.person_type_id == 1)
                     {
-                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ((producer.producer_firstname != "") ? producer.producer_firstname : "") + ((producer.producer_lastname != "") ? producer.producer_lastname : "")));
+                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ((producer.producer_firstname != "") ? producer.producer_firstname : "") + " " +((producer.producer_lastname != "") ? producer.producer_lastname : "")));
                         listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", producer.producer_identification_number));
-                        listaReemplazar.Add(new parametroRemplazo("@@TD", "CC"));
-                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", "NO APLICA"));
-                        listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", "NO APLICA"));
-                        listaReemplazar.Add(new parametroRemplazo("@@TDR", "NO APLICA"));
-                        listaReemplazar.Add(new parametroRemplazo("@@RAZON_SOCIAL", "NO APLICA"));
-                        listaReemplazar.Add(new parametroRemplazo("@@NUM_NIT", "NO APLICA"));
+                        listaReemplazar.Add(new parametroRemplazo("@@TD:", "CC"));
+                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@TDR", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@RAZON_SOCIAL", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_NIT", ""));
                     }
                     else if (producer.person_type_id == 2)
                     {
-                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ((producer.producer_name != "") ? producer.producer_firstname : "") + ((producer.producer_lastname != "") ? producer.producer_lastname : "")));
+                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@TD:", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ((producer.producer_name != "") ? producer.producer_firstname : "") + " " +((producer.producer_lastname != "") ? producer.producer_lastname : "")));
                         listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", producer.producer_identification_number));
                         if (producer.identification_type_id == 1)
                         {
@@ -2049,10 +2052,10 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             listaReemplazar.Add(new parametroRemplazo("@@TIPO", project.production_type_name));
             listaReemplazar.Add(new parametroRemplazo("@@TIP_DUR", project.project_type_name));
             listaReemplazar.Add(new parametroRemplazo("@@DUR_MIN", duration));
-            listaReemplazar.Add(new parametroRemplazo("@@FECHA_INI", start_day + " / " + start_month + " / " + start_year));
-            listaReemplazar.Add(new parametroRemplazo("@@FECHA_FIN", end_day + " / " + end_month + " / " + end_year));
+            listaReemplazar.Add(new parametroRemplazo("@@FECHA_INI", start_day + "/" + start_month + "/" + start_year));
+            listaReemplazar.Add(new parametroRemplazo("@@FECHA_FIN", end_day + "/" + end_month + "/" + end_year));
             listaReemplazar.Add(new parametroRemplazo("@@LUGAR_FILMACION", project.project_recording_sites));
-            listaReemplazar.Add(new parametroRemplazo("@@COSTO_TOTAL", Convert.ToString(presupuestoTotal)));
+            listaReemplazar.Add(new parametroRemplazo("@@COSTO_TOTAL", presupuestoTotal.ToString("C0")));
             listaReemplazar.Add(new parametroRemplazo("@@DEPOSITO_FISICO", preprint));
             listaReemplazar.Add(new parametroRemplazo("@@SINOPSIS", project.project_synopsis));
 
