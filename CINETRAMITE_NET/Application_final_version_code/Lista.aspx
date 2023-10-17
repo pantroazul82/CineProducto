@@ -324,12 +324,10 @@
              </dx:GridViewDataDateColumn>
              <dx:GridViewDataTextColumn Settings-AutoFilterCondition="Contains" Visible="false" FieldName="hora_envio_aclaraciones" caption="Hora Envio Aclaraciones" VisibleIndex="11">
              </dx:GridViewDataTextColumn>
-             <dx:GridViewDataDateColumn  Settings-AutoFilterCondition="Contains"  FieldName="fecha_final" caption="Fecha Final" ReadOnly="True" VisibleIndex="12">
-             </dx:GridViewDataDateColumn>
 
              <dx:GridViewDataTextColumn Settings-AutoFilterCondition="Contains" FieldName="responsable"  caption="Responsable"  ReadOnly="True" VisibleIndex="13"></dx:GridViewDataTextColumn>
              <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" FieldName="Fecha_Limite" caption="Fecha Limite" ReadOnly="True" VisibleIndex="13"></dx:GridViewDataDateColumn>
-             <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy" FieldName="fecha_tramite_fin" caption="Fin tramite" ReadOnly="True" VisibleIndex="13"></dx:GridViewDataDateColumn>
+             <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy" FieldName="fecha_tramite_fin" caption="Fecha tramite fin" ReadOnly="True" VisibleIndex="13"></dx:GridViewDataDateColumn>
 
              <dx:GridViewDataColumn Settings-AutoFilterCondition="Contains" FieldName="fecha_resolucion" caption="Resolución/Certificado" VisibleIndex="14">
                  <DataItemTemplate>
