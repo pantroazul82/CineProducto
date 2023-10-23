@@ -421,7 +421,15 @@ p.project_resolution_date as fecha_resolucion,
 p.project_notification_date as fecha_notificacion, 
 project_notification2_date as fecha_notificacion_2,
 fecha_limite as Fecha_Limite,
-case when p.state_id=9 then cast(p.fecha_notificacion_certificado as date) when p.state_id=10 then cast(p.fecha_final as date) when p.state_id=12 then cast(p.fecha_final as date) when p.state_id=14 then cast(p.project_clarification_request_date as date) else null end 'fecha_tramite_fin',
+case
+when p.state_id=9 and project_notification_date is not null then cast(p.project_notification_date as date)
+when p.state_id=9 and project_resolution_date is not null then cast(p.project_resolution_date as date)
+when p.state_id=10 then cast(p.fecha_final as date) 
+when p.state_id=12 then cast(p.fecha_cancelacion as date)
+
+--when p.state_id=14 then cast(p.fecha_desistido as date) else null end 'fecha_tramite_fin',
+
+when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin',
 r.resolution_path as pdf_resolucion,
 resolution_path2 as pdf_resolucion_aclaratoria,
 (select nombres +' ' + apellidos from usuario where idusuario = p.responsable) as responsable,
