@@ -106,9 +106,9 @@
                                 NavigateUrl='<%# "DatosProyecto.aspx?project_id="+Eval("project_id") %>'></asp:HyperLink>
                         </DataItemTemplate>
                     </dx:GridViewDataColumn>
-                    <dx:GridViewDataColumn Settings-AutoFilterCondition="Contains" Caption="Hoja De Tansferencia" FieldName="HojaTransferencia" VisibleIndex="5">
+                    <dx:GridViewDataColumn Settings-AutoFilterCondition="Contains" Caption="Notificación de resolución" FieldName="HojaTransferencia" VisibleIndex="5">
                         <DataItemTemplate>
-                            <asp:HyperLink Target="_blank" NavigateUrl='<%#Eval("HOJA_TRANSFERENCIA") %>' runat="server" Text='<%# Eval("HOJA_TRANSFERENCIA").ToString() == "" ||Eval("HOJA_TRANSFERENCIA") == null  ? "": "Hoja de transferencia" %>' />
+                            <asp:HyperLink Target="_blank" NavigateUrl='<%#Eval("HOJA_TRANSFERENCIA") %>' runat="server" Text='<%# Eval("HOJA_TRANSFERENCIA").ToString() == "" ||Eval("HOJA_TRANSFERENCIA") == null  ? "": "Notificación de resolución" %>' />
                         </DataItemTemplate>
                     </dx:GridViewDataColumn>
                     <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" PropertiesDateEdit-DisplayFormatString="dd/MM/yyyy hh:mm:ss" FieldName="Fecha_y_Hora_de_Solicitud" Caption="Fecha solicitud" ReadOnly="True" VisibleIndex="6">

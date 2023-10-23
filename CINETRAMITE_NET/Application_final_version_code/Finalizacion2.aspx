@@ -1032,26 +1032,26 @@
                     <% } %>
                 </fieldset>
 
+                <%-- cargar hoja de transferencia --%>
                 <fieldset class="fieldset-hoja-transferencia" id="FSHojaTransferencia" runat="server" visible=" true">
-                    <legend>Hoja de Transferencia</legend>
+                    <legend>Notificación de resolución</legend>
 
 
                     <% if (path_hojaTransferencia != null && path_hojaTransferencia.Trim() != "")
                         { %>
                     <div>
-                        <a target="_blank" href="<%=path_hojaTransferencia%>">Hoja de transferencia</a>
+                        <a target="_blank" href="<%=path_hojaTransferencia%>">Notificación de resolución</a>
                     </div>
                     <%} %>
 
 
 
-                    <% if ((user_role > 1 && user_role != 6) && (project_state == 2 || project_state == 3 || project_state == 4 ||
-                 project_state == 6 || project_state == 7 || project_state == 8))
+                    <% if ((user_role > 1 && user_role != 6) && (project_state == 9 || project_state == 10))
                         { %>
                     <br />
                     <div style="border-style: solid; border-color: lightblue; border-width: 1px;">
                         <div>
-                            <b>Cargar Hoja de Transferencia</b><br />
+                            <b>Cargar Notificación de resolución</b><br />
 <%--                                                <span id="name_hoja_tansferencia"><% if (path_hojaTransferencia != "" && path_hojaTransferencia != null)
                            { %>
                           <a target="_blank" href="<%=path_hojaTransferencia%>">Hoja de transferencia</a>

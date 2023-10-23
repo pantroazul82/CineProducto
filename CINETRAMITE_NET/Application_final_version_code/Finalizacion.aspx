@@ -38,6 +38,7 @@
             autosize($('#<%=txtRespuestaVisualizacion2.ClientID %>'));
             $('#loading').hide();
 
+            //funcion para cargar formulario de solicitud firmado
             $(function () {
 
                 $('#FileUpload_formulario_solicitud').fileupload({
@@ -117,6 +118,96 @@
                     }
                 });
             });
+
+            //funcion para cargar Hoja de Tranferncia
+            $(function () {
+
+                $('#FileUpload_Hoja_Transferencia').fileupload({
+                    url: 'FileUploadHandler.ashx?upload=start&folder=<%= Page.ResolveClientUrl("~/uploads")%>' + '/<%=project_id %>/' + '&attachment_id=0',
+                    add: function (e, data) {
+                        var cnt = 0;
+                        var ext = '';
+
+                        var stopIteration = false;
+                        $.each(data.files, function (index, file) {
+                            cnt = cnt + 1;
+                            ext = file.name.substring(file.name.lastIndexOf('.'));
+                            if (file.size > 5242880) {
+                                alert('El archivo ' + file.name + '  supera el tamaño máximo de 5 Megas.');
+                                return;
+                            }
+                            var CaracterEsp = /^[a-zA-Z0-9\s-._]+$/;
+                            if (!CaracterEsp.test(file.name)) {
+                                alert('El nombre del archivo no debe contener caracteres especiales: #@+(){}°~“´´%&');
+                                stopIteration = true;
+                                return false;
+                            }
+
+                        });
+
+                        if (stopIteration) {
+                            return;
+                        }
+
+
+                        if (cnt > 1) {
+                            alert('Solo debe seleccionar un archivo');
+                            return;
+                        }
+
+                        if (ext.toUpperCase() != '.PDF') {
+                            alert('solo es valido subir archivos en formato pdf.');
+                            return;
+                        }
+                        //   console.log('add', data);
+                        $('#progressbar').show();
+                        //    $('#progressbar1').show();
+                        data.submit();
+                        alert('Hoja de Transferencia se cargo correctamente.');
+
+                    },
+                    progress: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progressbar').css('width', progress + '%');
+                    },
+                    success: function (response, status) {
+                        $('#progressbar').hide();
+                        $('#progressbar div').css('width', '0%');
+
+                        if (response.indexOf("Error") >= 0) {
+                            alert(response);
+                        } else {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '<%=Page.ResolveClientUrl("~/Default.aspx/proccessHojaTransferencia") %>',
+                                data: '{project_id:<%=project_id%>,filename:"' + response + '"}',
+                                contentType: 'application/json; charset=utf-8',
+                                dataType: 'json',
+                                success: function (msg) {
+                                    // Replace the div's content with the page method's return.
+                                    $('#name_hoja_tansferencia').html(msg.d);
+                                },
+                                error: function (request, error) {
+                                    console.log(" Can't do because: " + error);
+                                },
+                            });
+                            $('#aspnetForm').submit();
+                        }
+
+
+                    },
+
+                    error: function (error) {
+                        alert('error');
+                        $('#progressbar<%# Eval("attachment_id")%>').hide();
+                        $('#progressbar<%# Eval("attachment_id")%> div').css('width', '0%');
+                        console.log('error', error);
+                    }
+                });
+            });
+
+
 
             $('#deshacerenvio').click(function () {
                 if (confirm('PRECAUCION: ESTA ACCIÓN DEVUELVE LA SOLICITUD AL PRODUCTOR. ¿DESEA CONTINUAR?')) {
@@ -782,7 +873,46 @@
        <%} %> 
 
         <% } %>
-      
+
+        <%-- Cargue de Hoja de transferencia --%>
+       <fieldset class="fieldset-hoja-transferencia" id="FSHojaTransferencia" runat="server" visible=" true">
+                    <legend>Notificación de resolución</legend>
+
+
+                    <% if (path_hojaTransferencia != null && path_hojaTransferencia.Trim() != "")
+                        { %>
+                    <div>
+                        <a target="_blank" href="<%=path_hojaTransferencia%>">Notificación de resolución</a>
+                    </div>
+                    <%} %>
+
+
+
+                    <% if ((user_role > 1 && user_role != 6) && (project_state == 9 || project_state == 10) )
+                        { %>
+                    <br />
+                    <div style="border-style: solid; border-color: lightblue; border-width: 1px;">
+                        <div>
+                            <b>Cargar Notificación de resolución</b><br />
+<%--                                                <span id="name_hoja_tansferencia"><% if (path_hojaTransferencia != "" && path_hojaTransferencia != null)
+                           { %>
+                          <a target="_blank" href="<%=path_hojaTransferencia%>">Hoja de transferencia</a>
+                          <%}else{ %>Adjunte el Hoja de Transferencia<%} %></span>*--%>
+                        </div>
+                        <div>
+                            <div id='divFileUpload_hoja_Transferencia'>
+                                <input type='file' name='file' id='FileUpload_Hoja_Transferencia' style='display: none' />
+                                <input type='button' style='width: 110px; height: 30px; background-color: darkblue; color: white;' id='btnFileUploadText'
+                                  value='Seleccionar' onclick="FileUpload_Hoja_Transferencia.click();" />
+                            </div>
+                            <div class='progressbar' id='progressbar' style='width: 100px; display: none;'>
+                                <div></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <% } %>
+                </fieldset>
 
                 
             <div style="background-color:white;">
