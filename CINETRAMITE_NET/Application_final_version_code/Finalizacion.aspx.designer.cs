@@ -474,6 +474,15 @@ namespace CineProducto
         protected global::System.Web.UI.HtmlControls.HtmlInputText notification_date2;
 
         /// <summary>
+        /// Control FSHojaTransferencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FSHojaTransferencia;
+
+        /// <summary>
         /// Control lblErrorAprobacion.
         /// </summary>
         /// <remarks>

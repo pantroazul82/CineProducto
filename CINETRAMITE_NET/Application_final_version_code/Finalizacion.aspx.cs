@@ -37,6 +37,7 @@ namespace CineProducto
         public string tab_datos_adjuntos_css_class = "";
         public string tab_datos_finalizacion_css_class = "";
         public string path_request_form = "";
+        public string path_hojaTransferencia = "";
 
         public int user_role = 0;
         public int project_id;
@@ -234,7 +235,11 @@ namespace CineProducto
 
             if (Session["project_id"] != null)
             {
-                lblCodProyecto.Text = Session["project_id"].ToString();
+                if (bool.Parse(Session["ES_PRODUCTOR"].ToString()))
+                {
+                    this.FSHojaTransferencia.Visible = false;
+                }
+                    lblCodProyecto.Text = Session["project_id"].ToString();
                 project.LoadProject(Convert.ToInt32(Session["project_id"]));
 
                 if (project.version == 2)//redirecciona a finalizacion nueva
@@ -590,6 +595,11 @@ namespace CineProducto
                 emtyform = project.validateNotInitForm("DatosFinalizacion");
                 RequestForm form = new RequestForm(this.project_id);
                 this.path_request_form = form.path;
+                
+                //hoja de transferencia
+                HojaTransferencia formhoja = new HojaTransferencia(this.project_id);
+                this.path_hojaTransferencia = formhoja.path;
+
                 if (form.path == null || form.path.Trim() == string.Empty)
                 {
                     project.sectionDatosFinalizacion.tab_state_id = 10;
@@ -692,6 +702,7 @@ namespace CineProducto
                             break;
                     }
                 }
+
             }
             else
             {
