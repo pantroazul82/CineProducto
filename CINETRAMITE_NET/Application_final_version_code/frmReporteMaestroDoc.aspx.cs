@@ -154,8 +154,13 @@ Fecha_Resolucion,
 attachment.attachment_description,
 patt.nombre_original,
 patt.project_attachment_path,
-project_notification_date Fecha_Notificacion,
- p.state_id
+cast(project_request_date as date) Fecha_Solicitud,
+case
+when p.state_id=9 and project_notification_date is not null then cast(p.project_notification_date as date)
+when p.state_id=9 and project_resolution_date is not null then cast(p.project_resolution_date as date)
+when p.state_id=10 then cast(p.fecha_final as date) 
+when p.state_id=12 then cast(p.fecha_cancelacion as date)
+when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
 from project_attachment patt
 left join attachment on attachment.attachment_id = patt.project_attachment_attachment_id
 left join project p  on p.project_id=patt.project_attachment_project_id
@@ -191,8 +196,13 @@ null Fecha_Resolucion,
 CASE WHEN request_form.request_form_path is NULL THEN  null
 ELSE  'Formulario de solicitud firmado' END  nombre_original,
 request_form.request_form_path  project_attachment_path,
-null Fecha_Notificacion,
-null state_id
+cast(project_request_date as date) Fecha_Solicitud,
+case
+when p.state_id=9 and project_notification_date is not null then cast(p.project_notification_date as date)
+when p.state_id=9 and project_resolution_date is not null then cast(p.project_resolution_date as date)
+when p.state_id=10 then cast(p.fecha_final as date) 
+when p.state_id=12 then cast(p.fecha_cancelacion as date)
+when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
 from project_attachment patt
 left join project p  on p.project_id=patt.project_attachment_project_id
 left join production_type on production_type.production_type_id = p.production_type_id
@@ -226,8 +236,13 @@ p.project_resolution_date  Fecha_Resolucion,
 'Anexos' attachment_description,
 adjunto_projecto.nombre_original nombre_original,
 adjunto_projecto.url_adjunto project_attachment_path,
-project_notification_date Fecha_Notificacion,
- p.state_id state_id
+cast(project_request_date as date) Fecha_Solicitud,
+case
+when p.state_id=9 and project_notification_date is not null then cast(p.project_notification_date as date)
+when p.state_id=9 and project_resolution_date is not null then cast(p.project_resolution_date as date)
+when p.state_id=10 then cast(p.fecha_final as date) 
+when p.state_id=12 then cast(p.fecha_cancelacion as date)
+when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
 from project_attachment patt
 left join project p  on p.project_id=patt.project_attachment_project_id
 left join production_type on production_type.production_type_id = p.production_type_id
@@ -247,7 +262,52 @@ where
      and (producer.person_type_id = '{ cmbTipoProductor.SelectedValue }' or  { cmbTipoProductor.SelectedValue }='-1') 
      and (p.project_type_id = '{ cmbDuracion.SelectedValue }' or  { cmbDuracion.SelectedValue }='-1') 
      and ( adjunto_projecto.url_adjunto IS NOT NULL )
-     { filtroPresupuesto })";
+     { filtroPresupuesto }) 
+UNION
+select  p.project_id, 
+p.project_name Titulo,
+production_type.production_type_name 'Tipo_Produccion',
+project_genre.project_genre_name 'Tipo_Obra',
+project_type.project_type_name 'Clasificacion_Duracion',
+case when producer.person_type_id =2 then producer.producer_name 
+else producer.producer_firstname +' '+producer.producer_lastname end 'Productor', 
+s.state_name Estado, 
+p.project_resolution_date 
+Fecha_Resolucion,
+'Hoja fisica trasferencia',
+case when isnull(p.HOJA_TRANSFERENCIA,'') ='' then     '' else 'Hoja Fisica de trasferencia' end,
+p.HOJA_TRANSFERENCIA,
+cast(project_request_date as date) Fecha_Solicitud,
+case
+when p.state_id=9 and project_notification_date is not null then cast(p.project_notification_date as date)
+when p.state_id=9 and project_resolution_date is not null then cast(p.project_resolution_date as date)
+when p.state_id=10 then cast(p.fecha_final as date) 
+when p.state_id=12 then cast(p.fecha_cancelacion as date)
+when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
+
+from project p 
+left join resolution  r on r.project_id= p.project_id  
+left join state s on p.state_id = s.state_id  
+join usuario on usuario.idusuario = p.project_idusuario
+left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join producer on producer.producer_id = project_producer.producer_id
+left join project_genre on project_genre.project_genre_id = p.project_genre_id
+left join production_type on production_type.production_type_id = p.production_type_id
+left join project_type on project_type.project_type_id = p.project_type_id
+where 
+( { filtro }  (p.project_request_date is null { filtroFecha })
+     and p.project_name like '%{ txtTitulo.Text.Trim().Replace("'", "%")}%' 
+     and s.state_id in ( { lblEstados.Text }) 
+     and (p.production_type_id = '{ cmbTipoProduccion.SelectedValue }' or  { cmbTipoProduccion.SelectedValue  }='-1') 
+     and (p.project_genre_id = '{ cmbTipoObra.SelectedValue} ' or   { cmbTipoObra.SelectedValue } ='-1') 
+     and (producer.producer_name like '%{  txtProductor.Text }%' or  producer.producer_firstname like '%{ txtProductor.Text }%' or producer.producer_lastname like '%{ txtProductor.Text }%' ) 
+     and (producer.person_type_id = '{ cmbTipoProductor.SelectedValue }' or  { cmbTipoProductor.SelectedValue }='-1') 
+     and (p.project_type_id = '{ cmbDuracion.SelectedValue }' or  { cmbDuracion.SelectedValue }='-1') 
+     { filtroPresupuesto })
+
+
+
+";
 
 
             if (cmbEstado.SelectedValue == "15")

@@ -314,6 +314,7 @@ namespace CineProducto.Bussines
                 {
                     this.productor_localizacion_contacto_id_padre = "";
                 }
+
             }
         }
 

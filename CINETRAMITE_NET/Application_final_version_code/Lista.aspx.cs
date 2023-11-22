@@ -951,7 +951,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             {
                                 ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number));
                             }
-                            tP.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto)) { Colspan = 3 });
+                            tP.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))) { Colspan = 3 });
                             tP.AddCell(new PdfPCell(new Paragraph("Colombia")) { Colspan = 2 });                            
 
                             //var phraseProductor = new Phrase();
@@ -965,7 +965,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             string nitCompleto = "";
                             if (unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
                             {
-                                nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit));
+                                nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit)).Replace(",", ".");
                                 nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();
                             }
                             string producerTipoEmpresaMostrar = "";
@@ -978,7 +978,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             tP.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unProjectProducer.producer.producer_name) + producerTipoEmpresaMostrar)) { Colspan = 4 });
                             if (unProjectProducer.producer.producer_type_id == 2)
                             {
-                                tP.AddCell(new PdfPCell(new Paragraph(nitCompleto)) { Colspan = 3 });
+                                tP.AddCell(new PdfPCell(new Paragraph(nitCompleto.Replace(",", "."))) { Colspan = 3 });
                                 tP.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
                             }
                             else
@@ -1029,7 +1029,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 string ccCompleto = "";
                                 if (unProjectProducer.producer.producer_identification_number != null && unProjectProducer.producer.producer_identification_number != "")
                                 {
-                                    ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number));
+                                    ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number.Replace(",", ".")));
                                 }
                                 if (unProjectProducer.producer.producer_type_id == 2)
                                 {
@@ -1037,7 +1037,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 }
                                 else
                                 {
-                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto)));
+                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))));
                                 }
                                 tP2.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
 
@@ -1052,7 +1052,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 string nitCompleto = "";
                                 if (unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
                                 {
-                                    nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit));
+                                    nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit.Replace(",", ".")));
                                     nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();
                                 }
 
@@ -1069,7 +1069,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 }
                                 else
                                 {
-                                    tP2.AddCell(new PdfPCell(new Paragraph("NIT " + nitCompleto)));
+                                    tP2.AddCell(new PdfPCell(new Paragraph("NIT " + nitCompleto.Replace(",", "."))));
                                     tP2.AddCell(new PdfPCell(new Paragraph("Colombia")));
                                 }
 
@@ -1089,17 +1089,21 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     document.Add(phraseParticipacion);
                     document.Add(separtor);
 
-
-                    var phrasePersonal = new Phrase();
-                    phrasePersonal.Add(new Chunk("Personal nacional acreditado:", boldFont));
-                    document.Add(phrasePersonal);
-                    document.Add(Chunk.NEWLINE);
-
-
                     PdfPTable tPers = new PdfPTable(2);
-                    tPers.WidthPercentage = 100f;
-                    tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Nombre", boldFont))));
-                    tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Cargo", boldFont))));
+                    if (myProject.project_staff != null)
+                    {
+                        var phrasePersonal = new Phrase();
+                        phrasePersonal.Add(new Chunk("Personal nacional acreditado:", boldFont));
+                        document.Add(phrasePersonal);
+                        document.Add(Chunk.NEWLINE);
+
+                        tPers.WidthPercentage = 100f;
+                        tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Nombre", boldFont))));
+                        tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Cargo", boldFont))));
+                    }
+
+
+                    
                     foreach (project_staff unPersonal in myProject.project_staff.OrderBy(x => x.project_staff_position_id))
                     {
                         string segundoNombre = "";
@@ -1115,6 +1119,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                         //phraseProductor.Add(unPersonal.project_staff_firstname + " " + unPersonal.project_staff_firstname2 + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2 + ", "+ unPersonal.position.position_name);
                         //document.Add(phraseProductor);              
                         //document.Add(Chunk.NEWLINE);
+                        
                     }
                     document.Add(tPers);
                     document.Add(separtor);

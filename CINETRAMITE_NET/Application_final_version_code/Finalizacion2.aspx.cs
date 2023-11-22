@@ -1953,16 +1953,32 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     email = producer.producer_email;
                     website = producer.producer_website;
                     fax = producer.producer_fax;
-                    municipio = producer.producer_localization_id;
-                    departamento = producer.producer_localization_father_id;
-                    departamento_optional = producer.producer_country;
-                    municipio_optional = producer.producer_city;
+                    municipio = producer.productor_localizacion_contacto_id;
+                    departamento = producer.productor_localizacion_contacto_id_padre;
+                    departamento_optional = producer.productor_pais_contacto;
+                    municipio_optional = producer.productor_ciudad_contacto;
                 }
                 if (producer.producer_type_id == 1)
                 {
                     if (producer.person_type_id == 1)
                     {
-                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ((producer.producer_firstname != "") ? producer.producer_firstname : "") + " " +((producer.producer_lastname != "") ? producer.producer_lastname : "")));
+                        string PRIMER_NOMBRE = "";
+                        string SEGUNDO_NOMBRE = "";
+                        string PRIMER_APELLIDO = "";
+                        string SEGUNDO_APELLIDO = "";
+
+                        PRIMER_NOMBRE = producer.producer_firstname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_firstname2.Trim()))
+                        {
+                            SEGUNDO_NOMBRE = producer.producer_firstname2.Trim();
+                        }
+                        PRIMER_APELLIDO = producer.producer_lastname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_lastname2.Trim()))
+                        {
+                            SEGUNDO_APELLIDO = producer.producer_lastname2.Trim();
+                        }
+
+                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", PRIMER_NOMBRE + " " + SEGUNDO_NOMBRE + " " + PRIMER_APELLIDO + " " + SEGUNDO_APELLIDO));
                         listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", producer.producer_identification_number));
                         listaReemplazar.Add(new parametroRemplazo("@@TD:", "CC"));
                         listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ""));
@@ -1973,10 +1989,24 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     }
                     else if (producer.person_type_id == 2)
                     {
+                        string PRIMER_NOMBRE_REP_LEGAL = "";
+                        string SEGUNDO_NOMBRE_REP_LEGAL = "";
+                        string PRIMER_APELLIDO_REP_LEGAL = "";
+                        string SEGUNDO_APELLIDO_REP_LEGAL = "";
                         listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ""));
                         listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", ""));
                         listaReemplazar.Add(new parametroRemplazo("@@TD:", ""));
-                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ((producer.producer_name != "") ? producer.producer_firstname : "") + " " +((producer.producer_lastname != "") ? producer.producer_lastname : "")));
+                        PRIMER_NOMBRE_REP_LEGAL = producer.producer_firstname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_firstname2.Trim()))
+                        {
+                            SEGUNDO_NOMBRE_REP_LEGAL = producer.producer_firstname2.Trim();
+                        }
+                        PRIMER_APELLIDO_REP_LEGAL = producer.producer_lastname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_lastname2.Trim()))
+                        {
+                            SEGUNDO_APELLIDO_REP_LEGAL = producer.producer_lastname2.Trim();
+                        }
+                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", PRIMER_NOMBRE_REP_LEGAL + " " + SEGUNDO_NOMBRE_REP_LEGAL + " " + PRIMER_APELLIDO_REP_LEGAL + " " + SEGUNDO_APELLIDO_REP_LEGAL));
                         listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", producer.producer_identification_number));
                         if (producer.identification_type_id == 1)
                         {
@@ -2021,6 +2051,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             listaReemplazar.Add(new parametroRemplazo("@@SITIO_WEB", website));
 
             //DATOS DE LA OBRA
+            #region datos de la obra
             string genre = "";
 
             if (project.project_genre_id == 1)
@@ -2058,7 +2089,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             listaReemplazar.Add(new parametroRemplazo("@@COSTO_TOTAL", presupuestoTotal.ToString("C0")));
             listaReemplazar.Add(new parametroRemplazo("@@DEPOSITO_FISICO", preprint));
             listaReemplazar.Add(new parametroRemplazo("@@SINOPSIS", project.project_synopsis));
-
+            #endregion
             objgenerar.generarFormularioProducto(Server, Page, listaReemplazar);
         }
 
@@ -3489,17 +3520,19 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     document.Add(phraseParticipacion);
                     document.Add(separtor);
 
-
-                    var phrasePersonal = new Phrase();
-                    phrasePersonal.Add(new Chunk("Personal nacional acreditado:", boldFont));
-                    document.Add(phrasePersonal);
-                    document.Add(Chunk.NEWLINE);
-
-
                     PdfPTable tPers = new PdfPTable(2);
-                    tPers.WidthPercentage = 100f;
-                    tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Nombre", boldFont))));
-                    tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Cargo", boldFont))));
+                    if (myProject.project_staff != null)
+                    {
+                        var phrasePersonal = new Phrase();
+                        phrasePersonal.Add(new Chunk("Personal nacional acreditado:", boldFont));
+                        document.Add(phrasePersonal);
+                        document.Add(Chunk.NEWLINE);
+
+                        tPers.WidthPercentage = 100f;
+                        tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Nombre", boldFont))));
+                        tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Cargo", boldFont))));
+                    }
+
                     foreach (project_staff unPersonal in myProject.project_staff.OrderBy(x => x.project_staff_position_id))
                     {
                         string segundoNombre = "";
@@ -3514,9 +3547,11 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         //phraseProductor.Add(unPersonal.project_staff_firstname + " " + unPersonal.project_staff_firstname2 + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2 + ", "+ unPersonal.position.position_name);
                         //document.Add(phraseProductor);              
                         //document.Add(Chunk.NEWLINE);
+                        
                     }
                     document.Add(tPers);
                     document.Add(separtor);
+
 
 
                     var phraseFecha = new Phrase();

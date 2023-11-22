@@ -232,5 +232,18 @@ en lugar de  where WWWW en lugar de from poner FFFF  en lugar de poner Like pone
         {
             txtSql.Text = cmbQuerisTool.SelectedValue;
         }
+
+        protected void btnVerificarCarpetas_Click(object sender, EventArgs e)
+        {
+            string ruta = Server.MapPath(txtVerificarAdjuntos.Text);
+            txtCarpetas.Text = "";
+            string[] arr = System.IO.Directory.GetDirectories(ruta);
+
+            for (int k = 0; k < arr.Length; k++)
+            {
+                string carpeta = System.IO.Path.GetFileName(arr[k].Trim());
+                txtCarpetas.Text = txtCarpetas.Text + "," + carpeta;
+            }
+        }
     }
 }

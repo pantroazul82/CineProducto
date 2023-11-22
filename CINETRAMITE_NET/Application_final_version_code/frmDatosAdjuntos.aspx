@@ -133,6 +133,8 @@ where project_type_id = 3 and
         <br />
         <asp:TextBox ID="txtVerificarAdjuntos" runat="server"></asp:TextBox>
         <asp:Button ID="btnVerificarADjuntos" runat="server" OnClick="btnVerificarADjuntos_Click" Text="Verificar" />
+        <asp:Button ID="btnVerificarCarpetas" runat="server" OnClick="btnVerificarCarpetas_Click" Text="Verificar Carpetas" />
+        <asp:TextBox ID="txtCarpetas" runat="server" Width="800" Height="30" BackColor="LightGreen"></asp:TextBox>
         <asp:GridView ID="grdDatos" runat="server" AutoGenerateColumns="false">
             <Columns>
                 <asp:TemplateField HeaderText="URL">
