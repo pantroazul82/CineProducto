@@ -201,13 +201,15 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
 
 
 
-                <dx:GridViewDataColumn Settings-AutoFilterCondition="Contains" Caption="Estado" >
-                    <DataItemTemplate>
-                        <asp:label runat="server" ID="lblEstado" Text='<%# verEstado(Eval("state_id"),Eval("Estado"),Eval("Fecha_Notificacion")) %>'></asp:label>
-                    </DataItemTemplate>
-                </dx:GridViewDataColumn>
+                <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" FieldName="Fecha_Solicitud" Caption="Fecha Notificacion" >
+                    <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" Height="30" />
+                </dx:GridViewDataDateColumn>
+                <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" FieldName="fecha_tramite_fin" Caption="Fecha Final" >
+                    <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" Height="30" />
+                </dx:GridViewDataDateColumn>
                 <dx:GridViewDataDateColumn Settings-AutoFilterCondition="Contains" FieldName="Fecha_Resolucion" Caption="Fecha Resolución" >              
-                <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" Height="30" /></dx:GridViewDataDateColumn>
+                    <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" Height="30" />
+                </dx:GridViewDataDateColumn>
             </Columns>
         </dx:ASPxGridView>
      
