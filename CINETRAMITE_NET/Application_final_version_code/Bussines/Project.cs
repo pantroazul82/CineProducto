@@ -1270,7 +1270,7 @@ body{ margin:0px; padding:0px; width:100%; }		</style>
             try
             {
                 cliente.Send(msg);
-            }catch{
+            }catch(Exception ex){
             
             }
         }
