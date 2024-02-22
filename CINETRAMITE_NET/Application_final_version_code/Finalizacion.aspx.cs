@@ -15,6 +15,7 @@ using System.Globalization;
 using DominioCineProducto;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using DominioCineProducto.Data;
+using DominioCineProducto.utils;
 
 namespace CineProducto
 {
@@ -58,7 +59,175 @@ namespace CineProducto
         public string tab_datos_formato_personal_revision_mark_image = "";
         public string tab_datos_personal_revision_mark_image = "";
         public string tab_datos_adjuntos_revision_mark_image = "";
+        protected void generarNuevoPDF(object sender, EventArgs e)
+        {
+            Project project = new Project();
+            project.LoadProject(this.project_id);
 
+            clsGeneracionPDF objgenerar = new clsGeneracionPDF();
+            List<parametroRemplazo> listaReemplazar = new List<parametroRemplazo>();
+            string direccion = "";
+            string telefono = "";
+            string celular = "";
+            string email = "";
+            string fax = "";
+            string website = "";
+            string municipio = "";
+            string departamento = "";
+            string departamento_optional = "";
+            string municipio_optional = "";
+
+            //DATOS DE EL PRODUCTOR
+            foreach (Producer producer in project.producer)
+            {
+
+                if (producer.requester == 1)
+                {
+                    direccion = producer.producer_address;
+                    telefono = producer.producer_phone;
+                    celular = producer.producer_movil;
+                    email = producer.producer_email;
+                    website = producer.producer_website;
+                    fax = producer.producer_fax;
+                    municipio = producer.productor_localizacion_contacto_id;
+                    departamento = producer.productor_localizacion_contacto_id_padre;
+                    departamento_optional = producer.productor_pais_contacto;
+                    municipio_optional = producer.productor_ciudad_contacto;
+                }
+                if (producer.producer_type_id == 1)
+                {
+                    if (producer.person_type_id == 1)
+                    {
+                        string PRIMER_NOMBRE = "";
+                        string SEGUNDO_NOMBRE = "";
+                        string PRIMER_APELLIDO = "";
+                        string SEGUNDO_APELLIDO = "";
+
+                        PRIMER_NOMBRE = producer.producer_firstname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_firstname2.Trim()))
+                        {
+                            SEGUNDO_NOMBRE = producer.producer_firstname2.Trim();
+                        }
+                        PRIMER_APELLIDO = producer.producer_lastname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_lastname2.Trim()))
+                        {
+                            SEGUNDO_APELLIDO = producer.producer_lastname2.Trim();
+                        }
+
+                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", PRIMER_NOMBRE + " " + SEGUNDO_NOMBRE + " " + PRIMER_APELLIDO + " " + SEGUNDO_APELLIDO));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", producer.producer_identification_number));
+                        listaReemplazar.Add(new parametroRemplazo("@@TD:", "CC"));
+                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@TDR", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@RAZON_SOCIAL", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_NIT", ""));
+                    }
+                    else if (producer.person_type_id == 2)
+                    {
+                        string PRIMER_NOMBRE_REP_LEGAL = "";
+                        string SEGUNDO_NOMBRE_REP_LEGAL = "";
+                        string PRIMER_APELLIDO_REP_LEGAL = "";
+                        string SEGUNDO_APELLIDO_REP_LEGAL = "";
+                        listaReemplazar.Add(new parametroRemplazo("@@NOMBRE_APELLIDOS", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUMERO_DOC", ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@TD:", ""));
+                        PRIMER_NOMBRE_REP_LEGAL = producer.producer_firstname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_firstname2.Trim()))
+                        {
+                            SEGUNDO_NOMBRE_REP_LEGAL = producer.producer_firstname2.Trim();
+                        }
+                        PRIMER_APELLIDO_REP_LEGAL = producer.producer_lastname.Trim();
+                        if (!string.IsNullOrEmpty(producer.producer_lastname2.Trim()))
+                        {
+                            SEGUNDO_APELLIDO_REP_LEGAL = producer.producer_lastname2.Trim();
+                        }
+                        listaReemplazar.Add(new parametroRemplazo("@@NOM_REP_LEGAL", PRIMER_NOMBRE_REP_LEGAL + " " + SEGUNDO_NOMBRE_REP_LEGAL + " " + PRIMER_APELLIDO_REP_LEGAL + " " + SEGUNDO_APELLIDO_REP_LEGAL));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_DOC_REP", producer.producer_identification_number));
+                        if (producer.identification_type_id == 1)
+                        {
+                            listaReemplazar.Add(new parametroRemplazo("@@TDR", "CC"));
+                        }
+                        else if (producer.identification_type_id == 2)
+                        {
+                            listaReemplazar.Add(new parametroRemplazo("@@TDR", "CE"));
+                        }
+                        listaReemplazar.Add(new parametroRemplazo("@@RAZON_SOCIAL", (producer.producer_name != "") ? producer.producer_name : ""));
+                        listaReemplazar.Add(new parametroRemplazo("@@NUM_NIT", "NIT: " + ((producer.producer_nit != "") ? producer.producer_nit : "")));
+                    }
+                }
+            }
+            DB db = new DB();
+            if (municipio != "" && departamento != "")
+            {
+
+                DataSet ds = db.Select("SELECT localization_name "
+                                     + "FROM localization "
+                                     + "WHERE localization_id ='" + municipio
+                                     + "' OR localization_id = '" + departamento + "'");
+                if (ds.Tables[0].Rows.Count > 1)
+                {
+                    // Se consulta el nombre del tipo de producción, tipo de proyecto y genero 
+                    departamento = ds.Tables[0].Rows[0]["localization_name"].ToString();
+                    municipio = ds.Tables[0].Rows[1]["localization_name"].ToString();
+                }
+            }
+            else
+            {
+                departamento = departamento_optional;
+                municipio = municipio_optional;
+            }
+
+            //DATOS DE CONTACTO
+            listaReemplazar.Add(new parametroRemplazo("@@DIRECCION", direccion));
+            listaReemplazar.Add(new parametroRemplazo("@@DEPTO", departamento));
+            listaReemplazar.Add(new parametroRemplazo("@@CIUDAD", municipio));
+            listaReemplazar.Add(new parametroRemplazo("@@CORREO", email));
+            listaReemplazar.Add(new parametroRemplazo("@@CEL", telefono));
+            listaReemplazar.Add(new parametroRemplazo("@@SITIO_WEB", website));
+
+            //DATOS DE LA OBRA
+            #region datos de la obra
+            string genre = "";
+
+            if (project.project_genre_id == 1)
+            {
+                genre = "Ficción";
+            }
+            else if (project.project_genre_id == 2)
+            {
+                genre = "Documental";
+            }
+            else if (project.project_genre_id == 3)
+            {
+                genre = "Animación";
+            }
+            int start_day = project.project_filming_start_date.Day;
+            int start_month = project.project_filming_start_date.Month;
+            int start_year = project.project_filming_start_date.Year;
+            int end_day = project.project_filming_end_date.Day;
+            int end_month = project.project_filming_end_date.Month;
+            int end_year = project.project_filming_end_date.Year;
+            string preprint = (project.project_preprint_store_info == "") ? "No aplica" : project.project_preprint_store_info;
+
+
+            string duration = project.GetProjectDuration("minutes").ToString().PadLeft(2, '0') + ":" + (project.GetProjectDuration("seconds").ToString().PadLeft(2, '0'));
+            long presupuestoTotal = project.project_total_cost_desarrollo + project.project_total_cost_posproduccion + project.project_total_cost_preproduccion + project.project_total_cost_produccion;
+
+            listaReemplazar.Add(new parametroRemplazo("@@TITULO_OBRA", project.project_name));
+            listaReemplazar.Add(new parametroRemplazo("@@GENERO", genre));
+            listaReemplazar.Add(new parametroRemplazo("@@TIPO", project.production_type_name));
+            listaReemplazar.Add(new parametroRemplazo("@@TIP_DUR", project.project_type_name));
+            listaReemplazar.Add(new parametroRemplazo("@@DUR_MIN", duration));
+            listaReemplazar.Add(new parametroRemplazo("@@FECHA_INI", start_day + "/" + start_month + "/" + start_year));
+            listaReemplazar.Add(new parametroRemplazo("@@FECHA_FIN", end_day + "/" + end_month + "/" + end_year));
+            listaReemplazar.Add(new parametroRemplazo("@@LUGAR_FILMACION", project.project_recording_sites));
+            listaReemplazar.Add(new parametroRemplazo("@@COSTO_TOTAL", presupuestoTotal.ToString("C0")));
+            listaReemplazar.Add(new parametroRemplazo("@@DEPOSITO_FISICO", preprint));
+            listaReemplazar.Add(new parametroRemplazo("@@SINOPSIS", project.project_synopsis));
+            #endregion
+            objgenerar.generarFormularioProducto(Server, Page, listaReemplazar);
+        }
         private void cargarResolucion()
         {
             Resolution resolution = new Resolution();
