@@ -363,7 +363,7 @@ project_attachment_attachment_id,
     project_attachment_approved
 FROM project_attachment 
 left join attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
-WHERE project_staff_id=@IdProjectStaff">
+WHERE project_staff_id=@IdProjectStaff order by 1 desc">
         <SelectParameters>
             <asp:ControlParameter ControlID="lblIdProjectStaff" DefaultValue="0" Name="IdProjectStaff" PropertyName="Text" />
         </SelectParameters>
