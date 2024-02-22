@@ -213,12 +213,33 @@ Al ingresar puede <b>Crear</b> una nueva solicitud o <b>Consultar</b> las ya exi
                             </tr>
                             <tr>
                                 <td class="register-button" colspan="2">
-                                    <input type="image" alt="Boton de envio del formulario de creacion de nuevo usuario" src="/images/btn_registro.gif" name="enviar" />
+                                    <input id="registrar" type="image" alt="Boton de envio del formulario de creacion de nuevo usuario" src="/images/btn_registro.gif" name="enviar" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
+                <script>
+
+                    //testButton.addEventListener("click", deshabilitarregistro);
+
+                    /*function deshabilitarregistro()
+                    {
+                        
+                        //const deshabilitarRegistro = () => {
+                        $("registrar").hide();
+                        
+                        //};
+                    }*/
+                    $(document).ready(function () {
+                        //alert("Mensaje123");
+                        $("#registrar").click(function () {
+                            //alert("Mensaje");
+                            $("#registrar").hide();
+                        });
+                    });
+                    
+                </script>
             </div>
             <%}%>
         </div>
