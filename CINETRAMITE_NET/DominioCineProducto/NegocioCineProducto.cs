@@ -196,13 +196,13 @@ namespace DominioCineProducto
         {
             Data.project registro = model.project.Find(project_id);
             int? UltimoUsuarioAsigado = model.project.Where(x => x.responsable != null).OrderByDescending(x => x.project_request_date).First().responsable;
-            Data.usuario siguienteUsuario = model.usuario.Where(c => c.es_responsable == true).OrderBy(c => c.FECHA_ASIGNACION).FirstOrDefault();
+            Data.usuario siguienteUsuario = model.usuario.Where(c => c.es_responsable == true && c.es_asignacion_automatica == true).OrderBy(c => c.FECHA_ASIGNACION).FirstOrDefault();
             if (siguienteUsuario != null) {
                 registro.responsable = siguienteUsuario.idusuario;
                 siguienteUsuario.FECHA_ASIGNACION = DateTime.Now;
             }
             else {
-                siguienteUsuario = model.usuario.Where(c => c.es_responsable == true).OrderBy(c => c.idusuario).FirstOrDefault();
+                siguienteUsuario = model.usuario.Where(c => c.es_responsable == true && c.es_asignacion_automatica == true).OrderBy(c => c.idusuario).FirstOrDefault();
                 registro.responsable = siguienteUsuario.idusuario;
             }
             model.SaveChanges();

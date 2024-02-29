@@ -55,6 +55,7 @@ namespace DominioCineProducto.Data
         public string telefono_movil { get; set; }
         public Nullable<bool> es_responsable { get; set; }
         public Nullable<System.DateTime> FECHA_ASIGNACION { get; set; }
+        public Nullable<bool> es_asignacion_automatica { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<project> project { get; set; }

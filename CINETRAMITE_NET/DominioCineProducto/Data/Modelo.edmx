@@ -629,16 +629,6 @@ warning 6002: The table/view 'cine.dbo.attachment_validation' does not have a pr
           <Property Name="state_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="state_deleted" Type="tinyint" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="tipo_estimulo">
           <Key>
             <PropertyRef Name="id_tipo_estimulo" />
@@ -692,6 +682,7 @@ warning 6002: The table/view 'cine.dbo.attachment_validation' does not have a pr
           <Property Name="telefono_movil" Type="nvarchar" MaxLength="50" />
           <Property Name="es_responsable" Type="bit" />
           <Property Name="FECHA_ASIGNACION" Type="datetime" />
+          <Property Name="es_asignacion_automatica" Type="bit" />
         </EntityType>
         <EntityType Name="ZONA_COLOMBIA">
           <Key>
@@ -708,25 +699,13 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <PropertyRef Name="attachment_name" />
           </Key>
           <Property Name="attachment_id" Type="int" Nullable="false" />
-          <Property Name="attachment_name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="attachment_name" Type="nvarchar" MaxLength="2000" Nullable="false" />
           <Property Name="attachment_description" Type="nvarchar" MaxLength="2000" />
           <Property Name="attachment_foreing_producer" Type="int" />
-          <Property Name="attachment_section" Type="nvarchar" MaxLength="255" />
+          <Property Name="attachment_section" Type="nvarchar" MaxLength="2000" />
           <Property Name="attachment_format" Type="nvarchar" MaxLength="255" />
           <Property Name="attachment_order" Type="int" />
         </EntityType>
-        <Association Name="FK_adjunto_projecto_project">
-          <End Role="project" Type="Self.project" Multiplicity="0..1" />
-          <End Role="adjunto_projecto" Type="Self.adjunto_projecto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="adjunto_projecto">
-              <PropertyRef Name="project_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_especialidad_cargo_position">
           <End Role="position" Type="Self.position" Multiplicity="0..1" />
           <End Role="especialidad_cargo" Type="Self.especialidad_cargo" Multiplicity="*" />
@@ -871,18 +850,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_project_attachment_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="project_attachment" Type="Self.project_attachment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_attachment">
-              <PropertyRef Name="project_attachment_project_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_project_firma_tramite">
           <End Role="firma_tramite" Type="Self.firma_tramite" Multiplicity="0..1" />
           <End Role="project" Type="Self.project" Multiplicity="*" />
@@ -904,18 +871,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Principal>
             <Dependent Role="project_format">
               <PropertyRef Name="format_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_format_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="project_format" Type="Self.project_format" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_format">
-              <PropertyRef Name="project_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -979,18 +934,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_project_producer_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="project_producer" Type="Self.project_producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_producer">
-              <PropertyRef Name="project_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_project_production_type">
           <End Role="production_type" Type="Self.production_type" Multiplicity="0..1" />
           <End Role="project" Type="Self.project" Multiplicity="*" />
@@ -1000,18 +943,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Principal>
             <Dependent Role="project">
               <PropertyRef Name="production_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_responsable_project">
-          <End Role="project" Type="Self.project" Multiplicity="0..1" />
-          <End Role="project_responsable" Type="Self.project_responsable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_responsable">
-              <PropertyRef Name="project_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1036,30 +967,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             </Principal>
             <Dependent Role="project_staff">
               <PropertyRef Name="project_staff_position_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_staff_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="project_staff" Type="Self.project_staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_staff">
-              <PropertyRef Name="project_staff_project_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_status_project">
-          <End Role="project" Type="Self.project" Multiplicity="1" />
-          <End Role="project_status" Type="Self.project_status" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_status">
-              <PropertyRef Name="project_status_project_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1242,7 +1149,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <EntitySet Name="staff_option" EntityType="Self.staff_option" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staff_option_detail" EntityType="Self.staff_option_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tipo_estimulo" EntityType="Self.tipo_estimulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tooltip" EntityType="Self.tooltip" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
@@ -1270,10 +1176,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
     [attachment_view].[attachment_order] AS [attachment_order]
     FROM [dbo].[attachment_view] AS [attachment_view]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_adjunto_projecto_project" Association="Self.FK_adjunto_projecto_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="adjunto_projecto" EntitySet="adjunto_projecto" />
-          </AssociationSet>
           <AssociationSet Name="FK_especialidad_cargo_position" Association="Self.FK_especialidad_cargo_position">
             <End Role="position" EntitySet="position" />
             <End Role="especialidad_cargo" EntitySet="especialidad_cargo" />
@@ -1322,20 +1224,12 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <End Role="attachment" EntitySet="attachment" />
             <End Role="project_attachment" EntitySet="project_attachment" />
           </AssociationSet>
-          <AssociationSet Name="FK_project_attachment_project" Association="Self.FK_project_attachment_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_attachment" EntitySet="project_attachment" />
-          </AssociationSet>
           <AssociationSet Name="FK_project_firma_tramite" Association="Self.FK_project_firma_tramite">
             <End Role="firma_tramite" EntitySet="firma_tramite" />
             <End Role="project" EntitySet="project" />
           </AssociationSet>
           <AssociationSet Name="FK_project_format_format" Association="Self.FK_project_format_format">
             <End Role="format" EntitySet="format" />
-            <End Role="project_format" EntitySet="project_format" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_format_project" Association="Self.FK_project_format_project">
-            <End Role="project" EntitySet="project" />
             <End Role="project_format" EntitySet="project_format" />
           </AssociationSet>
           <AssociationSet Name="FK_project_genre" Association="Self.FK_project_genre">
@@ -1358,17 +1252,9 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <End Role="producer" EntitySet="producer" />
             <End Role="project_producer" EntitySet="project_producer" />
           </AssociationSet>
-          <AssociationSet Name="FK_project_producer_project" Association="Self.FK_project_producer_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_producer" EntitySet="project_producer" />
-          </AssociationSet>
           <AssociationSet Name="FK_project_production_type" Association="Self.FK_project_production_type">
             <End Role="production_type" EntitySet="production_type" />
             <End Role="project" EntitySet="project" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_responsable_project" Association="Self.FK_project_responsable_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_responsable" EntitySet="project_responsable" />
           </AssociationSet>
           <AssociationSet Name="FK_project_staff_option" Association="Self.FK_project_staff_option">
             <End Role="staff_option" EntitySet="staff_option" />
@@ -1377,14 +1263,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <AssociationSet Name="FK_project_staff_position" Association="Self.FK_project_staff_position">
             <End Role="position" EntitySet="position" />
             <End Role="project_staff" EntitySet="project_staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_staff_project" Association="Self.FK_project_staff_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_staff" EntitySet="project_staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_status_project" Association="Self.FK_project_status_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_status" EntitySet="project_status" />
           </AssociationSet>
           <AssociationSet Name="FK_project_status_section" Association="Self.FK_project_status_section">
             <End Role="section" EntitySet="section" />
@@ -1897,10 +1775,10 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
             <PropertyRef Name="attachment_name" />
           </Key>
           <Property Name="attachment_id" Type="Int32" Nullable="false" />
-          <Property Name="attachment_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="attachment_name" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="attachment_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="attachment_foreing_producer" Type="Int32" />
-          <Property Name="attachment_section" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="attachment_section" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="attachment_format" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="attachment_order" Type="Int32" />
         </EntityType>
@@ -2909,6 +2787,7 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <Property Name="FECHA_ASIGNACION" Type="DateTime" Precision="3" />
           <NavigationProperty Name="project" Relationship="cineModel.FK_project_usuario" FromRole="usuario" ToRole="project" />
           <NavigationProperty Name="role_assignment" Relationship="cineModel.FK_role_assignment_usuario" FromRole="usuario" ToRole="role_assignment" />
+          <Property Name="es_asignacion_automatica" Type="Boolean" />
         </EntityType>
         <Association Name="FK_project_usuario">
           <End Type="cineModel.usuario" Role="usuario" Multiplicity="0..1" />
@@ -3346,17 +3225,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="cineModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tooltip">
             <EntityTypeMapping TypeName="cineModel.tooltip">
               <MappingFragment StoreEntitySet="tooltip">
@@ -3657,6 +3525,7 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="cineModel.usuario">
               <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="es_asignacion_automatica" ColumnName="es_asignacion_automatica" />
                 <ScalarProperty Name="FECHA_ASIGNACION" ColumnName="FECHA_ASIGNACION" />
                 <ScalarProperty Name="es_responsable" ColumnName="es_responsable" />
                 <ScalarProperty Name="telefono_movil" ColumnName="telefono_movil" />

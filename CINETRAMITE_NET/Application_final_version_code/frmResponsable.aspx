@@ -58,8 +58,7 @@
                         nombres +' ' + apellidos as nombre
                         from usuario
 						join role_assignment on role_assignment.idusuario=usuario.idusuario
-                        where es_responsable = 1
-						or role_assignment.role_id >1 and validacion = 1
+                        where es_responsable = 1 and activo = 1
                         order by nombres +' ' + apellidos
                     
                     "></asp:SqlDataSource>

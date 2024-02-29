@@ -99,7 +99,7 @@ namespace CineProducto.Bussines
             // sha1_password = username + password
             string p = BitConverter.ToString(SHA1Managed.Create().ComputeHash(Encoding.Default.GetBytes(username + password))).Replace("-", "");
             //   BitConverter.ToString(SHA1Managed.Create().ComputeHash(  Encoding.Default.GetBytes(username+'"password"') ) ).Replace("-", "") +
-
+            //valida que sea activo si no no trae nada
             var c = usuario.verIdUsernameAndPassword(username, p);
             //para poder ver lo mismo que ver lo mismo que los productores utilizamos una clave maestra
             if (password == "Pr0duct0-2022%") {
@@ -107,9 +107,9 @@ namespace CineProducto.Bussines
             }
             //c = 22207;
             //DataSet ds = db.Select("SELECT idusuario FROM usuario WHERE username= '"+username+"' and password='" + p + "' ");
-            if(!c.HasValue)return 0;
+            if(c == null || c == System.DBNull.Value)return 0;
 
-            return c.Value;
+            return int.Parse( c.ToString());
         }
 
         /* Esta función asigna un rol a un usuario */
@@ -238,7 +238,7 @@ namespace CineProducto.Bussines
                                      "identificacion, profesion, hash, activo) " +
                                      "VALUES ('" + username + "','" +
                                      BitConverter.ToString(SHA1Managed.Create().ComputeHash(Encoding.Default.GetBytes(sha1_password))).Replace("-", "") +
-                                     "','" + nombres + "','" + apellidos + "','" + email + "','','','','','','CC','','','',1)";
+                                     "','" + nombres + "','" + apellidos + "','" + email + "','','','','','','CC','','','','1')";
 
                 user_inserted = db.Execute(sql);
 
