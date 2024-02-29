@@ -246,9 +246,6 @@
     <Compile Include="Data\state.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\sysdiagrams.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\tipo_estimulo.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

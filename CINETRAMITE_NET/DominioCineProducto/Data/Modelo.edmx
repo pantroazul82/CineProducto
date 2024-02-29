@@ -1731,16 +1731,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <Property Name="state_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state_deleted" Type="Byte" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="tooltip">
           <Key>
             <PropertyRef Name="tooltip_id" />
@@ -1951,7 +1941,6 @@ warning 6002: The table/view 'cine.dbo.attachment_view' does not have a primary 
           <EntitySet Name="staff_option" EntityType="Self.staff_option" />
           <EntitySet Name="staff_option_detail" EntityType="Self.staff_option_detail" />
           <EntitySet Name="state" EntityType="Self.state" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tooltip" EntityType="Self.tooltip" />
           <EntitySet Name="ZONA_COLOMBIA" EntityType="Self.ZONA_COLOMBIA" />
           <EntitySet Name="attachment_validation" EntityType="Self.attachment_validation" />

@@ -61,7 +61,6 @@ namespace DominioCineProducto.Data
         public virtual DbSet<staff_option> staff_option { get; set; }
         public virtual DbSet<staff_option_detail> staff_option_detail { get; set; }
         public virtual DbSet<state> state { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tooltip> tooltip { get; set; }
         public virtual DbSet<ZONA_COLOMBIA> ZONA_COLOMBIA { get; set; }
         public virtual DbSet<attachment_validation> attachment_validation { get; set; }

@@ -41,7 +41,6 @@
         <EntityTypeShape EntityType="cineModel.staff_option" Width="1.5" PointX="6" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="cineModel.staff_option_detail" Width="1.5" PointX="11.25" PointY="25.875" IsExpanded="true" />
         <EntityTypeShape EntityType="cineModel.state" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="cineModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cineModel.tooltip" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cineModel.ZONA_COLOMBIA" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="cineModel.attachment_validation" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
