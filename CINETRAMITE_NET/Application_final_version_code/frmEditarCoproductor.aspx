@@ -569,7 +569,7 @@ project_attachment_attachment_id,
     project_attachment_approved
 FROM project_attachment 
 left join attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
-WHERE project_attachment_producer_id=@IdProductorAdjuntos">
+WHERE project_attachment_producer_id=@IdProductorAdjuntos order by 1 desc">
                                     <SelectParameters>
                                         <asp:ControlParameter ControlID="lblIdProducer" DefaultValue="0" Name="IdProductorAdjuntos" PropertyName="Text" />
                                     </SelectParameters>
