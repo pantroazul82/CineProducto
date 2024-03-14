@@ -227,6 +227,7 @@
                                                     </td>
                                                     <td class="value">
                                                         <dx:ASPxLabel ID="ASPxLabel12" runat="server" Text='<%# Eval("producer_website") %>' />
+                                                        
                                                     </td>
                                                 </tr>
                                                
@@ -255,9 +256,21 @@ else producer.producer_identification_number end as Identificacion,
 producer.producer_phone as Telefono, 
 producer.producer_movil,
 producer.producer_email as Email,
-case when producer.producer_type_id=1  then 'Colombia' else producer_country end as Pais_origen,
+case
+when producer.producer_type_id=1  then 'Colombia' 
+when (producer_country is not null and producer_country !='') then producer_country
+else PRODUCTOR_PAIS_CONTACTO
+end as Pais_origen,
+
 case when producer.producer_type_id=1  then l2.localization_name else 'NA' end as Departamento_Origen,
-case when producer.producer_type_id=1  then localization.localization_name else producer_city end as Ciudad_Origen,
+
+
+
+case when producer.producer_type_id=1  then localization.localization_name 
+when (producer_city is not null and producer_city !='') then producer_city
+else PRODUCTOR_CIUDAD_CONTACTO
+end as Ciudad_Origen,
+
 producer_website,
 producer.fecha_nacimiento,
 etnia.nombre as etnia,

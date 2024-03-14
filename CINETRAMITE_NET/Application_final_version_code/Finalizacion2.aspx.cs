@@ -3459,10 +3459,14 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                                     {
                                         ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number));
                                     }
-                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))){ Colspan = 2 });
+                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))) { Colspan = 2 });
                                 }
-
-                                tP2.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
+                                string ps = unProjectProducer.producer.producer_country;
+                                if (ps == null || ps.Trim() == string.Empty)
+                                {
+                                    ps = unProjectProducer.producer.PRODUCTOR_PAIS_CONTACTO;
+                                }
+                                tP2.AddCell(new PdfPCell(new Paragraph(ps)) { Colspan = 2 });
 
                                 //var phraseProductor = new Phrase();
                                 //phraseProductor.Add(unProjectProducer.producer.producer_firstname+" " +unProjectProducer.producer.producer_lastname + ", C.C. " + unProjectProducer.producer.producer_identification_number + " ("+unProjectProducer.producer.producer_type.producer_type_name+")");
@@ -3496,7 +3500,12 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                                 if (unProjectProducer.producer.producer_type_id == 2)
                                 {
                                     //tP2.AddCell(new PdfPCell(new Paragraph("" + nitCompleto)));
-                                    tP2.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
+                                    string ps = unProjectProducer.producer.producer_country;
+                                    if (ps == null || ps.Trim() == string.Empty)
+                                    {
+                                        ps = unProjectProducer.producer.PRODUCTOR_PAIS_CONTACTO;
+                                    }
+                                    tP2.AddCell(new PdfPCell(new Paragraph(ps)) { Colspan = 2 });
                                 }
                                 else
                                 {

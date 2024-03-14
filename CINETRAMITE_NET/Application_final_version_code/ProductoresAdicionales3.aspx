@@ -995,7 +995,7 @@ where producer.producer_type_id=1 and project.project_id =@Id_project and projec
             </Columns>
     </dx:ASPxGridView>        
         <asp:SqlDataSource ID="SqlDSExt" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="
-select 
+select TOP 1
             project_producer.project_producer_id,
             project_producer.producer_id,
 person_type.person_type_name as Tipo_Persona,
@@ -1007,8 +1007,20 @@ producer.producer_nit
 else producer.producer_identification_number end as Identificacion,
 producer.producer_phone as Telefono, 
 producer.producer_email as Email,
-producer_country as Pais_origen,
-producer_city as Ciudad_Origen,
+            case
+when producer.producer_type_id=1  then 'Colombia' 
+when (producer_country is not null and producer_country !='') then producer_country
+else PRODUCTOR_PAIS_CONTACTO
+end as Pais_origen,
+
+
+case when producer.producer_type_id=1  then localization.localization_name 
+when (producer_city is not null and producer_city !='') then producer_city
+else PRODUCTOR_CIUDAD_CONTACTO
+end as Ciudad_Origen,
+
+
+
 producer_website,
 producer.fecha_nacimiento,
 etnia.nombre as etnia,
@@ -1023,6 +1035,7 @@ left join person_type on person_type.person_type_id = producer.person_type_id
 left join etnia on etnia.id_etnia=producer.id_etnia
 left join genero on genero.id_genero=producer.id_genero
 left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
+left join localization on producer.producer_localization_id=localization.localization_id
 where producer.producer_type_id=2 and project.project_id = @pIdProjectExtran and project_producer.project_producer_requester=0">
             <SelectParameters>
                 <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="pIdProjectExtran" PropertyName="Text" />
