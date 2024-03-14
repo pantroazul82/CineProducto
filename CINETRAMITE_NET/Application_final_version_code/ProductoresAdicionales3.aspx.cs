@@ -1996,6 +1996,7 @@ namespace CineProducto
         protected void grdProdExt_BeforePerformDataSelect(object sender, EventArgs e)
         {
             //IdCoproductor = Convert.ToInt32((sender as ASPxGridView).GetMasterRowKeyValue());
+            //cg
         }
 
         protected void grdProdNal_RowCommand(object sender, ASPxGridViewRowCommandEventArgs e)

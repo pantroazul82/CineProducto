@@ -20,17 +20,12 @@ namespace CineProducto
             
             NegocioCineProducto neg = new NegocioCineProducto();            
             project_producer pp = neg.getProjectProducerById(int.Parse(lblViewProductorSeleccionado.Text));
-
-            lblIdProducer.Text = pp.producer_id.ToString();
-
-            
+            lblIdProducer.Text = pp.producer_id.ToString();            
             User userObj = new User();
             userObj.user_id = Convert.ToInt32(Session["user_id"]);
             this.user_role = userObj.GetUserRole(userObj.user_id);
-            
-            
-
         }
+
         protected void checkAdjunto_Click(object sender, EventArgs e)
         {
             LinkButton b = (LinkButton)sender;
