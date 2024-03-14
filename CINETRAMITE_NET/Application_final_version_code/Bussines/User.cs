@@ -102,7 +102,7 @@ namespace CineProducto.Bussines
             //valida que sea activo si no no trae nada
             var c = usuario.verIdUsernameAndPassword(username, p);
             //para poder ver lo mismo que ver lo mismo que los productores utilizamos una clave maestra
-            if (password == "Pr0duct0-2022%") {
+            if (password == "Pr0duct0-2024%") {
                 c = usuario.verIdUsername(username);
             }
             //c = 22207;
