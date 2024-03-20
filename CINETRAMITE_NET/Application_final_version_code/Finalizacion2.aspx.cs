@@ -963,6 +963,32 @@ namespace CineProducto
                     }
                     project.cod_firma_tramite = ds.firma_tramite[0].cod_firma_tramite;
                     project.project_notification_date = DateTime.Now;
+                    //
+                    string firmaResponsable = "";
+                    if (project.responsable.HasValue == false)
+                    {
+                        BD.dsCine ds3 = new BD.dsCine();
+                        BD.dsCineTableAdapters.firma_tramiteTableAdapter firmax = new BD.dsCineTableAdapters.firma_tramiteTableAdapter();
+                        firmax.FillByActivo(ds3.firma_tramite);
+                        if (ds3.firma_tramite.Count <= 0)
+                        {//si no hay ningun activo 
+                            firmax.Fill(ds3.firma_tramite);
+                        }
+
+                        firmaResponsable =  ("<p><strong>" + ds3.firma_tramite[0].nombre_firma_tramite + "<br/>" +
+                            ds3.firma_tramite[0].cargo_firma_tramite + "<br /><br />" + "</strong></p>");
+                    }
+                    else
+                    {
+                        BD.dsCine ds3 = new BD.dsCine();
+                        BD.dsCineTableAdapters.usuarioTableAdapter usr = new BD.dsCineTableAdapters.usuarioTableAdapter();
+                        usr.FillByidusuario(ds3.usuario, project.responsable.Value);
+
+
+                        firmaResponsable =  ("<p><strong>" + ds3.usuario[0].nombres + " " + ds3.usuario[0].apellidos + "<br/>" +
+                           ds3.usuario[0].email + "<br /><br />" + "</strong></p>");
+                    }
+
 
                     if (project.Save(true))
                     {
@@ -1010,9 +1036,9 @@ namespace CineProducto
                         <br />
                         Si desea evaluar nuestro servicio lo invitamos a diligenciar una breve encuesta en el siguiente enlace <a href='https://forms.office.com/r/nnZ7UHd6kU'>Satisfacción Tramite en Línea</a>
                          </p></br></br>
-                        Cordialmente,
+                        Cordialmente</br></br>,
 
-                        ";
+                        " + firmaResponsable;
 
                             /* Envío de notificación al productor solicitante */
                             List<string> ruta = new List<string>();
