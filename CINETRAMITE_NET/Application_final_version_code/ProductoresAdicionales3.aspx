@@ -894,7 +894,8 @@
     </dx:ASPxGridView>
         
         
-        <asp:SqlDataSource ID="SqlDSProdNal" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select 
+        <asp:SqlDataSource ID="SqlDSProdNal" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" 
+            SelectCommand="select 
             project_producer.project_producer_id,
 producer.producer_id,
 person_type.person_type_name as Tipo_Persona,
@@ -906,14 +907,28 @@ producer.producer_nit
 else producer.producer_identification_number end as Identificacion,
 producer.producer_phone as Telefono, 
 producer.producer_email as Email,
-localization.localization_name as Municipio_Origen,
+
+
+case
+when producer.producer_type_id=1 AND (localization.localization_name IS NOT NULL AND localization.localization_name !='')  then localization.localization_name 
+when producer.producer_type_id=1 AND (localization3.localization_name IS NOT NULL AND localization3.localization_name !='')  then localization3.localization_name 
+when (producer_city is not null and producer_city !='') then producer_city
+else PRODUCTOR_CIUDAD_CONTACTO
+end as Municipio_Origen,
+CASE
+when producer.producer_type_id=1 AND (localization2.localization_name IS NOT NULL AND localization2.localization_name !='')  then localization2.localization_name 
+when producer.producer_type_id=1 AND (localization4.localization_name IS NOT NULL AND localization4.localization_name !='')  then localization4.localization_name 
+when (producer_city is not null and producer_city !='') then producer_city
+else ''
+end as Departamento_Origen,   
+
+
 producer_website,
 producer.fecha_nacimiento,
 etnia.nombre as etnia,
 genero.nombre as genero,
 grupo_poblacional.nombre as Grupo_Poblacional,
-project_producer.project_producer_participation_percentage as porcentaje,
-            localization2.localization_name as Departamento_Origen
+project_producer.project_producer_participation_percentage as porcentaje
 from project_producer 
 left join producer on producer.producer_id = project_producer.producer_id
 left join project on project.project_id = project_producer.project_id
@@ -921,10 +936,16 @@ left join state on project.state_id = state.state_id
 left join person_type on person_type.person_type_id = producer.person_type_id
 left join localization on producer.producer_localization_id=localization.localization_id
             left join localization localization2 on localization2.localization_id=localization.localization_father_id
+
+left join localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
+            left join localization localization4 on localization4.localization_id=localization3.localization_father_id
+
+
 left join etnia on etnia.id_etnia=producer.id_etnia
 left join genero on genero.id_genero=producer.id_genero
 left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
-where producer.producer_type_id=1 and project.project_id =@Id_project and project_producer.project_producer_requester=0">
+where producer.producer_type_id=1 and project.project_id =@Id_project and
+            project_producer.project_producer_requester=0">
             <SelectParameters>
                 <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="Id_project" PropertyName="Text" />
             </SelectParameters>
