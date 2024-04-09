@@ -17,8 +17,7 @@ namespace CineProducto
         protected void Page_Load(object sender, EventArgs e)
         {
             lblViewProductorSeleccionado.Text = Request.QueryString["project_producer_id"];
-            
-            NegocioCineProducto neg = new NegocioCineProducto();            
+                        NegocioCineProducto neg = new NegocioCineProducto();            
             project_producer pp = neg.getProjectProducerById(int.Parse(lblViewProductorSeleccionado.Text));
             lblIdProducer.Text = pp.producer_id.ToString();            
             User userObj = new User();
