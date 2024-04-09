@@ -10,7 +10,6 @@
 namespace CineProducto
 {
 
-
     public partial class frmVerCoproductor
     {
 
