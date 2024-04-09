@@ -2003,8 +2003,7 @@ namespace CineProducto
         {
 
         }
-
-        public void llenarGrillas()
+                public void llenarGrillas()
         {
             grdProdExt.DataBind();
             grdProdNal.DataBind();
