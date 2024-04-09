@@ -262,11 +262,16 @@ when (producer_country is not null and producer_country !='') then producer_coun
 else PRODUCTOR_PAIS_CONTACTO
 end as Pais_origen,
 
-case when producer.producer_type_id=1  then l2.localization_name else 'NA' end as Departamento_Origen,
+CASE
+when producer.producer_type_id=1 AND (localization2.localization_name IS NOT NULL AND localization2.localization_name !='')  then localization2.localization_name 
+when producer.producer_type_id=1 AND (localization4.localization_name IS NOT NULL AND localization4.localization_name !='')  then localization4.localization_name 
+when (producer_city is not null and producer_city !='') then producer_city
+else ''
+end as Departamento_Origen,   
 
-
-
-case when producer.producer_type_id=1  then localization.localization_name 
+case
+when producer.producer_type_id=1 AND (localization.localization_name IS NOT NULL AND localization.localization_name !='')  then localization.localization_name 
+when producer.producer_type_id=1 AND (localization3.localization_name IS NOT NULL AND localization3.localization_name !='')  then localization3.localization_name 
 when (producer_city is not null and producer_city !='') then producer_city
 else PRODUCTOR_CIUDAD_CONTACTO
 end as Ciudad_Origen,
@@ -293,7 +298,11 @@ left join etnia on etnia.id_etnia=producer.id_etnia
 left join genero on genero.id_genero=producer.id_genero
 left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
 left join localization on producer.producer_localization_id=localization.localization_id
-left join localization l2 on l2.localization_id=localization.localization_father_id
+left join localization localization2 on localization2.localization_id=localization.localization_father_id
+left join localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
+            left join localization localization4 on localization4.localization_id=localization3.localization_father_id
+
+
 left join producer_company_type on producer_company_type.producer_company_type_id=producer.producer_company_type_id
 left join identification_type on identification_type.identification_type_id=producer.identification_type_id
 where project_producer.project_producer_id=@producer_id_view">
