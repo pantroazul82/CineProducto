@@ -352,8 +352,8 @@ namespace CineProducto
                 filtroRol = "(p.project_idusuario = '" + Session["user_id"] + "') and ";
                 grdDevDatos.Columns[1].Visible = false;
                 grdDevDatos.Columns[2].Visible = false;
-                grdDevDatos.Columns[12].Visible = false;//responsable
-                grdDevDatos.Columns[13].Visible = false;//fecha limite
+                grdDevDatos.Columns[11].Visible = false;//responsable
+                grdDevDatos.Columns[12].Visible = false;//fecha limite
 
             }
             else {
