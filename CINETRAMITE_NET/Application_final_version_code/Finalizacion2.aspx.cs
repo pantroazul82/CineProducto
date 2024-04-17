@@ -352,7 +352,13 @@ namespace CineProducto
                 List<project_status> registros = neg.getProjectStatusByProject(myProject.project_id);
                 //this.pasar_solicitud_a_editor_permission
                 this.bloquearSiguientePasoFlujo = false;
-                if ( this.user_role > 1 && myProject.state_id >= 2 && myProject.state_id < 5 && isPendienteRevision(registros, int.Parse(myProject.project_domestic_producer_qty.ToString()) + int.Parse(myProject.project_foreign_producer_qty.ToString()) )) 
+                int cantidadProductores = int.Parse(myProject.project_domestic_producer_qty.ToString());
+                if(myProject.production_type_id==2)//si es coproduccion sume mas
+                {
+                    cantidadProductores += int.Parse(myProject.project_foreign_producer_qty.ToString());
+                }
+                if ( this.user_role > 1 && myProject.state_id >= 2 && myProject.state_id < 5 && isPendienteRevision(registros,
+                    cantidadProductores)) 
                 {
                     lblValPasarEditor.Text = "Debe revisar todas las secciones antes de poder enviar a editor";
                     lblValPasarEditor2.Text = "Debe revisar todas las secciones antes de poder enviar a editor";
