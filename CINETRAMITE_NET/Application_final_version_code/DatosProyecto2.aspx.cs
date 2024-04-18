@@ -480,6 +480,7 @@ namespace CineProducto
                 {
                     project.municipio_lab = Request.Form["selectedMunicipio"];
                 }
+                project.municipio_lab_otro = txtMunicipioOtro.Text;
                 project.nombre_lab = txtNombreLabRev.Value;
                 project.otros_idiomas = txtOtrosIdiomas.Value;
                 
