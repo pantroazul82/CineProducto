@@ -1050,7 +1050,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             else
                             {
                                 string nitCompleto = "";
-                                if (unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
+                                if (unProjectProducer.producer.producer_type_id != 2 && unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
                                 {
                                     nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit.Replace(",", ".")));
                                     nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();
