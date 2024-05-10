@@ -272,17 +272,28 @@ namespace CineProducto
                 res = res + "<br><br><p style='text-align:justify;'>" + letter.letter_prefirma.Replace("\r\n","<br>")+"</p>";
                 res = res + "<br><br>" + letter.letter_message.Replace("\r\n", "<br>");
 
+                if (project.responsable.HasValue == false)
+                {
+                    BD.dsCine ds = new BD.dsCine();
+                    BD.dsCineTableAdapters.firma_tramiteTableAdapter firma = new BD.dsCineTableAdapters.firma_tramiteTableAdapter();
+                    firma.FillByActivo(ds.firma_tramite);
+                    if (ds.firma_tramite.Count <= 0)
+                    {//si no hay ningun activo 
+                        firma.Fill(ds.firma_tramite);
+                    }
 
-                BD.dsCine ds = new BD.dsCine();
-                BD.dsCineTableAdapters.firma_tramiteTableAdapter firma = new BD.dsCineTableAdapters.firma_tramiteTableAdapter();
-                firma.FillByActivo(ds.firma_tramite);
-                if (ds.firma_tramite.Count <= 0)
-                {//si no hay ningun activo 
-                    firma.Fill(ds.firma_tramite);
+                    res = res + ("<p><strong>" + ds.firma_tramite[0].nombre_firma_tramite + "<br/>" +
+                        ds.firma_tramite[0].cargo_firma_tramite + "<br /><br />" + "</strong></p>");
                 }
+                else {
+                    BD.dsCine ds = new BD.dsCine();
+                    BD.dsCineTableAdapters.usuarioTableAdapter usr = new BD.dsCineTableAdapters.usuarioTableAdapter();
+                    usr.FillByidusuario(ds.usuario,project.responsable.Value);
+                  
 
-                res = res + ("<p><strong>" + ds.firma_tramite[0].nombre_firma_tramite + "<br/>" +
-                    ds.firma_tramite[0].cargo_firma_tramite + "<br /><br />" + "</strong></p>");
+                    res = res + ("<p><strong>" + ds.usuario[0].nombres+" "+ ds.usuario[0].apellidos +  "<br/>" +
+                       ds.usuario[0].email + "<br /><br />" + "</strong></p>");
+                }
 
                 if (letter.letter_note.Trim() != string.Empty)
                 {

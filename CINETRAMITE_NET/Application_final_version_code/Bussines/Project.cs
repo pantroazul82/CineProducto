@@ -91,6 +91,7 @@ namespace CineProducto.Bussines
         public DateTime? fecha_notificacion_certificado;
         public string observaciones_visualizacion_por_productor;
         public int? cod_idioma;
+        public int? responsable;
         public string complemento_carta_aclaraciones;
         public int? cod_firma_tramite;
         public int version;
@@ -188,7 +189,7 @@ namespace CineProducto.Bussines
                                  + "state_id,"
                                  + "project_percentage ,"
                                  + "project_personal_type,formulario_aprobado_pronda,formulario_aprobado_sronda,aprueba_visualizacion_proyecto_pronda,aprueba_visualizacion_proyecto_sronda,titulo_provisional, observaciones_visualizacion_por_productor, "
-                                 + "cod_idioma ,complemento_carta_aclaraciones,cod_firma_tramite"
+                                 + "cod_idioma,responsable ,complemento_carta_aclaraciones,cod_firma_tramite"
                                  + ",tiene_premio,premio,fecha_revisor_editor,fecha_editor_director,fecha_revisor_editor2,fecha_editor_director2,fecha_cancelacion,sustituto_carta_aclaracion "
                                  + ",obs_adicional_obra,obs_adicional_productor,obs_adicional_otros_prd,obs_adicional_personal,obs_adicional_finalizacion,carta_aclaraciones_generada,version "
                                  + ",pagina_web,pagina_facebook, tiene_reconocimiento,ano_resolucion,num_resolucion,tiene_estimulos,fdc,fdc_especificacion,ibermedia,otros_estimulos,ibermedia_especificacion,"
@@ -270,6 +271,7 @@ namespace CineProducto.Bussines
                 this.project_percentage = ds.Tables[0].Rows[0]["project_percentage"].ToString() != "" ? (decimal)ds.Tables[0].Rows[0]["project_percentage"] : 0;
                 this.project_personal_type = ds.Tables[0].Rows[0]["project_personal_type"].ToString() != "" ? (int)ds.Tables[0].Rows[0]["project_personal_type"] : 0;
                 this.cod_idioma = (ds.Tables[0].Rows[0]["cod_idioma"] != System.DBNull.Value &&  ds.Tables[0].Rows[0]["cod_idioma"].ToString() != "") ? (int)ds.Tables[0].Rows[0]["cod_idioma"] : 0;
+                this.responsable = (ds.Tables[0].Rows[0]["responsable"] != System.DBNull.Value && ds.Tables[0].Rows[0]["responsable"].ToString() != "") ? (int?)ds.Tables[0].Rows[0]["responsable"] : (int?)null;
                 this.complemento_carta_aclaraciones = (ds.Tables[0].Rows[0]["complemento_carta_aclaraciones"] != System.DBNull.Value && ds.Tables[0].Rows[0]["complemento_carta_aclaraciones"].ToString() != "") ? ds.Tables[0].Rows[0]["complemento_carta_aclaraciones"].ToString() : "";
 
                 this.cod_firma_tramite = (ds.Tables[0].Rows[0]["cod_firma_tramite"] != System.DBNull.Value && ds.Tables[0].Rows[0]["cod_firma_tramite"].ToString() != "") ? (int)ds.Tables[0].Rows[0]["cod_firma_tramite"] : (0);
@@ -478,6 +480,7 @@ namespace CineProducto.Bussines
                 string project_has_domestic_director = (this.project_has_domestic_director == -1) ? "null" : "'" + this.project_has_domestic_director + "'";
                 string project_staff_option_id = (this.project_staff_option_id == 0) ? "null" : "'" + this.project_staff_option_id + "'";
                 string str_cod_idioma = (this.cod_idioma == 0) ? "null" : "'" + this.cod_idioma + "'";
+                string str_responsable = (this.responsable == null) ? "null" : "'" + this.responsable + "'";
 
 
                 string str_cod_firma = (this.cod_firma_tramite == 0) ? "null" : "'" + this.cod_firma_tramite + "'";
@@ -560,6 +563,7 @@ namespace CineProducto.Bussines
                 updateProject = updateProject + "project_personal_type = " + this.project_personal_type + ", ";                
                 updateProject = updateProject + "cod_firma_tramite = " + str_cod_firma + ", ";
                 updateProject = updateProject + "cod_idioma = " + str_cod_idioma + ", ";
+                updateProject = updateProject + "responsable = " + str_responsable + ", ";
                 updateProject = updateProject + "complemento_carta_aclaraciones = '" + complemento_carta_aclaraciones.Replace("'", "´") + "', ";
 
                 //if (this.state_id == 2 )//esta enviandola radicandola o enviando aclaraciones
