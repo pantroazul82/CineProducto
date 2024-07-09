@@ -44,7 +44,7 @@ namespace CineProducto.Bussines
                                  + "project_optional_staff_contract_attachment, project_optional_staff_position_id, "
                                  + "project_optional_staff_identification_approved, project_optional_staff_cv_approved, "
                                  + "project_optional_staff_contract_approved "
-                                 + "FROM project_optional_staff WHERE project_optional_staff_id=" + project_optional_staff_id.ToString());
+                                 + "FROM dboPrd.project_optional_staff WHERE project_optional_staff_id=" + project_optional_staff_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.project_optional_staff_id = (int)ds.Tables[0].Rows[0]["project_optional_staff_id"];
@@ -72,7 +72,7 @@ namespace CineProducto.Bussines
             if (this.project_optional_staff_id.ToString() != "" && this.project_optional_staff_id > 0)
             {
                 /* Creación de la sentencia de actualizacion */
-                string updateProjectOptionalStaff = "UPDATE project_optional_staff SET ";
+                string updateProjectOptionalStaff = "UPDATE dboPrd.project_optional_staff SET ";
 
                 updateProjectOptionalStaff = updateProjectOptionalStaff + "project_optional_staff_project_id = '" + this.project_optional_staff_project_id + "', ";
                 updateProjectOptionalStaff = updateProjectOptionalStaff + "project_optional_staff_firstname = '" + this.project_optional_staff_firstname + "', ";
@@ -102,7 +102,7 @@ namespace CineProducto.Bussines
             else 
             {
                 /* Creación de la sentencia de actualizacion */
-                string insertProjectOptionalStaff = "INSERT INTO project_optional_staff ("
+                string insertProjectOptionalStaff = "INSERT INTO dboPrd.project_optional_staff ("
                                      + "project_optional_staff_project_id, "
                                      + "project_optional_staff_firstname, "
                                      + "project_optional_staff_lastname, "
@@ -133,7 +133,7 @@ namespace CineProducto.Bussines
                 /* Si se actualizó correctamente la tabla del productor */
                 if (db.Execute(insertProjectOptionalStaff))
                 {
-                    string queryProjectStaffId = "SELECT MAX(project_optional_staff_id) as project_optional_staff_id FROM project_optional_staff";
+                    string queryProjectStaffId = "SELECT MAX(project_optional_staff_id) as project_optional_staff_id FROM dboPrd.project_optional_staff";
                     DataSet newStaffDS = db.Select(queryProjectStaffId);
                     if (newStaffDS.Tables[0].Rows.Count == 1)
                     {

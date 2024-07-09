@@ -53,7 +53,7 @@ namespace CineProducto.Bussines
                 this.username = username;
 
                 
-                System.Data.DataSet ds = db.Select("select nombres,apellidos,email from usuario where idusuario=" + user_id);
+                System.Data.DataSet ds = db.Select("select nombres,apellidos,email from dboPrd.usuario where idusuario=" + user_id);
                 if (ds.Tables[0].Rows.Count == 1)
                 {
                     this.firstname = ds.Tables[0].Rows[0]["nombres"].ToString();
@@ -79,7 +79,7 @@ namespace CineProducto.Bussines
                 this.username = username;
 
                 DB db = new DB();
-                DataSet ds = db.Select("select nombres,apellidos,email from usuario where idusuario=" + user_id);
+                DataSet ds = db.Select("select nombres,apellidos,email from dboPrd.usuario where idusuario=" + user_id);
                 if (ds.Tables[0].Rows.Count == 1)
                 {
                     this.firstname = ds.Tables[0].Rows[0]["nombres"].ToString();
@@ -120,7 +120,7 @@ namespace CineProducto.Bussines
             // sha1_password = username + password
             string p=BitConverter.ToString( SHA1Managed.Create().ComputeHash( Encoding.Default.GetBytes(username+password) ) ).Replace("-", "");
             //   BitConverter.ToString(SHA1Managed.Create().ComputeHash(  Encoding.Default.GetBytes(username+'"password"') ) ).Replace("-", "") +
-            result = db.Execute("update usuario set password='"+p+"' where idusuario ='"+user_id+"'");
+            result = db.Execute("update dboPrd.usuario set password='" + p+"' where idusuario ='"+user_id+"'");
 
             return result;
         }
@@ -144,7 +144,7 @@ namespace CineProducto.Bussines
             {
                 DB db = new DB();
                 DataSet ds = db.Select("SELECT role_id "
-                                     + "FROM role_assignment  "
+                                     + "FROM dboPrd.role_assignment  "
                                      + "WHERE idusuario=" + this.user_id);
                 if (ds.Tables[0].Rows.Count == 1)
                 {
@@ -159,7 +159,7 @@ namespace CineProducto.Bussines
             int result = 0;
             DB db = new DB();
             DataSet ds = db.Select("SELECT role_id "
-                                    + "FROM role_assignment  "
+                                    + "FROM dboPrd.role_assignment  "
                                     + "WHERE idusuario=" + user_id);
             if (ds.Tables[0].Rows.Count == 1)
             {
@@ -174,7 +174,7 @@ namespace CineProducto.Bussines
         {
             bool result;
             DB db = new DB();
-            result = db.Execute("INSERT INTO role_assignment "
+            result = db.Execute("INSERT INTO dboPrd.role_assignment "
                         + "(role_id, idusuario, username)  "
                         + "VALUES ("+ role_id +","+ user_id +",'--------')");
 
@@ -186,7 +186,7 @@ namespace CineProducto.Bussines
         {
             bool result;
             DB db = new DB();
-            result = db.Execute("DELETE FROM role_assignment "
+            result = db.Execute("DELETE FROM dboPrd.role_assignment "
                         + "WHERE role_id = " + role_id + " AND idusuario = " + user_id);
 
             return result;
@@ -202,7 +202,7 @@ namespace CineProducto.Bussines
             {
                 DB db = new DB();
                 DataSet ds = db.Select("SELECT permission_name "
-                                     + "FROM permission, role_assignment, role_permission  "
+                                     + "FROM dboPrd.permission, dboPrd.role_assignment, dboPrd.role_permission  "
                                      + "WHERE permission_name ='" + permission_name + "' AND "
                                      + "permission.permission_id = role_permission.permission_id AND "
                                      + "role_permission.role_id = role_assignment.role_id AND "
@@ -233,7 +233,7 @@ namespace CineProducto.Bussines
                 //Ejecutamos el llamado a la base de datos
                 sha1_password = username + password;
                 //Buscamos la coincidencia con email y hash entregado
-                string sql =  "INSERT into usuario (username, password, nombres, apellidos, email, " +
+                string sql = "INSERT into dboPrd.usuario (username, password, nombres, apellidos, email, " +
                                      "telefono, direccion, ciudad, pais, cargo, tipoidentificacion, " +
                                      "identificacion, profesion, hash, activo) " +
                                      "VALUES ('" + username + "','" +

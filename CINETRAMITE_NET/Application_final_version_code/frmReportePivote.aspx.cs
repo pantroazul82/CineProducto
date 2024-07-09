@@ -181,24 +181,24 @@ person_type.person_type_name 'Tipo_persona_productor',
 [project_legal_deposit] Deposito_Legal,
 [project_percentage] Porcentaje_Colombiano,
 s.state_name Estado,
-case when p.state_id =12 or (p.state_id =10 and p.project_name in(select project_name from project where state_id>1 group by project_name having count(*)>1)) then 0 else 1 end cnt_sin_repeticion,
+case when p.state_id =12 or (p.state_id =10 and p.project_name in(select project_name from dboPrd.project where state_id>1 group by project_name having count(*)>1)) then 0 else 1 end cnt_sin_repeticion,
 
 ISNULL(resp.nombres,'') + ' ' + ISNULL(resp.apellidos,'') as responsable,
 p.fecha_limite
 
-from project p 
- left join resolution  r on r.project_id= p.project_id 
- left join state s on p.state_id = s.state_id 
- join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join producer_type on producer_type.producer_type_id = producer.producer_type_id
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join idioma on idioma.cod_idioma = p.cod_idioma
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_type on project_type.project_type_id = p.project_type_id
-left join usuario resp on p.responsable = resp.idusuario
+from dboPrd.project p 
+ left join dboPrd.resolution  r on r.project_id= p.project_id 
+ left join dboPrd.state s on p.state_id = s.state_id 
+ join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.producer_type on producer_type.producer_type_id = producer.producer_type_id
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.idioma on idioma.cod_idioma = p.cod_idioma
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
+left join dboPrd.usuario resp on p.responsable = resp.idusuario
 
 where p.state_id>1 and
 (" + filtro + @" (p.project_request_date is null " + filtroFecha + @")
@@ -269,7 +269,7 @@ where p.state_id>1 and
                         codigos = "1,2,3,4,5,6,7,8,9,10,12";
                     }
 
-                    cmbEstado.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                    cmbEstado.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                     cmbEstado.AppendDataBoundItems = true;
                     cmbEstado.DataValueField = "state_id";
                     cmbEstado.DataTextField = "state_name";

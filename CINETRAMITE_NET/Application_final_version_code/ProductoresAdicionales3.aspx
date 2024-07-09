@@ -557,7 +557,7 @@
                                     <asp:DropDownList ID="cmbGenero" runat="server" name="cmbGenero" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGenero" DataTextField="nombre" DataValueField="id_genero">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM [genero]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM dboPrd.[genero]"></asp:SqlDataSource>
                             
                                 </div>
                             </li>
@@ -580,7 +580,7 @@
                                     <asp:DropDownList ID="cmbGrupoPoblacional" runat="server" name="cmbGrupoPoblacional" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGrupoPoblacional" DataTextField="nombre" DataValueField="id_grupo_poblacional">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM [grupo_poblacional]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM dboPrd.[grupo_poblacional]"></asp:SqlDataSource>
                             
                                 </div>
                             </li>
@@ -595,7 +595,7 @@
                                      <asp:DropDownList ID="cmbEtnia" runat="server" name="cmbEtnia" AppendDataBoundItems="True" DataSourceID="SqlDataSourceEtnia" DataTextField="nombre" DataValueField="id_etnia">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM [etnia]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM dboPrd.[etnia]"></asp:SqlDataSource>
                               
                                     </div>
                             </li>
@@ -929,21 +929,21 @@ etnia.nombre as etnia,
 genero.nombre as genero,
 grupo_poblacional.nombre as Grupo_Poblacional,
 project_producer.project_producer_participation_percentage as porcentaje
-from project_producer 
-left join producer on producer.producer_id = project_producer.producer_id
-left join project on project.project_id = project_producer.project_id
-left join state on project.state_id = state.state_id 
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join localization on producer.producer_localization_id=localization.localization_id
-            left join localization localization2 on localization2.localization_id=localization.localization_father_id
+from dboPrd.project_producer 
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.project on project.project_id = project_producer.project_id
+left join dboPrd.state on project.state_id = state.state_id 
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.localization on producer.producer_localization_id=localization.localization_id
+            left join dboPrd.localization localization2 on localization2.localization_id=localization.localization_father_id
 
-left join localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
-            left join localization localization4 on localization4.localization_id=localization3.localization_father_id
+left join dboPrd.localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
+            left join dboPrd.localization localization4 on localization4.localization_id=localization3.localization_father_id
 
 
-left join etnia on etnia.id_etnia=producer.id_etnia
-left join genero on genero.id_genero=producer.id_genero
-left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
+left join dboPrd.etnia on etnia.id_etnia=producer.id_etnia
+left join dboPrd.genero on genero.id_genero=producer.id_genero
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
 where producer.producer_type_id=1 and project.project_id =@Id_project and
             project_producer.project_producer_requester=0">
             <SelectParameters>
@@ -1016,9 +1016,8 @@ where producer.producer_type_id=1 and project.project_id =@Id_project and
             </Columns>
     </dx:ASPxGridView>        
         <asp:SqlDataSource ID="SqlDSExt" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="
-select TOP 1
-            project_producer.project_producer_id,
-            project_producer.producer_id,
+select project_producer.project_producer_id,
+      project_producer.producer_id,
 person_type.person_type_name as Tipo_Persona,
 (case when producer.person_type_id =2 then 
 producer.producer_name 
@@ -1048,15 +1047,15 @@ etnia.nombre as etnia,
 genero.nombre as genero,
 grupo_poblacional.nombre as Grupo_Poblacional,
 project_producer.project_producer_participation_percentage as porcentaje
-from project_producer 
-left join producer on producer.producer_id = project_producer.producer_id
-left join project on project.project_id = project_producer.project_id
-left join state on project.state_id = state.state_id 
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join etnia on etnia.id_etnia=producer.id_etnia
-left join genero on genero.id_genero=producer.id_genero
-left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
-left join localization on producer.producer_localization_id=localization.localization_id
+from dboPrd.project_producer 
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.project on project.project_id = project_producer.project_id
+left join dboPrd.state on project.state_id = state.state_id 
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.etnia on etnia.id_etnia=producer.id_etnia
+left join dboPrd.genero on genero.id_genero=producer.id_genero
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
+left join dboPrd.localization on producer.producer_localization_id=localization.localization_id
 where producer.producer_type_id=2 and project.project_id = @pIdProjectExtran and project_producer.project_producer_requester=0">
             <SelectParameters>
                 <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="pIdProjectExtran" PropertyName="Text" />

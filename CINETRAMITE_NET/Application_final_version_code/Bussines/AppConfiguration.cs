@@ -30,7 +30,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT configuration_id, configuration_name, "
                                  + "configuration_description, configuration_value "
-                                 + "FROM configuration WHERE configuration_name = '" + this.name +"'");
+                                 + "FROM dboPrd.configuration WHERE configuration_name = '" + this.name +"'");
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.id = (int)ds.Tables[0].Rows[0]["configuration_id"];

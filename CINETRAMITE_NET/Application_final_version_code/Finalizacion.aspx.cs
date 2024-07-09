@@ -162,7 +162,7 @@ namespace CineProducto
             {
 
                 DataSet ds = db.Select("SELECT localization_name "
-                                     + "FROM localization "
+                                     + "FROM dboPrd.localization "
                                      + "WHERE localization_id ='" + municipio
                                      + "' OR localization_id = '" + departamento + "'");
                 if (ds.Tables[0].Rows.Count > 1)
@@ -1977,7 +1977,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 {
 
                     DataSet ds = db.Select("SELECT localization_name "
-                                         + "FROM localization "
+                                         + "FROM dboPrd.localization "
                                          + "WHERE localization_id =" + municipio
                                          + "OR localization_id = " + departamento);
                     if (ds.Tables[0].Rows.Count > 1)
@@ -2038,7 +2038,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         if (producer.producer_localization_id != "" && producer.producer_localization_father_id != "")
                         {
                             DataSet dss = db.Select("SELECT localization_name "
-                                         + "FROM localization "
+                                         + "FROM dboPrd.localization "
                                          + "WHERE localization_id =" + producer.producer_localization_id
                                          + "OR localization_id = " + producer.producer_localization_father_id);
                             if (dss.Tables[0].Rows.Count > 1)

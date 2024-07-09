@@ -29,7 +29,7 @@ namespace CineProducto.Bussines
             DataSet result = new DataSet();
             result = db.Select("select * from (  SELECT position_id, position_name, position_description "
                 + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                + " FROM position "
+                                + " FROM dboPrd.position "
                                 + " WHERE position_father_id = '0' AND "
                                 + " position_deleted='0' "
                                
@@ -58,7 +58,7 @@ namespace CineProducto.Bussines
                     "select * from ("+
                     "SELECT position_id, position_father_id, position_name, position_description "
                     + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                    + " FROM position "
+                                    + " FROM dboPrd.position "
                                     + " WHERE position_father_id = '" + position_id + "' AND "
                                     + " position_deleted='0'"
                                     + ") st where  "
@@ -94,7 +94,7 @@ namespace CineProducto.Bussines
                 "SELECT position_id, position_father_id, position_name, position_description "
                    + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
                  
-                                + " FROM position "
+                                + " FROM dboPrd.position "
                                 + " WHERE position_father_id = '0' AND "
                                 + " position_deleted='0'"
                               
@@ -117,15 +117,15 @@ namespace CineProducto.Bussines
         public void save() {
             DB db = new DB();
             DataSet ds = db.Select("SELECT position_id "
-                                 + "FROM position WHERE position_id="+this.position_id);
+                                 + "FROM dboPrd.position WHERE position_id=" + this.position_id);
             string query = "";
             if (ds.Tables[0].Rows.Count == 1)
             {
-                query = "UPDATE position SET position_name = '" + this.position_name + "' , position_description = '" + this.position_description + "', position_father_id = '" + this.position_father_id + "' , position_deleted = "+this.position_deleted+" WHERE position_id ="+this.position_id;
+                query = "UPDATE dboPrd.position SET position_name = '" + this.position_name + "' , position_description = '" + this.position_description + "', position_father_id = '" + this.position_father_id + "' , position_deleted = "+this.position_deleted+" WHERE position_id ="+this.position_id;
             }
             else
             {
-                query = "INSERT INTO position (position_name, position_description, position_father_id, position_deleted) VALUES ('" + this.position_name + "','" + this.position_description + "', " + this.position_father_id + ", " + this.position_deleted + ")";
+                query = "INSERT INTO dboPrd.position (position_name, position_description, position_father_id, position_deleted) VALUES ('" + this.position_name + "','" + this.position_description + "', " + this.position_father_id + ", " + this.position_deleted + ")";
             }
             db.Execute(query);
         }
@@ -140,7 +140,7 @@ namespace CineProducto.Bussines
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (this.position_id > 0)
             {
-                result = db.Execute("UPDATE position SET position_deleted = 1 WHERE position_id=" + this.position_id);
+                result = db.Execute("UPDATE dboPrd.position SET position_deleted = 1 WHERE position_id=" + this.position_id);
             }
 
             /* Retorna el indicador del resultado de la operación */

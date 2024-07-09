@@ -51,11 +51,11 @@
                                          </asp:DropDownList>                                        
                                         <asp:SqlDataSource ID="SqlDataSourcePosition" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="
                                              SELECT position_id, position_name, position_description 
-                                   FROM position 
+                                   FROM dboPrd.position 
                                    WHERE position_father_id = @staffOptionId AND 
                                    position_id not in (	select
                                                         project_staff.project_staff_position_id
-                                                        from project_staff  
+                                                        from dboPrd.project_staff  
                                                         WHERE project_staff.project_staff_project_id= @paramProjectId
                                                         and project_staff.project_staff_id != @IdProjectStaff
                                                       ) and 
@@ -76,7 +76,7 @@
                                                     <asp:ListItem Text="Seleccione..." Value=""></asp:ListItem>
                                          </asp:DropDownList> 
 
-                                        <asp:SqlDataSource ID="SqlDataSourceEspecialidad" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select * from especialidad_cargo where position_id = @position_padre_especialidad">
+                                        <asp:SqlDataSource ID="SqlDataSourceEspecialidad" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select * from dboPrd.especialidad_cargo where position_id = @position_padre_especialidad">
                                             <SelectParameters>
                                                 <asp:ControlParameter ControlID="cmbCargo" Name="position_padre_especialidad" PropertyName="SelectedValue" />
                                             </SelectParameters>
@@ -99,7 +99,7 @@
                                                     <asp:ListItem Text="Seleccione..." Value=""></asp:ListItem>
                                          </asp:DropDownList> 
                                         <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidator7" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbTipoDocumentoRep" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:SqlDataSource ID="SqlDataSourceTipoIdentificacion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [identification_type_id], [identification_type_name] FROM [identification_type] where [identification_type_id] != 2"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceTipoIdentificacion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [identification_type_id], [identification_type_name] FROM dboPrd.[identification_type] where [identification_type_id] != 2"></asp:SqlDataSource>
                                       </div>
 
                                         <div class="form-group col-sm-6">                                            
@@ -169,7 +169,7 @@
                                         </asp:DropDownList> 
                                                 <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidator1" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbGrupoPoblacional" ForeColor="Red"></asp:RequiredFieldValidator>
 
-                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional"  runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM [grupo_poblacional]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional"  runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM dboPrd.[grupo_poblacional]"></asp:SqlDataSource>
                             
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                             <asp:ListItem Text="Seleccione..." Value=""></asp:ListItem>
                                         </asp:DropDownList>    
                                                 <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidator5" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbEtnia" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM [etnia]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM dboPrd.[etnia]"></asp:SqlDataSource>
                               
                                             </div>
                                         </div>
@@ -194,7 +194,7 @@
                                                 <asp:ListItem Text="Seleccione..." Value=""></asp:ListItem>
                                                 </asp:DropDownList>    
                                                         <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidatorGen" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbGenero" ForeColor="Red"></asp:RequiredFieldValidator>
-                                                <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM [genero]"></asp:SqlDataSource>
+                                                <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM dboPrd.[genero]"></asp:SqlDataSource>
                             
                                                 </div>
                                             </div>
@@ -222,7 +222,7 @@
                                             <asp:ListItem Text="Seleccione..." Value="" />
                                             </asp:DropDownList>   
                                             <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidator15" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbDepartamento" ForeColor="Red"></asp:RequiredFieldValidator>
-                                         <asp:SqlDataSource ID="SqlDataSourceDeptos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from localization where localization_father_id=0"></asp:SqlDataSource>
+                                         <asp:SqlDataSource ID="SqlDataSourceDeptos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from dboPrd.localization where localization_father_id=0"></asp:SqlDataSource>
 
                                         </div>
                                     </div>
@@ -233,7 +233,7 @@
                                             <asp:ListItem Text="Seleccione..." Value="" />
                                              </asp:DropDownList>  
                                             <asp:RequiredFieldValidator SetFocusOnError="true"  ID="RequiredFieldValidator16" runat="server" ErrorMessage="Este campo es obligatorio" ControlToValidate="cmbMunicipio" ForeColor="Red"></asp:RequiredFieldValidator>
-                                            <asp:SqlDataSource ID="SqlDataSourceCitys" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from localization where localization_father_id=@localizacion_id">
+                                            <asp:SqlDataSource ID="SqlDataSourceCitys" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from dboPrd.localization where localization_father_id=@localizacion_id">
                                                 <SelectParameters>
                                                     <asp:ControlParameter ControlID="cmbDepartamento" Name="localizacion_id" PropertyName="SelectedValue" />
                                                 </SelectParameters>
@@ -361,8 +361,8 @@ case when project_attachment_approved = 1 then 'Si' else 'No' end as Aprobado,
 nombre_original,
 project_attachment_attachment_id,
     project_attachment_approved
-FROM project_attachment 
-left join attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
+FROM dboPrd.project_attachment 
+left join dboPrd.attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
 WHERE project_staff_id=@IdProjectStaff order by 1 desc">
         <SelectParameters>
             <asp:ControlParameter ControlID="lblIdProjectStaff" DefaultValue="0" Name="IdProjectStaff" PropertyName="Text" />

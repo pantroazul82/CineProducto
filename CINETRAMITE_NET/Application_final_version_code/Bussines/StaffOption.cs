@@ -77,7 +77,7 @@ public class StaffOption
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(staff_option_id) as qty FROM staff_option WHERE staff_option_deleted = 0");
+        DataSet resultRegisterQty = db.Select("Select count(staff_option_id) as qty FROM dboPrd.staff_option WHERE staff_option_deleted = 0");
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.staff_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -112,7 +112,7 @@ public class StaffOption
                                       + ",staff_option_percentage_init"
                                       + ",staff_option_percentage_end"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM staff_option, project_type, production_type, project_genre"
+                                  + " FROM dboPrd.staff_option, dboPrd.project_type, dboPrd.production_type, dboPrd.project_genre"
                                   + " WHERE staff_option.project_type_id = project_type.project_type_id AND"
                                         + " staff_option.production_type_id = production_type.production_type_id AND"
                                         + " staff_option.project_genre_id = project_genre.project_genre_id AND"
@@ -167,7 +167,7 @@ public class StaffOption
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(position_id) as qty FROM staff_option_detail WHERE staff_option_detail_deleted = 0 AND version="+ version +" AND staff_option_id = " + StaffOptionId);
+        DataSet resultRegisterQty = db.Select("Select count(position_id) as qty FROM dboPrd.staff_option_detail WHERE staff_option_detail_deleted = 0 AND version=" + version +" AND staff_option_id = " + StaffOptionId);
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.staff_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -194,7 +194,7 @@ public class StaffOption
         result = db.Select("SELECT * FROM "
                                 + "(SELECT staff_option_detail_id, staff_option_id, position_name"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                + " FROM staff_option_detail, position "
+                                + " FROM dboPrd.staff_option_detail, dboPrd.position "
                                 + " WHERE staff_option_detail_deleted = 0 AND staff_option_detail.position_id = position.position_id "
                                 + " AND version = " + version
                                 + " AND staff_option_id = " + StaffOptionId + ") AS ResultadoPaginado"
@@ -220,12 +220,12 @@ public class StaffOption
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (this.id <= 0)
             {
-                result = db.Execute("INSERT INTO staff_option (project_type_id, production_type_id, project_genre_id, staff_option_has_domestic_director, staff_option_description, staff_option_deleted,staff_option_personal_option,staff_option_percentage_init,staff_option_percentage_end) " +
+                result = db.Execute("INSERT INTO dboPrd.staff_option (project_type_id, production_type_id, project_genre_id, staff_option_has_domestic_director, staff_option_description, staff_option_deleted,staff_option_personal_option,staff_option_percentage_init,staff_option_percentage_end) " +
                                     "VALUES ('" + this.project_type_id + "','" + this.production_type_id + "','" + this.project_genre_id + "','" + this.has_domestic_director + "','" + this.description + "', 0 ,'" + this.staff_option_personal_option + "','" + this.staff_option_percentage_init + "','" + this.staff_option_percentage_end + "' )");
             }
             else
             {
-                result = db.Execute("UPDATE staff_option SET project_type_id = '" + this.project_type_id +
+                result = db.Execute("UPDATE dboPrd.staff_option SET project_type_id = '" + this.project_type_id +
                                     "', production_type_id = '" + this.production_type_id +
                                     "', project_genre_id = '" + this.project_genre_id +
                                     "', staff_option_has_domestic_director = '" + this.has_domestic_director +
@@ -257,7 +257,7 @@ public class StaffOption
         /* Se verifica si se debe llevar a cabo una inserción o una actualización */
         if (this.id > 0)
         {
-            result = db.Execute("UPDATE staff_option SET staff_option_deleted = 1 WHERE staff_option_id=" + this.id);
+            result = db.Execute("UPDATE dboPrd.staff_option SET staff_option_deleted = 1 WHERE staff_option_id=" + this.id);
         }
 
         /* Retorna el indicador del resultado de la operación */

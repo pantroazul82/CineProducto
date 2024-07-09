@@ -70,7 +70,7 @@ public class Permission
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(permission_id) as qty FROM permission");
+        DataSet resultRegisterQty = db.Select("Select count(permission_id) as qty FROM dboPrd.permission");
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.permission_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -99,7 +99,7 @@ public class Permission
                                       + ",permission_name"
                                       + ",permission_description"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM permission) AS ResultadoPaginado"
+                                  + " FROM dboPrd.permission) AS ResultadoPaginado"
                             + " WHERE RowNumber BETWEEN " + (PageSize * this.permission_options_page_index + 1)
                             + " AND " + (PageSize * (this.permission_options_page_index + 1))
                             + " ORDER BY " + SortColumn + " " + SortOrder);
@@ -149,7 +149,7 @@ public class Permission
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(role_id) as qty FROM role_permission WHERE permission_id = " + permission_id);
+        DataSet resultRegisterQty = db.Select("Select count(role_id) as qty FROM dboPrd.role_permission WHERE permission_id = " + permission_id);
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.assigned_roles_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -178,7 +178,7 @@ public class Permission
                                       + ",role.role_id"
                                       + ",role.role_name"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM role_permission, role "
+                                  + " FROM dboPrd.role_permission, role "
                                   + " WHERE role_permission.role_id = role.role_id AND permission_id = " + permission_id + ") AS ResultadoPaginado"
                             + " WHERE RowNumber BETWEEN " + (PageSize * this.assigned_roles_page_index + 1)
                             + " AND " + (PageSize * (this.assigned_roles_page_index + 1))
@@ -193,7 +193,7 @@ public class Permission
     {
         bool result;
         DB db = new DB();
-        result = db.Execute("INSERT INTO role_permission "
+        result = db.Execute("INSERT INTO dboPrd.role_permission "
                     + "(role_id, permission_id)  "
                     + "VALUES (" + role_id + "," + permission_id + ")" );
 
@@ -205,7 +205,7 @@ public class Permission
     {
         bool result;
         DB db = new DB();
-        result = db.Execute("DELETE FROM role_permission "
+        result = db.Execute("DELETE FROM dboPrd.role_permission "
                     + "WHERE role_id = " + role_id + " AND permission_id = " + permission_id);
 
         return result;

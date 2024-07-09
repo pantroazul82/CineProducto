@@ -16,6 +16,7 @@ using System.Net.Mime;
 using System.Text;
 using DominioCineProducto.utils;
 using DominioCineProducto;
+using DevExpress.XtraPrinting.Native;
 
 namespace CineProducto.Bussines
 {
@@ -158,7 +159,7 @@ namespace CineProducto.Bussines
         public DataTable obtenerIdiomas()
         {
           DB db = new DB();
-          DataSet ds = db.Select("SELECT cod_idioma, nombre_idioma from idioma ");
+          DataSet ds = db.Select("SELECT cod_idioma, nombre_idioma from dboPrd.idioma ");
           return ds.Tables[0];
         }
 
@@ -195,21 +196,21 @@ namespace CineProducto.Bussines
                                  + ",obs_adicional_obra,obs_adicional_productor,obs_adicional_otros_prd,obs_adicional_personal,obs_adicional_finalizacion,carta_aclaraciones_generada,version "
                                  + ",pagina_web,pagina_facebook, tiene_reconocimiento,ano_resolucion,num_resolucion,tiene_estimulos,fdc,fdc_especificacion,ibermedia,otros_estimulos,ibermedia_especificacion,"
                                  + "inf_visualizacion,fecha_notificacion_certificado "
-                                 + " FROM project "
+                                 + " FROM dboPrd.project "
                                  + "WHERE project_id=" + project_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 /* Se consulta el nombre del tipo de producción, tipo de proyecto y genero */
-                DataSet ProductionTypeDS = db.Select("SELECT production_type_name FROM production_type WHERE production_type_id = '" + ds.Tables[0].Rows[0]["production_type_id"].ToString() + "'");
+                DataSet ProductionTypeDS = db.Select("SELECT production_type_name FROM dboPrd.production_type WHERE production_type_id = '" + ds.Tables[0].Rows[0]["production_type_id"].ToString() + "'");
                 this.production_type_name = ProductionTypeDS.Tables[0].Rows.Count == 1 ? ProductionTypeDS.Tables[0].Rows[0]["production_type_name"].ToString() : "";
                 
-                DataSet ProjectTypeDS = db.Select("SELECT project_type_name FROM project_type WHERE project_type_id = '" + ds.Tables[0].Rows[0]["project_type_id"].ToString() + "'");
+                DataSet ProjectTypeDS = db.Select("SELECT project_type_name FROM dboPrd.project_type WHERE project_type_id = '" + ds.Tables[0].Rows[0]["project_type_id"].ToString() + "'");
                 this.project_type_name = ProjectTypeDS.Tables[0].Rows.Count == 1 ? ProjectTypeDS.Tables[0].Rows[0]["project_type_name"].ToString() : "";
                 
-                DataSet ProjectGenreDS = db.Select("SELECT project_genre_name FROM project_genre WHERE project_genre_id = '" + ds.Tables[0].Rows[0]["project_genre_id"].ToString() + "'");
+                DataSet ProjectGenreDS = db.Select("SELECT project_genre_name FROM dboPrd.project_genre WHERE project_genre_id = '" + ds.Tables[0].Rows[0]["project_genre_id"].ToString() + "'");
                 this.project_genre_name = ProjectGenreDS.Tables[0].Rows.Count == 1 ? ProjectGenreDS.Tables[0].Rows[0]["project_genre_name"].ToString() : "";
 
-                DataSet ProjectStateDS = db.Select("SELECT state_name FROM state WHERE state_id = '" + ds.Tables[0].Rows[0]["state_id"].ToString() + "'");
+                DataSet ProjectStateDS = db.Select("SELECT state_name FROM dboPrd.state WHERE state_id = '" + ds.Tables[0].Rows[0]["state_id"].ToString() + "'");
                 this.state_name = ProjectStateDS.Tables[0].Rows.Count == 1 ? ProjectStateDS.Tables[0].Rows[0]["state_name"].ToString() : "";
 
                 this.project_id = (int)ds.Tables[0].Rows[0]["project_id"];
@@ -382,7 +383,7 @@ namespace CineProducto.Bussines
         public string  LoadCorreo(string codigoManual)
         {
             DB db = new DB();
-            DataSet ds = db.Select("select texto from correo where cod_manual_correo ='"+codigoManual+"' ");
+            DataSet ds = db.Select("select texto from dboPrd.correo where cod_manual_correo ='" + codigoManual+"' ");
             if (ds.Tables[0].Rows.Count >= 1)
             {
                 if (ds.Tables[0].Rows[0][0] == null || ds.Tables[0].Rows[0][0] == System.DBNull.Value ||
@@ -435,7 +436,7 @@ namespace CineProducto.Bussines
         public int validarNombreProyecto(string nombre, string idUsuario) 
         {
             DB db = new DB();
-            string query = @"select project_id from project where lower(rtrim(project_name)) ='" + nombre.Trim().ToLower() + "' and (state_id=5 or state_id=1) and project_idusuario =" + idUsuario;
+            string query = @"select project_id from dboPrd.project where lower(rtrim(project_name)) ='" + nombre.Trim().ToLower() + "' and (state_id=5 or state_id=1) and project_idusuario =" + idUsuario;
             var ds = db.Select(query).Tables[0];
 
             if (ds.Rows.Count == 0) return 0;
@@ -487,7 +488,7 @@ namespace CineProducto.Bussines
 
                 string str_cod_firma = (this.cod_firma_tramite == 0) ? "null" : "'" + this.cod_firma_tramite + "'";
                 /* Creación de la sentencia de actualizacion */
-                string updateProject = "UPDATE project SET ";
+                string updateProject = "UPDATE dboPrd.project SET ";
 
 
                 List<System.Data.SqlClient.SqlParameter> listaParametros = new List<System.Data.SqlClient.SqlParameter>();
@@ -648,7 +649,7 @@ namespace CineProducto.Bussines
                 if (execution && basico==false)
                 {
                     /* Se borran todos los formatos relacionados con el proyecto */
-                    string deleteFormats = "DELETE FROM project_format WHERE project_id=" + this.project_id;
+                    string deleteFormats = "DELETE FROM dboPrd.project_format WHERE project_id=" + this.project_id;
                     db.Execute(deleteFormats);
 
                     /* Se graban todos los formatos relacionados con el proyecto */
@@ -656,7 +657,7 @@ namespace CineProducto.Bussines
                     {
                         if (format.format_id > 0)
                         {
-                            string insertFormats = "INSERT INTO project_format (format_id, project_id, project_format_detail) ";
+                            string insertFormats = "INSERT INTO dboPrd.project_format (format_id, project_id, project_format_detail) ";
                             insertFormats = insertFormats + "VALUES ('" + format.format_id + "','" + this.project_id + "','" + format.format_project_detail + "')";
                             if (db.Execute(insertFormats) == false)
                             {
@@ -667,7 +668,7 @@ namespace CineProducto.Bussines
                     }
 
                     /* Se borran todas la relaciones de productores con el proyecto */
-                    string deleteProducers = "DELETE FROM project_producer WHERE project_id=" + this.project_id;
+                    string deleteProducers = "DELETE FROM dboPrd.project_producer WHERE project_id=" + this.project_id;
                     db.Execute(deleteProducers);
 
                     /* Se graba la informacion de los productores y se crean las relaciones */
@@ -692,7 +693,7 @@ namespace CineProducto.Bussines
                         {
                             if (producer.Save(this.project_id) && saveProducer)
                             {
-                                string addProducer = "INSERT INTO project_producer (producer_id, project_id, project_producer_participation_percentage, project_producer_requester) ";
+                                string addProducer = "INSERT INTO dboPrd.project_producer (producer_id, project_id, project_producer_participation_percentage, project_producer_requester) ";
                                 addProducer = addProducer + "VALUES ('" + producer.producer_id + "','" + this.project_id + "'," + producer.participation_percentage.ToString().Replace(',','.') + ",'" + producer.requester + "')";
                                 if (db.Execute(addProducer) == false)
                                 {
@@ -765,14 +766,14 @@ namespace CineProducto.Bussines
             else if(this.project_name != "" && this.project_idusuario > 0) //Se inserta el registro para crear una nueva solicitud
             {
                 /* Creación de la sentencia de actualizacion */
-                string insertProject = "INSERT INTO project (project_name, state_id, project_idusuario) "
-                                      +" VALUES ('"+ this.project_name +"',1,'"+ this.project_idusuario +"')";
+                string insertProject = "INSERT INTO dboPrd.project (project_name, state_id, project_idusuario) "
+                                      + " VALUES ('"+ this.project_name +"',1,'"+ this.project_idusuario +"')";
                 
                 /* Si se actualizó correctamente la tabla del proyecto, se procede a actualizar la tabla de formatos del proyecto */
                 if (db.Execute(insertProject))
                 {
                     /* Obtiene el id del registro insertado y vuelve a cargar la inforamación del objeto */
-                    string queryId = "SELECT max(project_id) as project_id FROM project WHERE project_name='" + this.project_name + "'";
+                    string queryId = "SELECT max(project_id) as project_id FROM dboPrd.project WHERE project_name='" + this.project_name + "'";
                     DataSet queryIdDS = db.Select(queryId);
                     if (queryIdDS.Tables[0].Rows.Count == 1)
                     {
@@ -816,7 +817,7 @@ namespace CineProducto.Bussines
             /* Si esta definido un project_id se hace la consulta de los formatos */
             if (this.project_id.ToString() != "" && this.project_id > 0)
             {
-                string queryFormats = "SELECT format_id, project_format_detail FROM project_format WHERE project_id= " + this.project_id;
+                string queryFormats = "SELECT format_id, project_format_detail FROM dboPrd.project_format WHERE project_id= " + this.project_id;
                 DataSet queryFormatsDS = db.Select(queryFormats);
                 for (int i = 0; i < queryFormatsDS.Tables[0].Rows.Count; i++)
                 {
@@ -842,7 +843,7 @@ namespace CineProducto.Bussines
             if (this.project_id.ToString() != "" && this.project_id > 0)
             {
                 string queryProducers = "SELECT producer_id, project_producer_participation_percentage, project_producer_requester ";
-                queryProducers = queryProducers + "FROM project_producer WHERE project_id= " + this.project_id;
+                queryProducers = queryProducers + "FROM dboPrd.project_producer WHERE project_id= " + this.project_id;
                 DataSet queryProducersDS = db.Select(queryProducers);
                 for (int i = 0; i < queryProducersDS.Tables[0].Rows.Count; i++)
                 {
@@ -870,10 +871,46 @@ namespace CineProducto.Bussines
             /* Si esta definido un project_id se hace la consulta del personal relacionado */
             if (this.project_id.ToString() != "" && this.project_id > 0)
             {
+                string queryPersonal = @"
+                        set dateformat dmy
+select project_staff_id from (
+
+select
+project_staff_id,
+case when position.position_father_id = 0 then position.position_name else p2.position_name end as TipoCargo,
+case when position.position_father_id = 0 then '' else position.position_name end as Position,
+case when position.position_father_id = 0 then position.position_id else p2.position_id end pid,
+ROW_NUMBER() OVER (PARTITION BY case when position.position_father_id = 0 then position.position_name else p2.position_name end order by project_staff_id) AS cnt 
+,st.staff_option_detail_quantity
+from dboPrd.project_staff  
+left join dboPrd.position on position.position_id =  project_staff.project_staff_position_id
+left join dboPrd.position p2 on position.position_father_id =  p2.position_id
+left join dboPrd.genero on genero.id_genero = project_staff.id_genero
+left join dboPrd.etnia on etnia.id_etnia = project_staff.id_etnia
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
+left join dboPrd.identification_type on identification_type.identification_type_id = project_staff.identification_type_id
+join(
+select p.project_id,position.position_id,
+position.position_name,staff_option_detail.[staff_option_detail_quantity]
+ from dboPrd.project p 
+join dboPrd.staff_option on staff_option.project_type_id = p.project_type_id and
+staff_option.project_type_id = p.project_type_id and staff_option.project_genre_id = p.project_genre_id and 
+staff_option.staff_option_has_domestic_director = p.project_has_domestic_director and 
+p.project_percentage between staff_option.staff_option_percentage_init and  staff_option.staff_option_percentage_end
+and staff_option.staff_option_deleted=0
+join dboPrd.staff_option_detail on staff_option_detail.staff_option_id= staff_option.staff_option_id and staff_option_detail.version = p.version and staff_option_detail.staff_option_detail_deleted=0
+join dboPrd.position on position.position_id= staff_option_detail.position_id
+
+) st on st.project_id = project_staff.project_staff_project_id and st.position_id = (case when position.position_father_id = 0 then position.position_id else p2.position_id end)
+
+WHERE project_staff.project_staff_project_id= " + this.project_id +
+
+")ss where ss.cnt<= staff_option_detail_quantity";
+     
                 string queryStaff = "SELECT project_staff_id " +
-                                        "FROM project_staff " +
+                                        "FROM dboPrd.project_staff " +
                                         "WHERE project_staff_project_id= " + this.project_id;
-                DataSet queryStaffDS = db.Select(queryStaff);
+                DataSet queryStaffDS = db.Select(queryPersonal);
                 for (int i = 0; i < queryStaffDS.Tables[0].Rows.Count; i++)
                 {
                     Staff newStaff = new Staff();
@@ -1523,8 +1560,8 @@ body{ margin:0px; padding:0px; width:100%; }		</style>
                     }
                     cont++;
                     if (this.tiene_estimulos == "Si") {
-                        string consultaEstimulos = @"select count(*) as cantidad from estimulo
-                                             join tipo_estimulo on tipo_estimulo.id_tipo_estimulo = estimulo.id_tipo_estimulo
+                        string consultaEstimulos = @"select count(*) as cantidad from dboPrd.estimulo
+                                             join dboPrd.tipo_estimulo on tipo_estimulo.id_tipo_estimulo = estimulo.id_tipo_estimulo
                                             where estimulo.project_id = " + this.project_id.ToString();
                         DB db = new DB();
                         DataSet dsEstimulos = db.Select(consultaEstimulos);
