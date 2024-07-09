@@ -7,6 +7,7 @@
 <asp:Content ID="TitleContent" runat="server" ContentPlaceHolderID="TitleContent"> Trámite Reconocimiento Como Obra Nacional - Datos de la Obra - Mincultura</asp:Content>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script src="<%= Page.ResolveClientUrl("~/Scripts/cine.js")%>" type="text/javascript"></script>
+
   
      <style>
         .progressbar
@@ -198,6 +199,12 @@
 
          $('#<%=municipioDDL.ClientID %>').change(function () {
              $('#selectedMunicipio').val($('#<%=municipioDDL.ClientID %>').val());
+             if ($('#<%=municipioDDL.ClientID %>').val() == "ZA001") {
+                 $('#contenedorOtroMunicipio').show();
+             }
+             else {
+                 $('#contenedorOtroMunicipio').hide();
+             }
          });       
         
         $('.currencyformat').formatCurrency({ roundToDecimalPlace: 0 });
@@ -402,6 +409,12 @@
             }
 
             $('#loading').hide();
+            if ($('#<%=municipioDDL.ClientID %>').val() == "ZA001") {
+                $('#contenedorOtroMunicipio').show();
+            }
+            else {
+                $('#contenedorOtroMunicipio').hide();
+            }
     });
 
 
@@ -1365,14 +1378,25 @@ where estimulo.project_id = @project_id">
                             </asp:DropDownList>
                         </div>
                     </li>
-                        <li>
-                        <div class="field_label">
-                            Direcci&oacute;n del laboratorio de revelado:<span class="required_field_text">*</span></div>
-                        <div class="field_input">
-                            <textarea name="project_development_lab_info" id="project_development_lab_info" rows="3"
-                                cols="60" runat="server"></textarea></div>
+
+                        <li id="contenedorOtroMunicipio">
+                            <div class="field_label">
+                               especifique:<span class="required_field_text"></span>
+                            </div>
+                            <div class="field_input">
+                                <asp:TextBox runat="server" ID="txtMunicipioOtro" class="inputLargo user-input" />
+                            </div>
                         </li>
-                    
+                        <li>
+                            <div class="field_label">
+                                Direcci&oacute;n del laboratorio de revelado:<span class="required_field_text">*</span>
+                            </div>
+                            <div class="field_input">
+                                <textarea name="project_development_lab_info" id="project_development_lab_info" rows="3"
+                                    cols="60" runat="server"></textarea>
+                            </div>
+                        </li>
+
                     </div>
 
                    

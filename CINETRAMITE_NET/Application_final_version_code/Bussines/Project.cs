@@ -42,6 +42,7 @@ namespace CineProducto.Bussines
         public string project_development_lab_info;
         public string municipio_lab;
         public string nombre_lab;
+        public string municipio_lab_otro;
         public string no_acta_deposito;
         public string otros_idiomas;
 
@@ -182,7 +183,7 @@ namespace CineProducto.Bussines
                                  + "project_type_id, project_genre_id, "
                                  + "project_synopsis, project_recording_sites, "
                                  + "project_has_domestic_director, project_staff_option_id, project_duration, project_filming_start_date, project_filming_end_date, "
-                                 + "project_filming_date_obs, project_idusuario, project_development_lab_info, municipio_lab, nombre_lab,exhibida_publicamente, no_acta_deposito,otros_idiomas,project_preprint_store_info, "
+                                 + "project_filming_date_obs, project_idusuario, project_development_lab_info, municipio_lab, municipio_lab_otro, nombre_lab,exhibida_publicamente, no_acta_deposito,otros_idiomas,project_preprint_store_info, "
                                  + "project_legal_deposit, project_clarification_request_additional_text, project_schedule_film_view, project_result_film_view,"
                                  + "project_request_date, project_clarification_request_date, "
                                  + "project_clarification_response_date, project_resolution_date, project_notification_date,project_resolution2_date, project_notification2_date, "
@@ -256,6 +257,7 @@ namespace CineProducto.Bussines
                 this.project_development_lab_info = ds.Tables[0].Rows[0]["project_development_lab_info"].ToString() != "" ? ds.Tables[0].Rows[0]["project_development_lab_info"].ToString() : "";
                 this.municipio_lab = ds.Tables[0].Rows[0]["municipio_lab"].ToString() != "" ? ds.Tables[0].Rows[0]["municipio_lab"].ToString() : "0";
                 this.nombre_lab = ds.Tables[0].Rows[0]["nombre_lab"].ToString() != "" ? ds.Tables[0].Rows[0]["nombre_lab"].ToString() : "";
+                this.municipio_lab_otro = ds.Tables[0].Rows[0]["municipio_lab_otro"].ToString() != "" ? ds.Tables[0].Rows[0]["municipio_lab_otro"].ToString() : "";
                 this.no_acta_deposito = ds.Tables[0].Rows[0]["no_acta_deposito"].ToString() != "" ? ds.Tables[0].Rows[0]["no_acta_deposito"].ToString() : "";
                 this.exhibida_publicamente = ds.Tables[0].Rows[0]["exhibida_publicamente"].ToString() != "" ? ds.Tables[0].Rows[0]["exhibida_publicamente"].ToString() : "";                
                 this.otros_idiomas = ds.Tables[0].Rows[0]["otros_idiomas"].ToString() != "" ? ds.Tables[0].Rows[0]["otros_idiomas"].ToString() : "";
@@ -512,6 +514,7 @@ namespace CineProducto.Bussines
 
                 updateProject = updateProject + "municipio_lab = '" + municipio_lab + "', ";
                 updateProject = updateProject + "nombre_lab = '" + this.nombre_lab.Replace("'", "´") + "', ";
+                updateProject = updateProject + "municipio_lab_otro = '" + municipio_lab_otro + "', ";
                 updateProject = updateProject + "no_acta_deposito = '" + this.no_acta_deposito.Replace("'", "´") + "', ";
                 updateProject = updateProject + "exhibida_publicamente = '" + this.exhibida_publicamente.Replace("'", "´") + "', ";
                 updateProject = updateProject + "otros_idiomas = '" + this.otros_idiomas.Replace("'", "´") + "', ";                
