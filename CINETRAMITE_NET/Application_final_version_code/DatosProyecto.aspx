@@ -680,7 +680,7 @@
                             </asp:DropDownList>
                             
                             
-                            <asp:SqlDataSource ID="SqlDataSourceIdioma" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_idioma], [nombre_idioma] FROM [idioma]"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSourceIdioma" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_idioma], [nombre_idioma] FROM dboPrd.[idioma]"></asp:SqlDataSource>
                             
                             
                          </div>

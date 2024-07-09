@@ -54,7 +54,7 @@ namespace CineProducto.Bussines
         {
             List<Annotation> list = new List<Annotation>();
             DB db = new DB();
-            DataSet ds = db.Select("SELECT annotation_id FROM annotation WHERE annotation_project = " + projectId + " AND annotation_file = '" + documentString + "'");
+            DataSet ds = db.Select("SELECT annotation_id FROM dboPrd.annotation WHERE annotation_project = " + projectId + " AND annotation_file = '" + documentString + "'");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
@@ -70,7 +70,7 @@ namespace CineProducto.Bussines
 
             DB db = new DB();
             DataSet ds = db.Select("SELECT * "
-                                 + "FROM annotation WHERE annotation_id='" + id.ToString() + "'");
+                                 + "FROM dboPrd.annotation WHERE annotation_id='" + id.ToString() + "'");
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.annotation_id = ds.Tables[0].Rows[0]["annotation_id"].ToString();
@@ -100,7 +100,7 @@ namespace CineProducto.Bussines
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (new Annotation(this.annotation_id).annotation_id == null)
             {
-                result = db.Execute("INSERT INTO annotation (annotation_text, annotation_id, annotation_x, annotation_y, "
+                result = db.Execute("INSERT INTO dboPrd.annotation (annotation_text, annotation_id, annotation_x, annotation_y, "
                                         + "annotation_project,annotation_width,annotation_height,annotation_folded,annotation_readonly, " +
                                     "annotation_file, annotation_type, annotation_displayformat) VALUES ('" + this.annotation_text + "','" + this.annotation_id + "', " +
                                     this.annotation_x + ", " + this.annotation_y + ", " +
@@ -110,7 +110,7 @@ namespace CineProducto.Bussines
             }
             else
             {
-                result = db.Execute("UPDATE annotation SET " +
+                result = db.Execute("UPDATE dboPrd.annotation SET " +
                                        "annotation_text = '" + this.annotation_text + "', " +
                                        "annotation_x = " + this.annotation_x + ", " +
                                        "annotation_y = " + this.annotation_y + ", " +
@@ -131,7 +131,7 @@ namespace CineProducto.Bussines
         public bool delete()
         {
             DB db = new DB();
-            return db.Execute("DELETE FROM annotation WHERE annotation_id = '" + this.annotation_id + "'");
+            return db.Execute("DELETE FROM dboPrd.annotation WHERE annotation_id = '" + this.annotation_id + "'");
         }
     }
 }

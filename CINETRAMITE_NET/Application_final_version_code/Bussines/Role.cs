@@ -75,7 +75,7 @@ public class Role
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(role_id) as qty FROM role WHERE role_deleted = 0");
+        DataSet resultRegisterQty = db.Select("Select count(role_id) as qty FROM dboPrd.role WHERE role_deleted = 0");
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.role_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -105,7 +105,7 @@ public class Role
                                       + ",role_description"
                                       + ",role_deleted"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM role"
+                                  + " FROM dboPrd.role"
                                   + " WHERE role_deleted = 0) AS ResultadoPaginado"
                             + " WHERE RowNumber BETWEEN " + (PageSize * this.role_options_page_index + 1)
                             + " AND " + (PageSize * (this.role_options_page_index + 1))
@@ -156,7 +156,7 @@ public class Role
         }
 
         /* Se calcula la cantidad de registros que hacen parte del resultado */
-        DataSet resultRegisterQty = db.Select("Select count(idusuario) as qty FROM role_assignment WHERE role_id = " + role_id);
+        DataSet resultRegisterQty = db.Select("Select count(idusuario) as qty FROM dboPrd.role_assignment WHERE role_id = " + role_id);
         if (resultRegisterQty.Tables[0].Rows.Count == 1)
         {
             this.assigned_users_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -185,7 +185,7 @@ public class Role
                                       + ",idusuario"
                                       + ",username"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM role_assignment WHERE role_id = " + role_id + ") AS ResultadoPaginado"
+                                  + " FROM dboPrd.role_assignment WHERE role_id = " + role_id + ") AS ResultadoPaginado"
                             + " WHERE RowNumber BETWEEN " + (PageSize * this.assigned_users_page_index + 1)
                             + " AND " + (PageSize * (this.assigned_users_page_index + 1))
                             + " ORDER BY " + SortColumn + " " + SortOrder);

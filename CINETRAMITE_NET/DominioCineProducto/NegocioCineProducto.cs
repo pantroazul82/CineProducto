@@ -195,18 +195,37 @@ namespace DominioCineProducto
         public void AsignarPrimerResponsable(int project_id, int asignado_por)
         {
             Data.project registro = model.project.Find(project_id);
-            int? UltimoUsuarioAsigado = model.project.Where(x => x.responsable != null).OrderByDescending(x => x.project_request_date).First().responsable;
-            Data.usuario siguienteUsuario = model.usuario.Where(c => c.es_responsable == true && c.es_asignacion_automatica == true).OrderBy(c => c.FECHA_ASIGNACION).FirstOrDefault();
+            /*int? UltimoUsuarioAsigado = model.project.Where(x => x.responsable != null).OrderByDescending(x => x.project_request_date).First().responsable;
+            string sqlUltimoAsignado = @"select responsable from project_responsable where id_project_responsable IN(
+	select top 1 id from (
+			select project_id,max(st.id) as id from project_responsable join (
+				select top 100 id_project_responsable id from project_responsable order by id_project_responsable desc
+				--ultimos 100 registros de projet responsable, pero hay casos de reasignacion que  no deberia afectar
+				) st on st.id = project_responsable.id_project_responsable
+			group by project_id
+		having count(*) =1 --para descartar las reasignaciones
+	) ss order by ss.id desc
+)";
+            UltimoUsuarioAsigado = model.Database.SqlQuery<int>(sqlUltimoAsignado).FirstOrDefault();
+            */
+            Data.usuario siguienteUsuario = model.usuario.Where
+                (c => c.es_responsable == true && c.ES_ASIGNACION_AUTOMATICA == true).OrderBy(c => c.FECHA_ASIGNACION).FirstOrDefault();
+            //el que tenga la fecha de asignacion mas baja es el siguiente que se le deberia asignar
+            //es importante que todos los uusarios que tengan asignacion automatica tengan un valor en fecha_asignacion --update usuario set fecha_asignacion = dateadd(year,-1,getdate()) where fecha_asignacion is null
             if (siguienteUsuario != null) {
                 registro.responsable = siguienteUsuario.idusuario;
                 siguienteUsuario.FECHA_ASIGNACION = DateTime.Now;
             }
-            else {
-                siguienteUsuario = model.usuario.Where(c => c.es_responsable == true && c.es_asignacion_automatica == true).OrderBy(c => c.idusuario).FirstOrDefault();
+            else {//en que caso viene null, en el caso que el unico responsable no tenga fecha de asignacion.
+                siguienteUsuario = model.usuario.Where(c => c.es_responsable == true && c.ES_ASIGNACION_AUTOMATICA == true).OrderBy(c => c.idusuario).FirstOrDefault();
                 registro.responsable = siguienteUsuario.idusuario;
+                siguienteUsuario.FECHA_ASIGNACION = DateTime.Now;
+                //desde ningun otro lado se debe cambiar la fecha de asignacion si no se daña el algoritmo
             }
             model.SaveChanges();
-
+            //para la auditoria que hace el usuario guardamos la fecha real en donde se asigno el responsable
+            string sql = " update dboPrd.project set fecha_asignacion_responsable=getdate() where project_id=" + project_id;
+            model.Database.ExecuteSqlCommand(sql);
 
             project_responsable pResponsable = new project_responsable();
             pResponsable.project_id = project_id;

@@ -44,7 +44,7 @@ namespace CineProducto.Bussines
                                  + "a.attachment_name, av.variable, "
                                  + "av.validation_type, av.value, "
                                  + "av.operator, av.active "
-                                 + "FROM attachment_validation av, attachment a" 
+                                 + "FROM dboPrd.attachment_validation av, dboPrd.attachment a"
                                  + "WHERE av.attachment_id = a.attachment_id AND "
                                  + "attachment_id=" + attachment_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
@@ -81,14 +81,14 @@ namespace CineProducto.Bussines
                 /* Se verifica si se debe llevar a cabo una inserción o una actualización */
                 if (this.validation_id <= 0)
                 {
-                    result = db.Execute("INSERT INTO attachment_validation (attachment_id, variable, validation_type, "
-                                            +"value, operator, active) " +
+                    result = db.Execute("INSERT INTO dboPrd.attachment_validation (attachment_id, variable, validation_type, "
+                                            + "value, operator, active) " +
                                         "VALUES ('" + this.attachment_id + "','" + this.validation_variable + "','" + this.validation_type + "','" +
                                             this.validation_value + "','" + this.validation_operator + "','" + save_query_active_field + "')");
                 }
                 else
                 {
-                    result = db.Execute("UPDATE attachment_validation SET " +
+                    result = db.Execute("UPDATE dboPrd.attachment_validation SET " +
                                            "attachment_id = '" + this.attachment_id +
                                         "', variable = '" + this.validation_variable +
                                         "', validation_type = '" + this.validation_type +
@@ -144,7 +144,7 @@ namespace CineProducto.Bussines
             }
 
             /* Se calcula la cantidad de registros que hacen parte del resultado */
-            DataSet resultRegisterQty = db.Select("Select count(validation_id) as qty FROM attachment_validation");
+            DataSet resultRegisterQty = db.Select("Select count(validation_id) as qty FROM dboPrd.attachment_validation");
             if (resultRegisterQty.Tables[0].Rows.Count == 1)
             {
                 this.validation_attachment_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -178,7 +178,7 @@ namespace CineProducto.Bussines
                                           + ",av.operator"
                                           + ",av.active"
                                           + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                      + " FROM attachment_validation av, attachment a WHERE av.attachment_id = a.attachment_id) "
+                                      + " FROM dboPrd.attachment_validation av, dboPrd.attachment a WHERE av.attachment_id = a.attachment_id) "
                                 + " AS ResultadoPaginado"
                                 + " WHERE RowNumber BETWEEN " + (PageSize * this.validation_attachment_options_page_index + 1)
                                 + " AND " + (PageSize * (this.validation_attachment_options_page_index + 1))
@@ -204,7 +204,7 @@ namespace CineProducto.Bussines
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (this.validation_id > 0)
             {
-                result = db.Execute("DELETE FROM attachment_validation WHERE validation_id=" + this.validation_id);
+                result = db.Execute("DELETE FROM dboPrd.attachment_validation WHERE validation_id=" + this.validation_id);
             }
 
             /* Retorna el indicador del resultado de la operación */

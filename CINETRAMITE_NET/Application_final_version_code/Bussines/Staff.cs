@@ -60,7 +60,7 @@ namespace CineProducto.Bussines
                                  + "project_staff_contract_attachment, project_staff_position_id, "
                                  + "project_staff_identification_approved, project_staff_cv_approved, "
                                  + "project_staff_contract_approved "
-                                 + "FROM project_staff WHERE project_staff_id=" + project_staff_id.ToString());
+                                 + "FROM dboPrd.project_staff WHERE project_staff_id=" + project_staff_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.project_staff_id = (int)ds.Tables[0].Rows[0]["project_staff_id"];
@@ -108,7 +108,7 @@ namespace CineProducto.Bussines
             if (this.project_staff_id.ToString() != "" && this.project_staff_id > 0)
             {
                 /* Creación de la sentencia de actualizacion */
-                string updateProjectStaff = "UPDATE project_staff SET ";
+                string updateProjectStaff = "UPDATE dboPrd.project_staff SET ";
 
                 updateProjectStaff = updateProjectStaff + "project_staff_project_id = '" + this.project_staff_project_id + "', ";
                 updateProjectStaff = updateProjectStaff + "id_genero = '" + this.id_genero + "', ";
@@ -174,7 +174,7 @@ namespace CineProducto.Bussines
                 }
 
                 /* Creación de la sentencia de actualizacion */
-                string insertProjectStaff = "INSERT INTO project_staff ("
+                string insertProjectStaff = "INSERT INTO dboPrd.project_staff ("
                                      + "project_staff_project_id, "
                                      + "id_genero, "
                                      + "id_etnia, "
@@ -233,7 +233,7 @@ namespace CineProducto.Bussines
                 /* Si se actualizó correctamente la tabla del productor */
                 if (db.Execute(insertProjectStaff))
                 {
-                    string queryProjectStaffId = "SELECT MAX(project_staff_id) as project_staff_id FROM project_staff";
+                    string queryProjectStaffId = "SELECT MAX(project_staff_id) as project_staff_id FROM dboPrd.project_staff";
                     DataSet newStaffDS = db.Select(queryProjectStaffId);
                     if (newStaffDS.Tables[0].Rows.Count == 1)
                     {
@@ -276,7 +276,7 @@ namespace CineProducto.Bussines
                     percentage_validation = "staff_option_percentage_init <='" + percentage + "' AND staff_option_percentage_end >='" + percentage + "' AND ";
                 }
                 result = db.Select("SELECT staff_option_id, staff_option_description "
-                                    + "FROM staff_option "
+                                    + "FROM dboPrd.staff_option "
                                     + "WHERE project_type_id='" + project_type_id + "' AND "
                                     + "production_type_id='" + production_type_id + "' AND "
                                     + "project_genre_id='" + project_genre_id + "' AND "
@@ -286,7 +286,7 @@ namespace CineProducto.Bussines
             }
             else {
                 result = db.Select("SELECT top 0 staff_option_id, staff_option_description "
-                                      + "FROM staff_option ");
+                                      + "FROM dboPrd.staff_option ");
             }
 
             /* Retorna el indicador del resultado de la operación */
@@ -305,7 +305,7 @@ namespace CineProducto.Bussines
             {
                 string consulta = "SELECT staff_option_detail_id, position.position_id, position_name, "
                                     + "staff_option_detail_quantity, staff_option_detail_optional_quantity "
-                                    + "FROM staff_option_detail, position "
+                                    + "FROM dboPrd.staff_option_detail, dboPrd.position "
                                     + "WHERE staff_option_id = '" + staff_option_id.ToString() + "' AND "
                                     + "staff_option_detail_deleted='0' AND position.position_id = staff_option_detail.position_id"
                                     + " AND staff_option_detail.version = " + version.ToString();
@@ -326,7 +326,7 @@ namespace CineProducto.Bussines
             if (position_id > 0)
             {
                 result = db.Select("SELECT position_id, position_name, position_description "
-                                    + "FROM position "
+                                    + "FROM dboPrd.position "
                                     + "WHERE position_father_id = '" + position_id + "' AND "
                                     + "position_deleted='0'");
             }
@@ -343,7 +343,7 @@ namespace CineProducto.Bussines
 
             DataSet result = new DataSet();
             result = db.Select("SELECT position_id, position_name, position_description "
-                                + "FROM position "
+                                + "FROM dboPrd.position "
                                 + "WHERE position_father_id = '0' AND "
                                 + "position_deleted='0'");
 
@@ -362,7 +362,7 @@ namespace CineProducto.Bussines
                 /* Hace disponible la conexión a la base de datos */
                 DB db = new DB();
                 DataSet result = db.Select("SELECT DISTINCT position_father_id "
-                                         + "FROM position, project_staff "
+                                         + "FROM dboPrd.position, dboPrd.project_staff "
                                          + "WHERE position.position_id = project_staff.project_staff_position_id  "
                                          //+  " AND position_deleted='0' "+
                                          +" AND position.position_id = " + this.project_staff_position_id);
@@ -397,14 +397,14 @@ namespace CineProducto.Bussines
                  */
 
                 //eliminamos los aduntos de ese cargo
-                string sql = @"delete project_attachment from project_attachment where 
-                project_attachment_project_id ="+project_staff_project_id+@" and project_staff_id
+                string sql = @"delete dboPrd.project_attachment from project_attachment where 
+                project_attachment_project_id =" + project_staff_project_id+ @" and project_staff_id
                 in(
-select project_staff_id FROM project_staff WHERE project_staff_position_id= "+ this.project_staff_position_id +" and project_staff_project_id =" + project_staff_project_id + @"
+select project_staff_id FROM dboPrd.project_staff WHERE project_staff_position_id= " + this.project_staff_position_id +" and project_staff_project_id =" + project_staff_project_id + @"
                 )";
                 db.Execute(sql);
                 //eliminamos el cargo de ese proyecto
-                result = db.Execute("DELETE FROM project_staff WHERE project_staff_position_id = " + this.project_staff_position_id +
+                result = db.Execute("DELETE FROM dboPrd.project_staff WHERE project_staff_position_id = " + this.project_staff_position_id +
                     " and project_staff_project_id=" + project_staff_project_id);
             }
 

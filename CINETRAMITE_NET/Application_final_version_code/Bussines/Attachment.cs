@@ -51,7 +51,7 @@ namespace CineProducto.Bussines
                                  + "attachment_quantity, attachment_order, "
                                  + "attachment_deleted, "
                                  + "attachment_foreing_producer,tooltip "
-                                 + "FROM attachment WHERE attachment_id=" + attachment_id.ToString());
+                                 + "FROM dboPrd.attachment WHERE attachment_id=" + attachment_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.attachment_id = (int)ds.Tables[0].Rows[0]["attachment_id"];
@@ -138,7 +138,7 @@ namespace CineProducto.Bussines
                 /* Se verifica si se debe llevar a cabo una inserción o una actualización */
                 if (this.attachment_id <= 0)
                 {
-                    result = db.Execute("INSERT INTO attachment (attachment_father_id, attachment_name, attachment_machine_name, "
+                    result = db.Execute("INSERT INTO dboPrd.attachment (attachment_father_id, attachment_name, attachment_machine_name, "
                                             + "attachment_description,attachment_format,attachment_quantity,attachment_order,attachment_deleted,attachment_foreing_producer) " +
                                         "VALUES ('" + this.attachment_father_id + "','" + this.attachment_name + "','" + this.attachment_machine_name + "','" +
                                             this.attachment_description + "'," + save_format_query_value + "," + save_quantity_query_value +
@@ -146,7 +146,7 @@ namespace CineProducto.Bussines
                 }
                 else
                 {
-                    result = db.Execute("UPDATE attachment SET " +
+                    result = db.Execute("UPDATE dboPrd.attachment SET " +
                                            "attachment_father_id = '" + this.attachment_father_id +
                                         "', attachment_name = '" + this.attachment_name +
                                         "', attachment_machine_name = '" + this.attachment_machine_name +
@@ -177,8 +177,8 @@ namespace CineProducto.Bussines
             if (project != null)
             {
                 /* Consulta las secciones de adjuntos, id padre = 0 */
-                string queryAttachment = "SELECT attachment_id FROM attachment WHERE attachment_deleted = 0 AND "
-                                        +" attachment_father_id=0 ORDER BY attachment_order asc";
+                string queryAttachment = "SELECT attachment_id FROM dboPrd.attachment WHERE attachment_deleted = 0 AND "
+                                        + " attachment_father_id=0 ORDER BY attachment_order asc";
 
                 DataSet queryAttachmentDS = db.Select(queryAttachment);
 
@@ -192,7 +192,7 @@ namespace CineProducto.Bussines
                     }
 
                     /* Consulta los adjuntos que hacen parte de la sección actual */
-                    string queryAttachmentChild = "SELECT attachment_id FROM attachment WHERE attachment_deleted = 0 AND "
+                    string queryAttachmentChild = "SELECT attachment_id FROM dboPrd.attachment WHERE attachment_deleted = 0 AND "
                                         + " attachment_father_id=" + queryAttachmentDS.Tables[0].Rows[i]["attachment_id"] 
                                         + " ORDER BY attachment_order asc";
 
@@ -240,7 +240,7 @@ namespace CineProducto.Bussines
 
                 /* Consulta los adjuntos que hacen parte de la sección actual */
 
-                string queryAttachmentChild = "SELECT attachment_id FROM attachment WHERE attachment_deleted = 0 AND "
+                string queryAttachmentChild = "SELECT attachment_id FROM dboPrd.attachment WHERE attachment_deleted = 0 AND "
                                     + " attachment_father_id=" + father_id
                                     + " " + conditionForeingProducer
                                     + " ORDER BY attachment_order asc";
@@ -289,7 +289,7 @@ namespace CineProducto.Bussines
             DataSet ds = db.Select("SELECT attachment_id, variable, "
                                  + "validation_type, value, "
                                  + "operator "
-                                 + "FROM attachment_validation "
+                                 + "FROM dboPrd.attachment_validation "
                                  + "WHERE attachment_id=" + this.attachment_id.ToString()
                                  + " AND active = 1 order by prioridad desc");
 
@@ -570,7 +570,7 @@ namespace CineProducto.Bussines
             }
 
             /* Se calcula la cantidad de registros que hacen parte del resultado */
-            DataSet resultRegisterQty = db.Select("Select count(attachment_id) as qty FROM attachment_view ");
+            DataSet resultRegisterQty = db.Select("Select count(attachment_id) as qty FROM dboPrd.attachment_view ");
                 
                 //db.Select("Select count(attachment_id) as qty FROM attachment WHERE attachment_deleted = 0");
             if (resultRegisterQty.Tables[0].Rows.Count == 1)
@@ -605,7 +605,7 @@ namespace CineProducto.Bussines
                                           + ",attachment_order"
                                           + ",attachment_foreing_producer"
                                           + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                      + " FROM attachment_view) "
+                                      + " FROM dboPrd.attachment_view) "
                                 + " AS ResultadoPaginado"
                                 + " WHERE RowNumber BETWEEN " + (PageSize * this.attachment_options_page_index + 1)
                                 + " AND " + (PageSize * (this.attachment_options_page_index + 1))
@@ -631,7 +631,7 @@ namespace CineProducto.Bussines
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (this.attachment_id > 0)
             {
-                result = db.Execute("UPDATE attachment SET attachment_deleted = 1 WHERE attachment_id=" + this.attachment_id);
+                result = db.Execute("UPDATE dboPrd.attachment SET attachment_deleted = 1 WHERE attachment_id=" + this.attachment_id);
             }
 
             /* Retorna el indicador del resultado de la operación */

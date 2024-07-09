@@ -1156,7 +1156,7 @@ namespace CineProducto
                                 cmbFormatoPadre.DataBind();
                                 //cmbFormatoRodaje.Items.Add(new ListItem("Seleccione", "0"));
                                 cmbFormatoPadre.SelectedValue = format.format_padre.ToString();
-                                DataSet municipioDS = db.Select("select format_id, format_name  from format where format_type_id = 1 and format_padre = " + cmbFormatoPadre.SelectedValue + " order by format_name");
+                                DataSet municipioDS = db.Select("select format_id, format_name  from dboPrd.format where format_type_id = 1 and format_padre = " + cmbFormatoPadre.SelectedValue + " order by format_name");
                                 cmbFormatoRodaje.Items.Clear();
                                 cmbFormatoRodaje.Items.Add(new ListItem("Seleccione", "0"));
                                 for (int i = 0; i < municipioDS.Tables[0].Rows.Count; i++)
@@ -1557,7 +1557,7 @@ namespace CineProducto
         protected void cmbFormatoPadre_SelectedIndexChanged(object sender, EventArgs e)
         {
             DB db = new DB();
-            DataSet municipioDS = db.Select("select format_id, format_name  from format where format_type_id = 1 and format_padre = " + cmbFormatoPadre.SelectedValue + " order by format_name");
+            DataSet municipioDS = db.Select("select format_id, format_name  from dboPrd.format where format_type_id = 1 and format_padre = " + cmbFormatoPadre.SelectedValue + " order by format_name");
             cmbFormatoRodaje.Items.Clear();
             cmbFormatoRodaje.Items.Add(new ListItem("Seleccione", "0"));
             for (int i = 0; i < municipioDS.Tables[0].Rows.Count; i++)

@@ -289,22 +289,22 @@ producer.num_id_sup as Identificacion_Rep_Sup,
 producer_company_type.producer_company_type_name, 
 producer_company_type.producer_company_type_id,
 identification_type.identification_type_name as Tipo_Identificacion_Rep
-from project_producer 
-left join producer on producer.producer_id = project_producer.producer_id
-left join project on project.project_id = project_producer.project_id
-left join state on project.state_id = state.state_id 
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join etnia on etnia.id_etnia=producer.id_etnia
-left join genero on genero.id_genero=producer.id_genero
-left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
-left join localization on producer.producer_localization_id=localization.localization_id
-left join localization localization2 on localization2.localization_id=localization.localization_father_id
-left join localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
-            left join localization localization4 on localization4.localization_id=localization3.localization_father_id
+from dboPrd.project_producer 
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.project on project.project_id = project_producer.project_id
+left join dboPrd.state on project.state_id = state.state_id 
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.etnia on etnia.id_etnia=producer.id_etnia
+left join dboPrd.genero on genero.id_genero=producer.id_genero
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional=producer.id_grupo_poblacional
+left join dboPrd.localization on producer.producer_localization_id=localization.localization_id
+left join dboPrd.localization localization2 on localization2.localization_id=localization.localization_father_id
+left join dboPrd.localization localization3 on producer.PRODUCTOR_LOCALIZACION_CONTACTO_ID=localization3.localization_id
+            left join dboPrd.localization localization4 on localization4.localization_id=localization3.localization_father_id
 
 
-left join producer_company_type on producer_company_type.producer_company_type_id=producer.producer_company_type_id
-left join identification_type on identification_type.identification_type_id=producer.identification_type_id
+left join dboPrd.producer_company_type on producer_company_type.producer_company_type_id=producer.producer_company_type_id
+left join dboPrd.identification_type on identification_type.identification_type_id=producer.identification_type_id
 where project_producer.project_producer_id=@producer_id_view">
         <SelectParameters>
             <asp:ControlParameter ControlID="lblViewProductorSeleccionado" DefaultValue="0" Name="producer_id_view" PropertyName="Text" />
@@ -393,8 +393,8 @@ case when project_attachment_approved = 1 then 'Si' else 'No' end as Aprobado,
 nombre_original,
 project_attachment_attachment_id,
         project_attachment_approved
-FROM project_attachment 
-left join attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
+FROM dboPrd.project_attachment 
+left join dboPrd.attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
 WHERE project_attachment_producer_id=@IdProductorAdjuntos">
         <SelectParameters>
             <asp:ControlParameter ControlID="lblIdProducer" DefaultValue="0" Name="IdProductorAdjuntos" PropertyName="Text" />

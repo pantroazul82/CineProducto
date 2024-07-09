@@ -1193,7 +1193,7 @@
                                 <SortedDescendingCellStyle BackColor="#FFFDF8" />
                                 <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
                             </asp:GridView>
-                            <asp:SqlDataSource ID="SqlDataSourceOtrosAdjuntos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_adjunto_projecto], [url_adjunto], [nombre_original], [descripcion], [eliminado], [project_id] FROM [adjunto_projecto] WHERE (([project_id] = @project_id) AND ([eliminado] = @eliminado))">
+                            <asp:SqlDataSource ID="SqlDataSourceOtrosAdjuntos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_adjunto_projecto], [url_adjunto], [nombre_original], [descripcion], [eliminado], [project_id] FROM dboPrd.[adjunto_projecto] WHERE (([project_id] = @project_id) AND ([eliminado] = @eliminado))">
                                 <SelectParameters>
                                     <asp:ControlParameter ControlID="lblCodProyecto" Name="project_id" PropertyName="Text" Type="Int32" />
                                     <asp:Parameter DefaultValue="false" Name="eliminado" Type="Boolean" />

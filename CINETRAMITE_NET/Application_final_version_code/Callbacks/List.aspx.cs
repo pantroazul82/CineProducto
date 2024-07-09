@@ -98,7 +98,7 @@ namespace CineProducto.Callbacks
             if (searchFilter == "WHERE ") {
                 searchFilter = "";
             }
-            string query = declarationDates + "with pagedProject as (SELECT ROW_NUMBER() OVER (" + orderQ + ") AS rownumber, p.project_id, p.project_name, p.project_request_date, p.project_clarification_request_date, p.project_clarification_response_date, p.project_resolution_date, s.state_name, r.resolution_path from project p left join resolution  r on r.project_id= p.project_id left join state s on p.state_id = s.state_id " + searchFilter + " " + userQ + ") select * from pagedProject where rownumber > " + start + " and rownumber <= " + end;
+            string query = declarationDates + "with pagedProject as (SELECT ROW_NUMBER() OVER (" + orderQ + ") AS rownumber, p.project_id, p.project_name, p.project_request_date, p.project_clarification_request_date, p.project_clarification_response_date, p.project_resolution_date, s.state_name, r.resolution_path from dboPrd.project p left join dboPrd.resolution  r on r.project_id= p.project_id left join dboPrd.state s on p.state_id = s.state_id " + searchFilter + " " + userQ + ") select * from dboPrd.pagedProject where rownumber > " + start + " and rownumber <= " + end;
 
             DB db = new DB();
             DataSet ds = db.Select(query);

@@ -48,7 +48,7 @@ public class StaffOptionDetail
                                                ",staff_option_detail_quantity" +
                                                ",staff_option_detail_optional_quantity" +
                                                ",staff_option_detail_deleted " +
-                                            "FROM staff_option_detail, position " +
+                                            "FROM dboPrd.staff_option_detail, dboPrd.position " +
                                             "WHERE position.position_id = staff_option_detail.position_id AND " +
                                                " staff_option_detail_id = " + this.id);
 
@@ -96,12 +96,12 @@ public class StaffOptionDetail
             /* Se verifica si se debe llevar a cabo una inserción o una actualización */
             if (this.id <= 0)
             {
-                result = db.Execute("INSERT INTO staff_option_detail (staff_option_id, position_id, staff_option_detail_quantity, staff_option_detail_optional_quantity, staff_option_detail_deleted) " +
+                result = db.Execute("INSERT INTO dboPrd.staff_option_detail (staff_option_id, position_id, staff_option_detail_quantity, staff_option_detail_optional_quantity, staff_option_detail_deleted) " +
                                     "VALUES (" + this.staff_option_id + "," + this.position_id + "," + this.position_qty + "," + this.position_optional_qty + ", 0)");
             }
             else
             {
-                result = db.Execute("UPDATE staff_option_detail SET position_id = " + this.position_id + ", staff_option_detail_optional_quantity = " + this.position_optional_qty + " WHERE staff_option_detail_id=" + this.id);
+                result = db.Execute("UPDATE dboPrd.staff_option_detail SET position_id = " + this.position_id + ", staff_option_detail_optional_quantity = " + this.position_optional_qty + " WHERE staff_option_detail_id=" + this.id);
             }   
         }
 
@@ -125,7 +125,7 @@ public class StaffOptionDetail
         /* Se verifica si se debe llevar a cabo una inserción o una actualización */
         if (this.id > 0)
         {
-            result = db.Execute("UPDATE staff_option_detail SET staff_option_detail_deleted = 1 WHERE staff_option_detail_id=" + this.id);
+            result = db.Execute("UPDATE dboPrd.staff_option_detail SET staff_option_detail_deleted = 1 WHERE staff_option_detail_id=" + this.id);
         }
 
         /* Retorna el indicador del resultado de la operación */

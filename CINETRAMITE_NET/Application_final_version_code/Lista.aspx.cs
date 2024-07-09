@@ -138,13 +138,13 @@ namespace CineProducto
             }
             if (!IsPostBack)
             {
-                cmbEstado.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                cmbEstado.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                 cmbEstado.AppendDataBoundItems = true;
                 cmbEstado.DataValueField = "state_id";
                 cmbEstado.DataTextField = "state_name";
                 cmbEstado.DataBind();
 
-                cmbEstado2.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                cmbEstado2.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                 cmbEstado2.AppendDataBoundItems = true;
                 cmbEstado2.DataValueField = "state_id";
                 cmbEstado2.DataTextField = "state_name";
@@ -432,16 +432,16 @@ when p.state_id=12 then cast(p.fecha_cancelacion as date)
 when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin',
 r.resolution_path as pdf_resolucion,
 resolution_path2 as pdf_resolucion_aclaratoria,
-(select nombres +' ' + apellidos from usuario where idusuario = p.responsable) as responsable,
+(select nombres +' ' + apellidos from dboPrd.usuario where idusuario = p.responsable) as responsable,
 usuario.username 'login',
 version
 
- from project p 
- left join resolution  r on r.project_id= p.project_id 
- left join state s on p.state_id = s.state_id 
- join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
+ from dboPrd.project p 
+ left join dboPrd.resolution  r on r.project_id= p.project_id 
+ left join dboPrd.state s on p.state_id = s.state_id 
+ join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
 where 
 (" + filtroRol + @" ( "+filtroFecha+@"))
 "+filtroFechaAvanzado+filtroFechaResolucion + filtroResponsable + filtroEstadoAclaracionesSolicitadas  + @" 
@@ -1050,7 +1050,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             else
                             {
                                 string nitCompleto = "";
-                                if (unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
+                                if (unProjectProducer.producer.producer_type_id != 2 && unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
                                 {
                                     nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit.Replace(",", ".")));
                                     nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();

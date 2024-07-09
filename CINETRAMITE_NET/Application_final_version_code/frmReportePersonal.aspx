@@ -59,7 +59,7 @@
                <asp:DropDownList ID="cmbTipoProduccion" runat="server" AppendDataBoundItems="True" DataSourceID="SqlDataSourceTipoProduccion" DataTextField="production_type_name" DataValueField="production_type_id">
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
-               <asp:SqlDataSource ID="SqlDataSourceTipoProduccion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [production_type_id], [production_type_name] FROM [production_type] ORDER BY [production_type_name]"></asp:SqlDataSource>
+               <asp:SqlDataSource ID="SqlDataSourceTipoProduccion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [production_type_id], [production_type_name] FROM dboPrd.[production_type] ORDER BY [production_type_name]"></asp:SqlDataSource>
            </td>
        </tr>
        <tr>
@@ -71,7 +71,7 @@
                <asp:DropDownList ID="cmbTipoObra" runat="server" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGenero" DataTextField="project_genre_name" DataValueField="project_genre_id">
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
-               <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [project_genre_id], [project_genre_name] FROM [project_genre] ORDER BY [project_genre_name]"></asp:SqlDataSource>
+               <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [project_genre_id], [project_genre_name] FROM dboPrd.[project_genre] ORDER BY [project_genre_name]"></asp:SqlDataSource>
            </td>
        </tr>
        <tr>
@@ -86,7 +86,7 @@
                <asp:DropDownList ID="cmbDuracion" runat="server" AppendDataBoundItems="True" DataSourceID="SqlDataSourceDuracion" DataTextField="project_type_name" DataValueField="project_type_id">
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
-               <asp:SqlDataSource ID="SqlDataSourceDuracion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [project_type_id], [project_type_name] FROM [project_type] ORDER BY [project_type_name]"></asp:SqlDataSource>
+               <asp:SqlDataSource ID="SqlDataSourceDuracion" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [project_type_id], [project_type_name] FROM dboPrd.[project_type] ORDER BY [project_type_name]"></asp:SqlDataSource>
            </td>
        </tr>
 
@@ -114,7 +114,7 @@
                <asp:DropDownList ID="cmbTipoProductor" runat="server" AppendDataBoundItems="True" DataSourceID="SqlDataSourceTipoProdcutr" DataTextField="person_type_name" DataValueField="person_type_id">
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
-               <asp:SqlDataSource ID="SqlDataSourceTipoProdcutr" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [person_type_id], [person_type_name] FROM [person_type]"></asp:SqlDataSource>
+               <asp:SqlDataSource ID="SqlDataSourceTipoProdcutr" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [person_type_id], [person_type_name] FROM dboPrd.[person_type]"></asp:SqlDataSource>
            </td>
        </tr>
            <tr>
@@ -151,7 +151,7 @@
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
                <asp:SqlDataSource ID="SqlDataSourceTipoCargo" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" 
-                   SelectCommand="select distinct position_id,position_name from position where position_father_id=0 and position_deleted =0 order by position_name"></asp:SqlDataSource>
+                   SelectCommand="select distinct position_id,position_name from dboPrd.position where position_father_id=0 and position_deleted =0 order by position_name"></asp:SqlDataSource>
            </td>
            <td class="auto-style2">&nbsp;</td>
            <td>Cargo</td>
@@ -160,7 +160,7 @@
                    <asp:ListItem Value="-1">todos</asp:ListItem>
                </asp:DropDownList>
                <asp:SqlDataSource ID="SqlDataSourceCargo" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" 
-                   SelectCommand="select distinct position_id,position_name from position where position_father_id!=0 and position_deleted =0 and position_father_id = @padre  order by position_name">
+                   SelectCommand="select distinct position_id,position_name from dboPrd.position where position_father_id!=0 and position_deleted =0 and position_father_id = @padre  order by position_name">
                    <SelectParameters><asp:ControlParameter Name="padre" ControlID="cmbTipoCArgo" /></SelectParameters>
                </asp:SqlDataSource>
            </td>

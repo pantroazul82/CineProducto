@@ -127,13 +127,13 @@ namespace CineProducto
             //}
             if (!IsPostBack)
             {
-                cmbEstado.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                cmbEstado.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                 cmbEstado.AppendDataBoundItems = true;
                 cmbEstado.DataValueField = "state_id";
                 cmbEstado.DataTextField = "state_name";
                 cmbEstado.DataBind();
 
-                cmbEstado2.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                cmbEstado2.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                 cmbEstado2.AppendDataBoundItems = true;
                 cmbEstado2.DataValueField = "state_id";
                 cmbEstado2.DataTextField = "state_name";
@@ -419,16 +419,16 @@ p.project_notification_date  fecha_notificacion,
 project_notification2_date as fecha_notificacion_2,
 r.resolution_path,
 resolution_path2,
-(select nombres +' ' + apellidos from usuario where idusuario = p.responsable) as responsable,
+(select nombres +' ' + apellidos from dboPrd.usuario where idusuario = p.responsable) as responsable,
 fecha_limite as Fecha_Limite,
 version
 
- from project p 
- left join resolution  r on r.project_id= p.project_id 
- left join state s on p.state_id = s.state_id 
- join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
+ from dboPrd.project p 
+ left join dboPrd.resolution  r on r.project_id= p.project_id 
+ left join dboPrd.state s on p.state_id = s.state_id 
+ join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
 where 
 (" + filtroRol + @" ( " + filtroFecha + @"))
 " + filtroFechaAvanzado + filtroFechaResolucion + filtroResponsable + filtroEstadoAclaracionesSolicitadas + @" 

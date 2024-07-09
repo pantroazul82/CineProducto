@@ -105,10 +105,10 @@ p.project_request_date as Fecha_y_Hora_de_Solicitud,
 cast(p.project_request_date as date) as Fecha_de_Solicitud,
 cast(p.project_request_date as time) Hora_de_solicitud,
 version
- from project p 
- join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
+ from dboPrd.project p 
+ join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
 
 where 
  ( " + filtroFecha + @")

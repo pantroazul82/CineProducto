@@ -32,7 +32,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT HOJA_TRANSFERENCIA, "
                                  + "project_id "
-                                 + "FROM project WHERE project_id=" + ProjectID.ToString());
+                                 + "FROM dboPrd.project WHERE project_id=" + ProjectID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 //this.requestID = (int)ds.Tables[0].Rows[0]["request_form_id"];
@@ -64,12 +64,12 @@ namespace CineProducto.Bussines
             }
             if (this.requestID == 0)
             {
-                result = db.Execute("UPDATE project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
+                result = db.Execute("UPDATE dboPrd.project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
 
             }
             else
             {
-                result = db.Execute("UPDATE project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
+                result = db.Execute("UPDATE dboPrd.project SET HOJA_TRANSFERENCIA = '" + this.path + "' where project_id=" + this.projectID);
             }
             return result;
         }

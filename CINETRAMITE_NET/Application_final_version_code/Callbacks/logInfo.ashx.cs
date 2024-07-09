@@ -18,7 +18,7 @@ namespace CineProducto.Callbacks
 
         public void ProcessRequest(HttpContext context)
         {
-            string query = "SELECT project_log_id, project_log_date, project_name FROM project_log, project WHERE project_log_project_id = project_id AND project_id = " + context.Session["project_id"];
+            string query = "SELECT project_log_id, project_log_date, project_name FROM dboPrd.project_log, dboPrd.project WHERE project_log_project_id = project_id AND project_id = " + context.Session["project_id"];
             DB db = new DB();
             DataSet ds = db.Select(query);
             if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)

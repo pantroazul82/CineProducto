@@ -69,9 +69,9 @@ namespace CineProducto
             string responsable = cmbUsuario.SelectedValue;
             string project_id = lblProjectId.Text;
             string asignado_por = userObj.user_id.ToString();
-            string insertProjectResp = "INSERT INTO project_responsable (fecha, responsable, project_id, asignado_por) "
+            string insertProjectResp = "INSERT INTO dboPrd.project_responsable (fecha, responsable, project_id, asignado_por) "
                                       + " VALUES (GETDATE()," + responsable + "," + project_id + ","+ asignado_por +")";
-            string updateProjectResp = "update project set responsable = "+responsable+" where project_id="+project_id;
+            string updateProjectResp = "update dboPrd.project set responsable = " + responsable+" where project_id="+project_id;
 
             db.Execute(insertProjectResp);
             db.Execute(updateProjectResp);
