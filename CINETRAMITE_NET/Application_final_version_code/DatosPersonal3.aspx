@@ -505,10 +505,15 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
     </dx:ASPxGridView>        
         <asp:SqlDataSource ID="SqlDSExt" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="
 set dateformat dmy
+select * from (
+
 select
 project_staff_id,
 case when position.position_father_id = 0 then position.position_name else p2.position_name end as TipoCargo,
 case when position.position_father_id = 0 then '' else position.position_name end as Position,
+case when position.position_father_id = 0 then position.position_id else p2.position_id end pid,
+ROW_NUMBER() OVER (PARTITION BY case when position.position_father_id = 0 then position.position_name else p2.position_name end order by project_staff_id) AS cnt 
+,st.staff_option_detail_quantity,
 project_staff_firstname + ' ' + isnull(project_staff_firstname2,'')+' '+project_staff_lastname+' '+project_staff_lastname2  as 'Nombre',
 identification_type.identification_type_name as tipo_identificacion,
 [project_staff_identification_number] 'Identificacion',
@@ -522,14 +527,30 @@ project_staff.project_staff_project_id,
 genero.nombre as genero,
 etnia.nombre as etnia,
 grupo_poblacional.nombre as grupo_poblacional
-from project_staff  
-left join position on position.position_id =  project_staff.project_staff_position_id
-left join position p2 on position.position_father_id =  p2.position_id
-left join genero on genero.id_genero = project_staff.id_genero
-left join etnia on etnia.id_etnia = project_staff.id_etnia
-left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
-left join identification_type on identification_type.identification_type_id = project_staff.identification_type_id
-WHERE project_staff.project_staff_project_id= @pIdProjectExtran">
+from dboPrd.project_staff  
+left join dboPrd.position on position.position_id =  project_staff.project_staff_position_id
+left join dboPrd.position p2 on position.position_father_id =  p2.position_id
+left join dboPrd.genero on genero.id_genero = project_staff.id_genero
+left join dboPrd.etnia on etnia.id_etnia = project_staff.id_etnia
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
+left join dboPrd.identification_type on identification_type.identification_type_id = project_staff.identification_type_id
+join(
+select p.project_id,position.position_id,
+position.position_name,staff_option_detail.[staff_option_detail_quantity]
+ from dboPrd.project p 
+join dboPrd.staff_option on staff_option.project_type_id = p.project_type_id and
+staff_option.project_type_id = p.project_type_id and staff_option.project_genre_id = p.project_genre_id and 
+staff_option.staff_option_has_domestic_director = p.project_has_domestic_director and 
+p.project_percentage between staff_option.staff_option_percentage_init and  staff_option.staff_option_percentage_end
+and staff_option.staff_option_deleted=0
+join dboPrd.staff_option_detail on staff_option_detail.staff_option_id= staff_option.staff_option_id and staff_option_detail.version = p.version and staff_option_detail.staff_option_detail_deleted=0
+join dboPrd.position on position.position_id= staff_option_detail.position_id
+
+) st on st.project_id = project_staff.project_staff_project_id and st.position_id = (case when position.position_father_id = 0 then position.position_id else p2.position_id end)
+
+WHERE project_staff.project_staff_project_id= @pIdProjectExtran 
+
+)ss where ss.cnt<= staff_option_detail_quantity">
             <SelectParameters>
                 <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="pIdProjectExtran" PropertyName="Text" />
             </SelectParameters>

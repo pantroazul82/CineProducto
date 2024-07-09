@@ -31,7 +31,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT request_form_id, "
                                  + "request_form_path, request_form_project_id, "
-                                 + "FROM request_form WHERE request_form_id=" + resID.ToString());
+                                 + "FROM dboPrd.request_form WHERE request_form_id=" + resID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.requestID = (int)ds.Tables[0].Rows[0]["request_form_id"];
@@ -45,7 +45,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT request_form_id, "
                                  + "request_form_path, request_form_project_id "
-                                 + "FROM request_form WHERE request_form_project_id=" + ProjectID.ToString());
+                                 + "FROM dboPrd.request_form WHERE request_form_project_id=" + ProjectID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.requestID = (int)ds.Tables[0].Rows[0]["request_form_id"];
@@ -59,7 +59,7 @@ namespace CineProducto.Bussines
 
             DB db = new DB();
             db.Execute("delete "
-                                 + " request_form WHERE request_form_project_id=" + ProjectID.ToString());
+                                 + " dboPrd.request_form WHERE request_form_project_id=" + ProjectID.ToString());
             
         }
 
@@ -77,11 +77,11 @@ namespace CineProducto.Bussines
             }
             if (this.requestID == 0)
             {
-                result = db.Execute("INSERT INTO request_form (request_form_path, request_form_project_id) values ('" + this.path + "', " + this.projectID + ")");
+                result = db.Execute("INSERT INTO dboPrd.request_form (request_form_path, request_form_project_id) values ('" + this.path + "', " + this.projectID + ")");
             }
             else
             {
-                result = db.Execute("UPDATE request_form SET request_form_path = '" + this.path + "' where request_form_project_id="+ this.projectID );
+                result = db.Execute("UPDATE dboPrd.request_form SET request_form_path = '" + this.path + "' where request_form_project_id="+ this.projectID );
             }
             return result;
         }
@@ -91,7 +91,7 @@ namespace CineProducto.Bussines
             bool result = false;
             if (this.requestID > 0)
             {
-                result = db.Execute("DELETE request_form WHERE request_form_id=" + this.requestID);
+                result = db.Execute("DELETE dboPrd.request_form WHERE request_form_id=" + this.requestID);
             }
             return result;
         }

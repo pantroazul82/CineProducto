@@ -44,5 +44,5 @@
     </asp:GridView>
     </div>
               </div>
-    <asp:SqlDataSource ID="SqlDataSourceFirmas" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_firma_tramite], [nombre_firma_tramite], [cargo_firma_tramite], [activo] FROM [firma_tramite] where cod_firma_tramite not in (2,4,6) "></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourceFirmas" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_firma_tramite], [nombre_firma_tramite], [cargo_firma_tramite], [activo] FROM dboPrd.[firma_tramite] where cod_firma_tramite not in (2,4,6) "></asp:SqlDataSource>
 </asp:Content>

@@ -352,7 +352,13 @@ namespace CineProducto
                 List<project_status> registros = neg.getProjectStatusByProject(myProject.project_id);
                 //this.pasar_solicitud_a_editor_permission
                 this.bloquearSiguientePasoFlujo = false;
-                if ( this.user_role > 1 && myProject.state_id >= 2 && myProject.state_id < 5 && isPendienteRevision(registros, int.Parse(myProject.project_domestic_producer_qty.ToString()) + int.Parse(myProject.project_foreign_producer_qty.ToString()) )) 
+                int cantidadProductores = int.Parse(myProject.project_domestic_producer_qty.ToString());
+                if(myProject.production_type_id==2)//si es coproduccion sume mas
+                {
+                    cantidadProductores += int.Parse(myProject.project_foreign_producer_qty.ToString());
+                }
+                if ( this.user_role > 1 && myProject.state_id >= 2 && myProject.state_id < 5 && isPendienteRevision(registros,
+                    cantidadProductores)) 
                 {
                     lblValPasarEditor.Text = "Debe revisar todas las secciones antes de poder enviar a editor";
                     lblValPasarEditor2.Text = "Debe revisar todas las secciones antes de poder enviar a editor";
@@ -907,7 +913,7 @@ namespace CineProducto
             {
                 #region cancelar solicitud
                 // if (project.state_id == 8) //Para enviar aclaracones el proyecto debe estar en el estado 6 (Aclaraciones enviadas)
-                if (project.state_id == 4 || project.state_id == 6 || project.state_id == 7 || project.state_id == 8)
+                if (project.state_id >= 2 && project.state_id <= 8)
                 {
                     project.fecha_cancelacion = DateTime.Now;
                     project.state_id = 12; //Pasa a estado 12 (Cancelada)
@@ -1396,7 +1402,6 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                             project.carta_aclaraciones_generada = cuerpo;
                             project.Save();
 
-                            // body = body + "<br/><br/>" + System.Configuration.ConfigurationManager.AppSettings["SEND_CLARIFICATION_REQUEST_MAIL_BODY_MENSAJE"];
                             body = body + "<br/><br/><p style='text-align:justify;'>" + System.Configuration.ConfigurationManager.AppSettings["SEND_CLARIFICATION_REQUEST_MAIL_BODY_FIN"]+"</p>";
                             
                             /* Envío de notificación al productor solicitante */
@@ -2052,7 +2057,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             {
 
                 DataSet ds = db.Select("SELECT localization_name "
-                                     + "FROM localization "
+                                     + "FROM dboPrd.localization "
                                      + "WHERE localization_id ='" + municipio
                                      + "' OR localization_id = '" + departamento + "'");
                 if (ds.Tables[0].Rows.Count > 1)
@@ -2279,7 +2284,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 {
 
                     DataSet ds = db.Select("SELECT localization_name "
-                                         + "FROM localization "
+                                         + "FROM dboPrd.localization "
                                          + "WHERE localization_id ='" + municipio
                                          + "' OR localization_id = '" + departamento + "'");
                     if (ds.Tables[0].Rows.Count > 1)
@@ -2345,7 +2350,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         if (producer.producer_localization_id != "" && producer.producer_localization_father_id != "")
                         {
                             DataSet dss = db.Select("SELECT localization_name "
-                                         + "FROM localization "
+                                         + "FROM dboPrd.localization "
                                          + "WHERE localization_id =" + producer.producer_localization_id
                                          + "OR localization_id = " + producer.producer_localization_father_id);
                             if (dss.Tables[0].Rows.Count > 1)
@@ -3568,6 +3573,9 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         tPers.AddCell(new PdfPCell(new Paragraph(new Chunk("Cargo", boldFont))));
                     }
 
+                  
+
+
                     foreach (project_staff unPersonal in myProject.project_staff.OrderBy(x => x.project_staff_position_id))
                     {
                         string segundoNombre = "";
@@ -3575,8 +3583,14 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         {
                             segundoNombre = " " + unPersonal.project_staff_firstname2;
                         }
-                        tPers.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unPersonal.project_staff_firstname + segundoNombre + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2))));
-                        tPers.AddCell(new PdfPCell(new Paragraph(unPersonal.position.position_name)));
+                        foreach (var staffMember in project.staff)
+                        {
+                            if(staffMember.project_staff_id == unPersonal.project_staff_id)
+                            {
+                                tPers.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unPersonal.project_staff_firstname + segundoNombre + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2))));
+                                tPers.AddCell(new PdfPCell(new Paragraph(unPersonal.position.position_name)));
+                            }
+                        }
 
                         //var phraseProductor = new Phrase();
                         //phraseProductor.Add(unPersonal.project_staff_firstname + " " + unPersonal.project_staff_firstname2 + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2 + ", "+ unPersonal.position.position_name);
@@ -3842,7 +3856,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 }
 
                 DateTime fechaRechazo = DateTime.Now;
-                if (project.project_notification_date != null)
+                if (project.project_notification_date != null && project.project_notification_date.Year > 1)
                     fechaRechazo = project.project_notification_date;
 
                 var phrase2 = new Phrase();     

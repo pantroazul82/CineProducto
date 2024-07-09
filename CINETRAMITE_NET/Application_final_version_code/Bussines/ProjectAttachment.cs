@@ -53,7 +53,7 @@ namespace CineProducto.Bussines
                                  + "project_attachment_approved ,"
                                  + "project_attachment_producer_id ,"
                                  + "project_attachment_project_staff_order,nombre_original,project_staff_id "
-                                 + " FROM project_attachment WHERE project_attachment_id=" + project_attachment_id.ToString()
+                                 + " FROM dboPrd.project_attachment WHERE project_attachment_id=" + project_attachment_id.ToString()
                                  );
             if (ds.Tables[0].Rows.Count == 1)
             {
@@ -85,7 +85,7 @@ namespace CineProducto.Bussines
         {
             DB db = new DB();
             DataSet ds = db.Select("SELECT project_attachment_id "
-                                 + " FROM project_attachment "
+                                 + " FROM dboPrd.project_attachment "
                                  + "WHERE project_attachment_project_id=" + project_id.ToString()
                                  + "AND project_attachment_attachment_id=" + attachment_id.ToString());
             if (ds.Tables[0].Rows.Count >= 1)
@@ -107,7 +107,7 @@ namespace CineProducto.Bussines
                                  + "project_attachment_approved, "
                                  + "project_attachment_producer_id, "
                                  + "project_attachment_project_staff_order,nombre_original ,project_staff_id "
-                                 + " FROM project_attachment "
+                                 + " FROM dboPrd.project_attachment "
                                  + "WHERE project_attachment_project_id=" + project_id.ToString()
                                  + " AND project_attachment_project_staff_order=" + attachment_staff_order.ToString()
                                  + " AND project_attachment_attachment_id=" + attachment_id.ToString());
@@ -146,7 +146,7 @@ namespace CineProducto.Bussines
                                  + "project_attachment_approved, "
                                  + "project_attachment_producer_id, "
                                  + "project_attachment_project_staff_order,nombre_original ,project_staff_id "
-                                 + " FROM project_attachment "
+                                 + " FROM dboPrd.project_attachment "
                                  + "WHERE project_attachment_project_id=" + project_id.ToString()
                                  + " AND project_staff_id=" + project_staff_id.ToString()
                                  + " AND project_attachment_attachment_id=" + attachment_id.ToString() + " order by project_attachment_date desc ");
@@ -194,7 +194,7 @@ namespace CineProducto.Bussines
                                  + "project_attachment_observation, project_attachment_date, "
                                  + "project_attachment_approved ,"
                                  + "project_attachment_producer_id,nombre_original  ,project_staff_id "
-                                 + "FROM project_attachment WHERE project_attachment_project_id=" + projectId.ToString()
+                                 + "FROM dboPrd.project_attachment WHERE project_attachment_project_id=" + projectId.ToString()
                                  + " " + _producer_id
                                  + " " + _attachmnetId
                                  );
@@ -246,8 +246,8 @@ namespace CineProducto.Bussines
                     {
                         string project_attachment_date_update_query = (this.project_attachment_date.Year == 1) ? "null" : "GETDATE()";
 
-                        SaveQuery =  "UPDATE project_attachment SET "
-                                    +"project_attachment_project_id=" + this.project_id + ","
+                        SaveQuery = "UPDATE dboPrd.project_attachment SET "
+                                    + "project_attachment_project_id=" + this.project_id + ","
                                     +"project_attachment_attachment_id =" + this.attachment.attachment_id + ","
                                     +"project_attachment_path='" + this.project_attachment_path + "',"
                                     + "project_attachment_observation='" + this.project_attachment_observation.Replace("'", "") + "',"
@@ -262,8 +262,8 @@ namespace CineProducto.Bussines
                     }
                     else
                     {
-                        SaveQuery =  "INSERT INTO project_attachment "
-                                    +"(project_attachment_project_id, project_attachment_attachment_id, "
+                        SaveQuery = "INSERT INTO dboPrd.project_attachment "
+                                    + "(project_attachment_project_id, project_attachment_attachment_id, "
                                     +"project_attachment_path,project_attachment_observation, "
                                     + "project_attachment_date, project_attachment_approved,project_attachment_producer_id,project_attachment_project_staff_order,nombre_original,project_staff_id) "
                                     +"VALUES ('"+ this.project_id +"','"+ this.attachment.attachment_id +"',"
@@ -288,7 +288,7 @@ namespace CineProducto.Bussines
                 {
                     if (item.project_attachement_producer_id == 0) {
                         string project_attachment_date_update_query = (item.project_attachment_date.Year == 1) ? "null" : "GETDATE()";
-                        string SaveQuery = "UPDATE project_attachment SET "
+                        string SaveQuery = "UPDATE dboPrd.project_attachment SET "
                                     + "project_attachment_project_id=" + item.project_id + ","
                                     + "project_attachment_attachment_id =" + item.attachment.attachment_id + ","
                                     + "project_attachment_path='" + item.project_attachment_path + "',"

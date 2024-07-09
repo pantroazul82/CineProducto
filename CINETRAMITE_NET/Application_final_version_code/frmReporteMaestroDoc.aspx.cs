@@ -161,17 +161,17 @@ when p.state_id=9 and project_resolution_date is not null then cast(p.project_re
 when p.state_id=10 then cast(p.fecha_final as date) 
 when p.state_id=12 then cast(p.fecha_cancelacion as date)
 when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
-from project_attachment patt
-left join attachment on attachment.attachment_id = patt.project_attachment_attachment_id
-left join project p  on p.project_id=patt.project_attachment_project_id
-left join resolution  r on r.project_id= p.project_id  
-left join state s on p.state_id = s.state_id  
-join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_type on project_type.project_type_id = p.project_type_id
+from dboPrd.project_attachment patt
+left join dboPrd.attachment on attachment.attachment_id = patt.project_attachment_attachment_id
+left join dboPrd.project p  on p.project_id=patt.project_attachment_project_id
+left join dboPrd.resolution  r on r.project_id= p.project_id  
+left join dboPrd.state s on p.state_id = s.state_id  
+join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
 where 
 ( { filtro }  (p.project_request_date is null { filtroFecha })
      and p.project_name like '%{ txtTitulo.Text.Trim().Replace("'", "%")}%' 
@@ -203,15 +203,15 @@ when p.state_id=9 and project_resolution_date is not null then cast(p.project_re
 when p.state_id=10 then cast(p.fecha_final as date) 
 when p.state_id=12 then cast(p.fecha_cancelacion as date)
 when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
-from project_attachment patt
-left join project p  on p.project_id=patt.project_attachment_project_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join project_type on project_type.project_type_id = p.project_type_id
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join state s on p.state_id = s.state_id 
-left join request_form  on request_form.request_form_project_id = patt.project_attachment_project_id
+from dboPrd.project_attachment patt
+left join dboPrd.project p  on p.project_id=patt.project_attachment_project_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.state s on p.state_id = s.state_id 
+left join dboPrd.request_form  on request_form.request_form_project_id = patt.project_attachment_project_id
 where 
 ( { filtro }  (p.project_request_date is null { filtroFecha })
      and p.project_name like '%{ txtTitulo.Text.Trim().Replace("'", "%")}%' 
@@ -243,15 +243,15 @@ when p.state_id=9 and project_resolution_date is not null then cast(p.project_re
 when p.state_id=10 then cast(p.fecha_final as date) 
 when p.state_id=12 then cast(p.fecha_cancelacion as date)
 when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
-from project_attachment patt
-left join project p  on p.project_id=patt.project_attachment_project_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join project_type on project_type.project_type_id = p.project_type_id
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join state s on p.state_id = s.state_id 
-left join adjunto_projecto  on adjunto_projecto.project_id = patt.project_attachment_project_id
+from dboPrd.project_attachment patt
+left join dboPrd.project p  on p.project_id=patt.project_attachment_project_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.state s on p.state_id = s.state_id 
+left join dboPrd.adjunto_projecto  on adjunto_projecto.project_id = patt.project_attachment_project_id
 where 
 ( { filtro }  (p.project_request_date is null { filtroFecha })
      and p.project_name like '%{ txtTitulo.Text.Trim().Replace("'", "%")}%' 
@@ -285,15 +285,15 @@ when p.state_id=10 then cast(p.fecha_final as date)
 when p.state_id=12 then cast(p.fecha_cancelacion as date)
 when p.state_id=14 then dateadd(day,20, cast(p.project_clarification_request_date as date)) else null end 'fecha_tramite_fin'
 
-from project p 
-left join resolution  r on r.project_id= p.project_id  
-left join state s on p.state_id = s.state_id  
-join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_type on project_type.project_type_id = p.project_type_id
+from dboPrd.project p 
+left join dboPrd.resolution  r on r.project_id= p.project_id  
+left join dboPrd.state s on p.state_id = s.state_id  
+join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
 where 
 ( { filtro }  (p.project_request_date is null { filtroFecha })
      and p.project_name like '%{ txtTitulo.Text.Trim().Replace("'", "%")}%' 
@@ -366,7 +366,7 @@ where
                         codigos = "1,2,3,4,5,6,7,8,9,10,12";
                     }
 
-                    cmbEstado.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                    cmbEstado.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                     cmbEstado.AppendDataBoundItems = true;
                     cmbEstado.DataValueField = "state_id";
                     cmbEstado.DataTextField = "state_name";

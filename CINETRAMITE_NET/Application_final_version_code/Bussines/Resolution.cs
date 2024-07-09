@@ -37,7 +37,7 @@ namespace CineProducto.Bussines
             DataSet ds = db.Select("SELECT resolution_id, "
                                  + "resolution_path, project_id,resolution_path2,resolution_uploaded2, "
                                  + "resolution_uploaded, resolution_visible "
-                                 + "FROM resolution WHERE resolution_id=" + resID.ToString());
+                                 + "FROM dboPrd.resolution WHERE resolution_id=" + resID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.resolutionID = (int)ds.Tables[0].Rows[0]["resolution_id"];
@@ -63,7 +63,7 @@ namespace CineProducto.Bussines
             DataSet ds = db.Select("SELECT resolution_id, "
                                  + "resolution_path, project_id ,resolution_path2,resolution_uploaded2,"
                                  + "resolution_uploaded, resolution_visible "
-                                 + "FROM resolution WHERE project_id=" + ProjectID.ToString());
+                                 + "FROM dboPrd.resolution WHERE project_id=" + ProjectID.ToString());
             this.projectID = ProjectID;
             if (ds.Tables[0].Rows.Count == 1)
             {
@@ -91,7 +91,7 @@ namespace CineProducto.Bussines
 
             /* Inicializacion de la variable que almacena el resultado a retornar */
             bool result = false;
-            DataSet ds = db.Select("SELECT resolution_id FROM resolution WHERE project_id=" + projectID.ToString());
+            DataSet ds = db.Select("SELECT resolution_id FROM dboPrd.resolution WHERE project_id=" + projectID.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.resolutionID = (int)ds.Tables[0].Rows[0]["resolution_id"];
@@ -103,12 +103,12 @@ namespace CineProducto.Bussines
             }
             if (this.resolutionID == 0)
             {
-                result = db.Execute(@"INSERT INTO resolution (resolution_path,resolution_path2, project_id, resolution_uploaded,resolution_uploaded2, resolution_visible) 
+                result = db.Execute(@"INSERT INTO dboPrd.resolution (resolution_path,resolution_path2, project_id, resolution_uploaded,resolution_uploaded2, resolution_visible) 
                 values ('" + this.path + "', '" + this.path2 + "', " + this.projectID + ", GETDATE(),getdate(), 0)");
             }
             else
             {
-                result = db.Execute("UPDATE resolution SET resolution_path2 = '" + this.path2 + "', resolution_path = '" + this.path + "', resolution_uploaded = GETDATE() where resolution_id=" + resolutionID);
+                result = db.Execute("UPDATE dboPrd.resolution SET resolution_path2 = '" + this.path2 + "', resolution_path = '" + this.path + "', resolution_uploaded = GETDATE() where resolution_id=" + resolutionID);
             }
             return result;
         }
@@ -120,7 +120,7 @@ namespace CineProducto.Bussines
             {
                 throw new Exception("InvalidData");
             }
-            return db.Execute("UPDATE resolution SET resolution_visible = 1 WHERE resolution_id = " + this.resolutionID);
+            return db.Execute("UPDATE dboPrd.resolution SET resolution_visible = 1 WHERE resolution_id = " + this.resolutionID);
         }
 
         public bool Hide()
@@ -130,7 +130,7 @@ namespace CineProducto.Bussines
             {
                 throw new Exception("InvalidData");
             }
-            return db.Execute("UPDATE resolution SET resolution_visible = 0 WHERE resolution_id = " + this.resolutionID);
+            return db.Execute("UPDATE dboPrd.resolution SET resolution_visible = 0 WHERE resolution_id = " + this.resolutionID);
         }
         public bool delete()
         {
@@ -138,7 +138,7 @@ namespace CineProducto.Bussines
             bool result = false;
             if (this.resolutionID > 0)
             {
-                result = db.Execute("DELETE resolution WHERE resolution_id=" + this.resolutionID);
+                result = db.Execute("DELETE dboPrd.resolution WHERE resolution_id=" + this.resolutionID);
             }
             return result;
 

@@ -99,9 +99,6 @@
     <Compile Include="Data\attachment_validation.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\attachment_view.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\configuration.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

@@ -70,8 +70,8 @@ namespace CineProducto.Bussines
                       +"attachment.attachment_description, attachment.attachment_format, attachment.attachment_quantity, attachment.attachment_order, attachment.attachment_deleted, "
                       +"attachment_validation.validation_id, attachment_validation.attachment_id AS Expr1, attachment_validation.variable, attachment_validation.validation_type, "
                       +"attachment_validation.value, attachment_validation.operator, attachment_validation.active "
-                      +"FROM  attachment INNER JOIN "
-                      +"attachment_validation ON attachment.attachment_id = attachment_validation.attachment_id "
+                      + "FROM  dboPrd.attachment INNER JOIN "
+                      + "dboPrd.attachment_validation ON attachment.attachment_id = attachment_validation.attachment_id "
                       + "WHERE    attachment_validation.value = '"+ type_company +"'");
 
             return ds;
@@ -89,10 +89,10 @@ namespace CineProducto.Bussines
                       +"attachment_validation.value, attachment_validation.operator, attachment_validation.active, project_attachment.project_attachment_id, "
                       +"project_attachment.project_attachment_attachment_id, project_attachment.project_attachment_project_id, project_attachment.project_attachment_path, "
                       +"project_attachment.project_attachment_observation, project_attachment.project_attachment_date, project_attachment.project_attachment_approved "
-                      +"FROM         attachment INNER JOIN "
-                      +"attachment_validation ON attachment.attachment_id = attachment_validation.attachment_id FULL OUTER JOIN "
-                      +"project_attachment ON project_attachment.project_attachment_attachment_id = attachment.attachment_id "
-                      +"WHERE     (attachment_validation.value = '"+ type_company +"') AND (project_attachment.project_attachment_project_id ="+ project_id +")");
+                      + "FROM         dboPrd.attachment INNER JOIN "
+                      + "dboPrd.attachment_validation ON attachment.attachment_id = attachment_validation.attachment_id FULL OUTER JOIN "
+                      + "dboPrd.project_attachment ON project_attachment.project_attachment_attachment_id = attachment.attachment_id "
+                      + "WHERE     (attachment_validation.value = '"+ type_company +"') AND (project_attachment.project_attachment_project_id ="+ project_id +")");
 
             return ds;
     
@@ -103,7 +103,7 @@ namespace CineProducto.Bussines
             {
                 conditionComplement = " AND " + conditionComplement;
             }
-            DataSet result = this.Select("SELECT " + idField + ", " + valueField + " FROM " + tableName + " WHERE " + tableName + "_deleted=0" + conditionComplement);
+            DataSet result = this.Select("SELECT " + idField + ", " + valueField + " FROM dboPrd." + tableName + " WHERE " + tableName + "_deleted=0" + conditionComplement);
             return result;
         }
 
@@ -113,7 +113,7 @@ namespace CineProducto.Bussines
             DataSet result = new DataSet();
             if (name != null && name != "")
             {
-                result = this.Select("SELECT tooltip_text FROM tooltip WHERE tooltip_name='" + name + "'");
+                result = this.Select("SELECT tooltip_text FROM dboPrd.tooltip WHERE tooltip_name='" + name + "'");
             }
             if (result.Tables[0].Rows.Count == 1)
             {

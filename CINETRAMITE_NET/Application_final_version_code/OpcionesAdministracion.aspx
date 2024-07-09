@@ -104,10 +104,10 @@
             </asp:GridView>
             <asp:SqlDataSource ID="SqlDataSourceConfiguracionGeneral" runat="server" 
                 ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" 
-                DeleteCommand="DELETE FROM [configuration] WHERE [configuration_id] = @configuration_id" 
-                InsertCommand="INSERT INTO [configuration] ([configuration_name], [configuration_description], [configuration_value]) VALUES (@configuration_name, @configuration_description, @configuration_value)" 
-                SelectCommand="SELECT * FROM [configuration] ORDER BY [configuration_name]" 
-                UpdateCommand="UPDATE [configuration] SET [configuration_name] = @configuration_name, [configuration_description] = @configuration_description, [configuration_value] = @configuration_value WHERE [configuration_id] = @configuration_id">
+                DeleteCommand="DELETE FROM dboPrd.[configuration] WHERE [configuration_id] = @configuration_id" 
+                InsertCommand="INSERT INTO dboPrd.[configuration] ([configuration_name], [configuration_description], [configuration_value]) VALUES (@configuration_name, @configuration_description, @configuration_value)" 
+                SelectCommand="SELECT * FROM dboPrd.[configuration] ORDER BY [configuration_name]" 
+                UpdateCommand="UPDATE dboPrd.[configuration] SET [configuration_name] = @configuration_name, [configuration_description] = @configuration_description, [configuration_value] = @configuration_value WHERE [configuration_id] = @configuration_id">
                 <DeleteParameters>
                     <asp:Parameter Name="configuration_id" Type="Int32" />
                 </DeleteParameters>
@@ -169,10 +169,10 @@
             </asp:GridView>
             <asp:SqlDataSource ID="SqlDataSourceTooltips" runat="server" 
                 ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" 
-                DeleteCommand="DELETE FROM [tooltip] WHERE [tooltip_id] = @tooltip_id" 
-                InsertCommand="INSERT INTO [tooltip] ([tooltip_name], [tooltip_text]) VALUES (@tooltip_name, @tooltip_text)" 
-                SelectCommand="SELECT * FROM [tooltip] ORDER BY [tooltip_name]" 
-                UpdateCommand="UPDATE [tooltip] SET [tooltip_text] = @tooltip_text WHERE [tooltip_id] = @tooltip_id">
+                DeleteCommand="DELETE FROM dboPrd.[tooltip] WHERE [tooltip_id] = @tooltip_id" 
+                InsertCommand="INSERT INTO dboPrd.[tooltip] ([tooltip_name], [tooltip_text]) VALUES (@tooltip_name, @tooltip_text)" 
+                SelectCommand="SELECT * FROM dboPrd.[tooltip] ORDER BY [tooltip_name]" 
+                UpdateCommand="UPDATE dboPrd.[tooltip] SET [tooltip_text] = @tooltip_text WHERE [tooltip_id] = @tooltip_id">
                 <DeleteParameters>
                     <asp:Parameter Name="tooltip_id" Type="Int32" />
                 </DeleteParameters>

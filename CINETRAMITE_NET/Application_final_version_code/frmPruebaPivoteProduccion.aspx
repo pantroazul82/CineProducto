@@ -70,12 +70,12 @@ r.resolution_path,
 resolution_path2
 
 
- from project p 
- left join resolution  r on r.project_id= p.project_id 
- left join state s on p.state_id = s.state_id 
- join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id"></asp:SqlDataSource>
+ from dboPrd.project p 
+ left join dboPrd.resolution  r on r.project_id= p.project_id 
+ left join dboPrd.state s on p.state_id = s.state_id 
+ join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id"></asp:SqlDataSource>
     </p>
     <p>
         &nbsp;</p>

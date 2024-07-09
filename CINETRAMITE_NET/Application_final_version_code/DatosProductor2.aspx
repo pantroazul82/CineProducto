@@ -651,7 +651,7 @@
                                     <asp:DropDownList ID="cmbGrupoPoblacional" runat="server" name="cmbGrupoPoblacional" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGrupoPoblacional" DataTextField="nombre" DataValueField="id_grupo_poblacional">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM [grupo_poblacional]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGrupoPoblacional" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_grupo_poblacional], [nombre] FROM dboPrd.[grupo_poblacional]"></asp:SqlDataSource>
                             
                                 </div>
                             </li>
@@ -663,7 +663,7 @@
                                     <asp:DropDownList ID="cmbGenero" runat="server" name="cmbGenero" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGenero" DataTextField="nombre" DataValueField="id_genero">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM [genero]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM dboPrd.[genero]"></asp:SqlDataSource>
                             
                                 </div>
                             </li>
@@ -674,7 +674,7 @@
                                      <asp:DropDownList ID="cmbEtnia" runat="server" name="cmbEtnia" AppendDataBoundItems="True" DataSourceID="SqlDataSourceEtnia" DataTextField="nombre" DataValueField="id_etnia">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM [etnia]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM dboPrd.[etnia]"></asp:SqlDataSource>
                               
                                     </div>
                             </li>

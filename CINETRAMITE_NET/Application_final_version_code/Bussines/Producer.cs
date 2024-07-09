@@ -64,7 +64,7 @@ namespace CineProducto.Bussines
         public bool isUser(int user_id)
         {
             DB db = new DB();
-            DataSet ds = db.Select("SELECT producer_id FROM producer WHERE producer_user_id=" + user_id.ToString());
+            DataSet ds = db.Select("SELECT producer_id FROM dboPrd.producer WHERE producer_user_id=" + user_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 return true;
@@ -83,7 +83,7 @@ namespace CineProducto.Bussines
                                  + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id,"
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
-                                 + "FROM producer WHERE producer_user_id=" + user_id.ToString());
+                                 + "FROM dboPrd.producer WHERE producer_user_id=" + user_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.producer_id = 0;// (int)ds.Tables[0].Rows[0]["producer_id"];
@@ -130,7 +130,7 @@ namespace CineProducto.Bussines
                 this.producer_website = ds.Tables[0].Rows[0]["producer_website"].ToString() != "" ? ds.Tables[0].Rows[0]["producer_website"].ToString() : "";
                 this.producer_user_id = ds.Tables[0].Rows[0]["producer_user_id"].ToString() != "" ? (int)ds.Tables[0].Rows[0]["producer_user_id"] : 0;
 
-                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.producer_localization_id + "'");
+                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.producer_localization_id + "'");
                 if (localizationFatherDS.Tables[0].Rows.Count == 1)
                 {
                     this.producer_localization_father_id = localizationFatherDS.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -139,7 +139,7 @@ namespace CineProducto.Bussines
                 {
                     this.producer_localization_father_id = "";
                 }
-                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
+                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
                 if (localizationFatherDSContact.Tables[0].Rows.Count == 1)
                 {
                     this.productor_localizacion_contacto_id_padre = localizationFatherDSContact.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -162,7 +162,7 @@ namespace CineProducto.Bussines
                                  + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id,"
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
-                                 + "FROM producer WHERE producer_user_id=" + user_id.ToString());
+                                 + "FROM dboPrd.producer WHERE producer_user_id=" + user_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.producer_id = (int)ds.Tables[0].Rows[0]["producer_id"];
@@ -211,7 +211,7 @@ namespace CineProducto.Bussines
 
 
 
-                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.producer_localization_id + "'");
+                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.producer_localization_id + "'");
                 if (localizationFatherDS.Tables[0].Rows.Count == 1)
                 {
                     this.producer_localization_father_id = localizationFatherDS.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -220,7 +220,7 @@ namespace CineProducto.Bussines
                 {
                     this.producer_localization_father_id = "";
                 }
-                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
+                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
                 if (localizationFatherDSContact.Tables[0].Rows.Count == 1)
                 {
                     this.productor_localizacion_contacto_id_padre = localizationFatherDSContact.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -243,7 +243,7 @@ namespace CineProducto.Bussines
                                  + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id, "
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
-                                 + "FROM producer WHERE producer_id=" + producer_id.ToString());
+                                 + "FROM dboPrd.producer WHERE producer_id=" + producer_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.producer_id = (int)ds.Tables[0].Rows[0]["producer_id"];
@@ -296,7 +296,7 @@ namespace CineProducto.Bussines
 
 
 
-                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.producer_localization_id + "'");
+                DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.producer_localization_id + "'");
                 if (localizationFatherDS.Tables[0].Rows.Count == 1)
                 {
                     this.producer_localization_father_id = localizationFatherDS.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -305,7 +305,7 @@ namespace CineProducto.Bussines
                 {
                     this.producer_localization_father_id = "";
                 }
-                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
+                DataSet localizationFatherDSContact = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.productor_localizacion_contacto_id + "'");
                 if (localizationFatherDSContact.Tables[0].Rows.Count == 1)
                 {
                     this.productor_localizacion_contacto_id_padre = localizationFatherDSContact.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -423,7 +423,7 @@ namespace CineProducto.Bussines
             /* Si esta definido un project_id se hace una actualización, de lo contrario se hace una inserción */
             if (this.producer_id.ToString() != "" && this.producer_id > 0)
             {
-                string updateProducer = "UPDATE producer SET ";
+                string updateProducer = "UPDATE dboPrd.producer SET ";
 
                 updateProducer = updateProducer + "person_type_id = " + person_type_update + " ";
                 updateProducer = updateProducer + "id_genero = " + id_genero_update + " ";
@@ -469,7 +469,7 @@ namespace CineProducto.Bussines
             }
             else 
             {
-                string insertProducer = "INSERT INTO producer (person_type_id, id_genero, id_etnia, identification_type_id, ";
+                string insertProducer = "INSERT INTO dboPrd.producer (person_type_id, id_genero, id_etnia, identification_type_id, ";
                 insertProducer = insertProducer + "producer_name, producer_nit, producer_nit_dig_verif,";                
                 insertProducer = insertProducer + "producer_company_type_id, producer_type_id, ";
                 insertProducer = insertProducer + "producer_identification_number, producer_firstname, producer_firstname2, ";                
@@ -521,7 +521,7 @@ namespace CineProducto.Bussines
                 /* Si se actualizó correctamente la tabla del productor */
                 if (db.Execute(insertProducer))
                 {
-                    string queryProducerId = "SELECT MAX(producer_id) as producer_id FROM producer";
+                    string queryProducerId = "SELECT MAX(producer_id) as producer_id FROM dboPrd.producer";
                     DataSet newProducerDS = db.Select(queryProducerId);
                     if (newProducerDS.Tables[0].Rows.Count == 1)
                     {
@@ -559,7 +559,7 @@ namespace CineProducto.Bussines
             {
                 /* Obtiene el nombre del municipio */
                 string queryLocalizationName = "SELECT localization_name ";
-                queryLocalizationName = queryLocalizationName + "FROM localization WHERE localization_id= '" + this.producer_localization_id + "'";
+                queryLocalizationName = queryLocalizationName + "FROM dboPrd.localization WHERE localization_id= '" + this.producer_localization_id + "'";
                 DataSet queryLocalizationDS = db.Select(queryLocalizationName);
                 if (queryLocalizationDS.Tables[0].Rows.Count == 1)
                 {
@@ -568,7 +568,7 @@ namespace CineProducto.Bussines
 
                 /* Obtiene el nombre del departamento */
                 string queryLocalizationFatherName = "SELECT localization_name ";
-                queryLocalizationFatherName = queryLocalizationFatherName + "FROM localization WHERE localization_id= '" + this.producer_localization_father_id+"'";
+                queryLocalizationFatherName = queryLocalizationFatherName + "FROM dboPrd.localization WHERE localization_id= '" + this.producer_localization_father_id+"'";
                 DataSet queryLocalizationFatherDS = db.Select(queryLocalizationFatherName);
                 if (queryLocalizationFatherDS.Tables[0].Rows.Count == 1)
                 {
@@ -597,7 +597,7 @@ namespace CineProducto.Bussines
             {
                 /* Obtiene el nombre del municipio */
                 string queryLocalizationName = "SELECT localization_name ";
-                queryLocalizationName = queryLocalizationName + "FROM localization WHERE localization_id= '" + this.productor_localizacion_contacto_id + "'";
+                queryLocalizationName = queryLocalizationName + "FROM dboPrd.localization WHERE localization_id= '" + this.productor_localizacion_contacto_id + "'";
                 DataSet queryLocalizationDS = db.Select(queryLocalizationName);
                 if (queryLocalizationDS.Tables[0].Rows.Count == 1)
                 {
@@ -606,7 +606,7 @@ namespace CineProducto.Bussines
 
                 /* Obtiene el nombre del departamento */
                 string queryLocalizationFatherName = "SELECT localization_name ";
-                queryLocalizationFatherName = queryLocalizationFatherName + "FROM localization WHERE localization_id= '" + this.productor_localizacion_contacto_id_padre + "'";
+                queryLocalizationFatherName = queryLocalizationFatherName + "FROM dboPrd.localization WHERE localization_id= '" + this.productor_localizacion_contacto_id_padre + "'";
                 DataSet queryLocalizationFatherDS = db.Select(queryLocalizationFatherName);
                 if (queryLocalizationFatherDS.Tables[0].Rows.Count == 1)
                 {

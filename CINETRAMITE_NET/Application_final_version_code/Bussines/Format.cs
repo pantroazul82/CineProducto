@@ -36,7 +36,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT format_id, format_type_id, format_name, "
                                  + "format_description, format_deleted, format_padre "
-                                 + "FROM format WHERE format_id = " + format_id.ToString());
+                                 + "FROM dboPrd.format WHERE format_id = " + format_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.format_id = (int)ds.Tables[0].Rows[0]["format_id"];
@@ -88,7 +88,7 @@ namespace CineProducto.Bussines
             }
 
             /* Se calcula la cantidad de registros que hacen parte del resultado */
-            DataSet resultRegisterQty = db.Select("Select count(format_id) as qty FROM format WHERE format_deleted = 0 AND format_type_id != 3");
+            DataSet resultRegisterQty = db.Select("Select count(format_id) as qty FROM dboPrd.format WHERE format_deleted = 0 AND format_type_id != 3");
             if (resultRegisterQty.Tables[0].Rows.Count == 1)
             {
                 this.format_options_record_count = Convert.ToInt32(resultRegisterQty.Tables[0].Rows[0]["qty"]);
@@ -117,7 +117,7 @@ namespace CineProducto.Bussines
                                       + ",format_type_id"
                                       + ",format_name"
                                       + ",ROW_NUMBER() OVER(ORDER BY " + SortColumn + " " + SortOrder + ") AS RowNumber"
-                                  + " FROM format"
+                                  + " FROM dboPrd.format"
                                   + " WHERE format_deleted = 0 AND format_type_id != 3) AS ResultadoPaginado"
                             + " WHERE RowNumber BETWEEN " + (PageSize * this.format_options_page_index + 1)
                             + " AND " + (PageSize * (this.format_options_page_index + 1))
@@ -140,14 +140,14 @@ namespace CineProducto.Bussines
                 /* Se verifica si se debe llevar a cabo una inserción o una actualización */
                 if (this.format_id <= 0)
                 {
-                    result = db.Execute("INSERT INTO format (format_type_id, format_name, "
+                    result = db.Execute("INSERT INTO dboPrd.format (format_type_id, format_name, "
                                             + "format_description,format_deleted) " +
                                         "VALUES (" + this.format_type_id + ",'" + this.format_name + "','" +
                                             this.format_description + "'," + this.format_deleted + ")");
                 }
                 else
                 {
-                    result = db.Execute("UPDATE format SET format_name = '" + this.format_name +
+                    result = db.Execute("UPDATE dboPrd.format SET format_name = '" + this.format_name +
                                         "', format_description = '" + this.format_description +
                                         "', format_deleted = " + this.format_deleted +
                                         " WHERE format_id=" + this.format_id);
@@ -170,7 +170,7 @@ namespace CineProducto.Bussines
                 /* Se verifica si se debe llevar a cabo una inserción o una actualización */
                 if (this.format_id > 0)
                 {
-                    result = db.Execute("UPDATE format SET format_deleted = " + this.format_deleted +
+                    result = db.Execute("UPDATE dboPrd.format SET format_deleted = " + this.format_deleted +
                                         " WHERE format_id=" + this.format_id);
                 }
             }

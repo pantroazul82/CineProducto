@@ -1923,6 +1923,21 @@ namespace CineProducto
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            //string observaciones = txtObservaciones.Text;
+            //string aclaraciones = txtAclaraciones.Text;
+
+            //// Validar si el texto contiene el carácter no permitido
+            //if (observaciones.Contains("'"))
+            //{
+            //    // Mostrar un mensaje de error
+            //    Response.Write(@"<script language='javascript'>alert('El carácter \' no está permitido en las observaciones.');</script>");
+            //    return;
+            //}else if (aclaraciones.Contains("'"))
+            //{
+            //        // Mostrar un mensaje de error
+            //        Response.Write(@"<script language='javascript'>alert('El carácter \' no está permitido en las aclaraciones.');</script>");
+            //        return;
+            //}
             DominioCineProducto.NegocioCineProducto neg = new DominioCineProducto.NegocioCineProducto();
             project MyProject = neg.getProject(Convert.ToInt32(Session["project_id"]));
             int sectionActual = 4;

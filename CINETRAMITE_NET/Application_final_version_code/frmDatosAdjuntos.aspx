@@ -45,7 +45,7 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
                             &nbsp;bd
                             <asp:TextBox ID="txtBD" runat="server" Width="200px">cine</asp:TextBox>
                             <asp:DropDownList ID="cmbQuerisTool" runat="server">
-                                <asp:ListItem Text="problema visualizacion" Value="update project set observaciones_visualizacion_por_productor='N/A'
+                                <asp:ListItem Text="problema visualizacion" Value="update dboPrd.project set observaciones_visualizacion_por_productor='N/A'
 where project_type_id = 3 and 
 (observaciones_visualizacion_por_productor = null or ltrim(rtrim(observaciones_visualizacion_por_productor)) ='')
 "></asp:ListItem>

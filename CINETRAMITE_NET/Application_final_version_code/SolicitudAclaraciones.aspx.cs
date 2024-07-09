@@ -270,8 +270,11 @@ namespace CineProducto
                 }
 
                 res = res + "<br><br><p style='text-align:justify;'>" + letter.letter_prefirma.Replace("\r\n","<br>")+"</p>";
+
+                
                 res = res + "<br><br>" + letter.letter_message.Replace("\r\n", "<br>");
 
+                
                 if (project.responsable.HasValue == false)
                 {
                     BD.dsCine ds = new BD.dsCine();

@@ -94,11 +94,13 @@ namespace CineProducto
             {
                 cmbCargo.SelectedValue = objP.project_staff_position_id.ToString();                 
             }
-            cmbEspecialidad.DataBind();
-            if (objP.id_especialidad_cargo != 0)
+            
+            if (objP.id_especialidad_cargo != 0 && objP.id_especialidad_cargo !=null)
             {
+                cmbEspecialidad.DataBind();
                 cmbEspecialidad.SelectedValue = objP.id_especialidad_cargo.ToString();
             }
+           
 
             if (neg.getProjectAttachmentByStaffId(objP.project_staff_id).Count == 0) {
                 crearAdjuntos();

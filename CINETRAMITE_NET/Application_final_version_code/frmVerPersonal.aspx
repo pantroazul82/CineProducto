@@ -189,15 +189,15 @@ project_staff.project_staff_project_id,
 genero.nombre as genero,
 etnia.nombre as etnia,
 grupo_poblacional.nombre as grupo_poblacional
-from project_staff  
-join position on position.position_id =  project_staff.project_staff_position_id
-left join position p2 on position.position_father_id =  p2.position_id
-left join genero on genero.id_genero = project_staff.id_genero
-left join etnia on etnia.id_etnia = project_staff.id_etnia
-left join grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
-left join identification_type on identification_type.identification_type_id = project_staff.identification_type_id
-left join localization on localization.localization_id = project_staff_localization_id
-left join localization l2 on l2.localization_id=localization.localization_father_id
+from dboPrd.project_staff  
+join dboPrd.position on position.position_id =  project_staff.project_staff_position_id
+left join dboPrd.position p2 on position.position_father_id =  p2.position_id
+left join dboPrd.genero on genero.id_genero = project_staff.id_genero
+left join dboPrd.etnia on etnia.id_etnia = project_staff.id_etnia
+left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
+left join dboPrd.identification_type on identification_type.identification_type_id = project_staff.identification_type_id
+left join dboPrd.localization on localization.localization_id = project_staff_localization_id
+left join dboPrd.localization l2 on l2.localization_id=localization.localization_father_id
 WHERE  project_staff_id=@project_staff_id">
         <SelectParameters>
             <asp:ControlParameter ControlID="lblIdProjectStaff" DefaultValue="0" Name="project_staff_id" PropertyName="Text" />
@@ -286,8 +286,8 @@ case when project_attachment_approved = 1 then 'Si' else 'No' end as Aprobado,
 nombre_original,
 project_attachment_attachment_id,
         project_attachment_approved
-FROM project_attachment 
-left join attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
+FROM dboPrd.project_attachment 
+left join dboPrd.attachment on attachment.attachment_id=project_attachment.project_attachment_attachment_id
 WHERE project_staff_id=@project_staff_id">
         <SelectParameters>
             

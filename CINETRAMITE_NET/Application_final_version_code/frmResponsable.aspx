@@ -56,8 +56,8 @@
                 <asp:SqlDataSource ID="SqlDataSourceUsuarios" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select 
                         usuario.idusuario,
                         nombres +' ' + apellidos as nombre
-                        from usuario
-						join role_assignment on role_assignment.idusuario=usuario.idusuario
+                        from dboPrd.usuario
+						join dboPrd.role_assignment on role_assignment.idusuario=usuario.idusuario
                         where es_responsable = 1 and activo = 1
                         order by nombres +' ' + apellidos
                     
@@ -112,9 +112,9 @@ project_responsable.fecha,
 r.nombres+' ' + r.apellidos as Responsable, 
 a.nombres+' ' + a.apellidos as Asignado_Por,
 project_responsable.project_id
-from project_responsable
-join usuario r on r.idusuario = project_responsable.responsable
-join usuario a on a.idusuario = project_responsable.asignado_por
+from dboPrd.project_responsable
+join dboPrd.usuario r on r.idusuario = project_responsable.responsable
+join dboPrd.usuario a on a.idusuario = project_responsable.asignado_por
 where project_responsable.project_id=@idProject
 order by project_responsable.fecha desc
         ">

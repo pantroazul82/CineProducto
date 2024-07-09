@@ -156,20 +156,20 @@ p.project_clarification_request_date Fecha_Solicitud_Aclaraciones,
 p.project_clarification_response_date Fecha_Envio_Aclaraciones, 
 p.project_resolution_date Fecha_Resolucion,project_notification_date Fecha_Notificacion,
  p.state_id,localization.localization_name,l2.localization_name depto
-from project p 
-left join resolution  r on r.project_id= p.project_id 
-left join state s on p.state_id = s.state_id 
-join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join producer_type on producer_type.producer_type_id = producer.producer_type_id
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join idioma on idioma.cod_idioma = p.cod_idioma
-left join project_genre on project_genre.project_genre_id = p.project_genre_id
-left join production_type on production_type.production_type_id = p.production_type_id
-left join project_type on project_type.project_type_id = p.project_type_id
- join localization on localization.localization_id = producer.producer_localization_id
- join localization l2 on l2.localization_id = localization.localization_father_id
+from dboPrd.project p 
+left join dboPrd.resolution  r on r.project_id= p.project_id 
+left join dboPrd.state s on p.state_id = s.state_id 
+join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.producer_type on producer_type.producer_type_id = producer.producer_type_id
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.idioma on idioma.cod_idioma = p.cod_idioma
+left join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+left join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+left join dboPrd.project_type on project_type.project_type_id = p.project_type_id
+ join dboPrd.localization on localization.localization_id = producer.producer_localization_id
+ join dboPrd.localization l2 on l2.localization_id = localization.localization_father_id
 ";
 
             string filtroSQL = @" where producer_localization_id is not null AND
@@ -201,20 +201,20 @@ sum(case when project_type.project_type_id != 3 then 1 else 0 end) CNT_LARGO,
 sum(case when project_type.project_type_id = 3 then 1 else 0 end) CNT_CORTO,
 max(l2.localization_x_coord) localization_x_coord,
 max(l2.localization_y_coord) localization_y_coord
-from project p 
-left join resolution  r on r.project_id= p.project_id 
-left join state s on p.state_id = s.state_id 
-join usuario on usuario.idusuario = p.project_idusuario
-left join project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
-left join producer on producer.producer_id = project_producer.producer_id
-left join producer_type on producer_type.producer_type_id = producer.producer_type_id
-left join person_type on person_type.person_type_id = producer.person_type_id
-left join idioma on idioma.cod_idioma = p.cod_idioma
-join project_genre on project_genre.project_genre_id = p.project_genre_id
-join production_type on production_type.production_type_id = p.production_type_id
-join project_type on project_type.project_type_id = p.project_type_id
- join localization on localization.localization_id = producer.producer_localization_id
- join localization l2 on l2.localization_id = localization.localization_father_id
+from dboPrd.project p 
+left join dboPrd.resolution  r on r.project_id= p.project_id 
+left join dboPrd.state s on p.state_id = s.state_id 
+join dboPrd.usuario on usuario.idusuario = p.project_idusuario
+left join dboPrd.project_producer on project_producer.project_id = p.project_id and project_producer.project_producer_requester=1
+left join dboPrd.producer on producer.producer_id = project_producer.producer_id
+left join dboPrd.producer_type on producer_type.producer_type_id = producer.producer_type_id
+left join dboPrd.person_type on person_type.person_type_id = producer.person_type_id
+left join dboPrd.idioma on idioma.cod_idioma = p.cod_idioma
+join dboPrd.project_genre on project_genre.project_genre_id = p.project_genre_id
+join dboPrd.production_type on production_type.production_type_id = p.production_type_id
+join dboPrd.project_type on project_type.project_type_id = p.project_type_id
+ join dboPrd.localization on localization.localization_id = producer.producer_localization_id
+ join dboPrd.localization l2 on l2.localization_id = localization.localization_father_id
  " + filtroSQL+@" 
 group by l2.localization_name";
 
@@ -296,7 +296,7 @@ group by l2.localization_name";
                         codigos = "1,2,3,4,5,6,7,8,9,10,12";
                     }
 
-                    cmbEstado.DataSource = db.Select("select state_id,state_name from state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
+                    cmbEstado.DataSource = db.Select("select state_id,state_name from dboPrd.state where state_deleted=0 and state_id in (" + codigos + ")").Tables[0];
                     cmbEstado.AppendDataBoundItems = true;
                     cmbEstado.DataValueField = "state_id";
                     cmbEstado.DataTextField = "state_name";

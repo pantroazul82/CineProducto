@@ -59,7 +59,7 @@ namespace CineProducto.Bussines
                                      + "project_status_aclaraciones_productor, project_status_aclaraciones_productor_date, "
                                      + "project_status_observacion_final, project_status_observacion_final_date, "
                                      + "project_status_modified, project_status_viewed "
-                                     + "FROM project_status, section, state state_revision, state state_tab "
+                                     + "FROM dboPrd.project_status, dboPrd.section, dboPrd.state state_revision, dboPrd.state state_tab "
                                      + "WHERE project_status.project_status_section_id = section.section_id AND "
                                      + "state_revision.state_id = project_status.project_status_revision_state_id AND "
                                      + "state_tab.state_id = project_status.project_status_tab_state_id AND "
@@ -152,23 +152,41 @@ namespace CineProducto.Bussines
 
                 /* Si existe el registor en la base de datos se hace una actualización, de lo contrario se hace una inserción */
                 DataSet ds = db.Select("SELECT project_status_project_id, project_status_section_id "
-                                     + "FROM project_status "
+                                     + "FROM dboPrd.project_status "
                                      + "WHERE project_status_project_id =" + this.project_id.ToString() + " AND "
                                      + "project_status_section_id=" + this.section_id);
                 if (ds.Tables[0].Rows.Count == 1)
                 {
+
+                    if (this.solicitud_aclaraciones == null) 
+                    {
+                        this.solicitud_aclaraciones = "";
+                    }
+                    if (this.observacion_inicial == null)
+                    {
+                        this.observacion_inicial = "";
+                    }
+                    if (this.aclaraciones_productor == null)
+                    {
+                        this.aclaraciones_productor = "";
+                    }
+                    if (this.observacion_final == null)
+                    {
+                        this.observacion_final = "";
+                    }
+
                     /* Creación de la sentencia de actualizacion */
-                    string updateProjectSection = "UPDATE project_status SET ";
+                    string updateProjectSection = "UPDATE dboPrd.project_status SET ";
                     List<System.Data.SqlClient.SqlParameter> listaParametros = new List<System.Data.SqlClient.SqlParameter>();
 
                     updateProjectSection = updateProjectSection + "project_status_revision_state_id = '" + revision_state_id_tmp + "', ";
                     updateProjectSection = updateProjectSection + "project_status_tab_state_id = '" + tab_state_id_tmp + "', ";
                     updateProjectSection = updateProjectSection + "project_status_revision_mark = '" + this.revision_mark + "', ";
-                    updateProjectSection = updateProjectSection + "project_status_solicitud_aclaraciones = '" + this.solicitud_aclaraciones + "', ";
+                    updateProjectSection = updateProjectSection + "project_status_solicitud_aclaraciones = '" + this.solicitud_aclaraciones.Replace("'", "´") + "', ";
                     updateProjectSection = updateProjectSection + "project_status_solicitud_aclaraciones_date = " + solicitud_aclaraciones_date_update_query + ", ";
                     updateProjectSection = updateProjectSection + "project_status_observacion_inicial = @project_status_observacion_inicial , ";
                     System.Data.SqlClient.SqlParameter parametrproject_status_observacion_inicial = new System.Data.SqlClient.SqlParameter();
-                    parametrproject_status_observacion_inicial.Value = this.observacion_inicial;
+                    parametrproject_status_observacion_inicial.Value = this.observacion_inicial.Replace("'", "´");
                     parametrproject_status_observacion_inicial.ParameterName = "@project_status_observacion_inicial";
                     parametrproject_status_observacion_inicial.Direction = ParameterDirection.Input;
                     parametrproject_status_observacion_inicial.SqlDbType = SqlDbType.VarChar;
@@ -177,11 +195,11 @@ namespace CineProducto.Bussines
 
 
                     updateProjectSection = updateProjectSection + "project_status_observacion_inicial_date = " + observacion_inicial_date_update_query + ", ";
-                    updateProjectSection = updateProjectSection + "project_status_aclaraciones_productor = '" + this.aclaraciones_productor + "', ";
+                    updateProjectSection = updateProjectSection + "project_status_aclaraciones_productor = '" + this.aclaraciones_productor.Replace("'", "´") + "', ";
                     updateProjectSection = updateProjectSection + "project_status_aclaraciones_productor_date = " + aclaraciones_productor_date_update_query + ", ";
                     updateProjectSection = updateProjectSection + "project_status_observacion_final = @project_status_observacion_final , ";
                     System.Data.SqlClient.SqlParameter parametrproject_status_observacion_final = new System.Data.SqlClient.SqlParameter();
-                    parametrproject_status_observacion_final.Value = this.observacion_final;
+                    parametrproject_status_observacion_final.Value = this.observacion_final.Replace("'", "´");
                     parametrproject_status_observacion_final.ParameterName = "@project_status_observacion_final";
                     parametrproject_status_observacion_final.Direction = ParameterDirection.Input;
                     parametrproject_status_observacion_final.SqlDbType = SqlDbType.VarChar;
@@ -209,7 +227,7 @@ namespace CineProducto.Bussines
                 else
                 {
                     /* Creación de la sentencia de actualizacion */
-                    string insertProjectSection = "INSERT INTO project_status ("
+                    string insertProjectSection = "INSERT INTO dboPrd.project_status ("
                                          + "project_status_project_id, "
                                          + "project_status_section_id, "
                                          + "project_status_revision_state_id, "
@@ -247,7 +265,7 @@ namespace CineProducto.Bussines
                     if (db.Execute(insertProjectSection))
                     {
                         string queryProjectSection = "SELECT project_status_project_id, project_status_section_id "
-                                                        + "FROM project_status "
+                                                        + "FROM dboPrd.project_status "
                                                         + "WHERE project_status_project_id = '" + this.project_id + "' AND "
                                                         + "project_status_section_id = '" + this.section_id + "'";
                         DataSet newSectionDS = db.Select(queryProjectSection);

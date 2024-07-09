@@ -36,7 +36,7 @@ namespace CineProducto.Bussines
             DB db = new DB();
             DataSet ds = db.Select("SELECT project_type_id, project_type_name, "
                                  + "project_type_description, project_type_deleted "
-                                 + "FROM project_type WHERE project_type_id=" + project_type_id.ToString());
+                                 + "FROM dboPrd.project_type WHERE project_type_id=" + project_type_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
             {
                 this.id = (int)ds.Tables[0].Rows[0]["project_type_id"];
@@ -69,7 +69,7 @@ namespace CineProducto.Bussines
 
             DataSet result = new DataSet();
             result = db.Select("SELECT project_type_id, project_type_name, project_type_description "
-                                + "FROM project_type "
+                                + "FROM dboPrd.project_type "
                                 + "WHERE project_type_deleted = '0'");
 
             /* Retorna el indicador del resultado de la operación */

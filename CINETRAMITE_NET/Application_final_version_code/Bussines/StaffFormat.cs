@@ -61,7 +61,7 @@ namespace CineProducto.Bussines
                                  + "staff_format_country, staff_format_state, "
                                  + "staff_format_email, staff_format_phone, "
                                  + "staff_format_movil, staff_format_fax "
-                                 + " FROM staff_format WHERE project_id=" + this.project_id 
+                                 + " FROM dboPrd.staff_format WHERE project_id=" + this.project_id 
                                  + " AND staff_format_position = '" + this.staff_format_position + "'");
             if (ds.Tables[0].Rows.Count == 1)
             {
@@ -79,7 +79,7 @@ namespace CineProducto.Bussines
                 this.staff_format_fax = ds.Tables[0].Rows[0]["staff_format_fax"].ToString() != "" ? ds.Tables[0].Rows[0]["staff_format_fax"].ToString() : "";
             }
 
-            DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM localization WHERE localization_id = '" + this.staff_format_localization_id + "'");
+            DataSet localizationFatherDS = db.Select("SELECT localization_father_id FROM dboPrd.localization WHERE localization_id = '" + this.staff_format_localization_id + "'");
             if (localizationFatherDS.Tables[0].Rows.Count == 1)
             {
                 this.staff_format_localization_father_id = localizationFatherDS.Tables[0].Rows[0]["localization_father_id"].ToString();
@@ -117,12 +117,12 @@ namespace CineProducto.Bussines
 
                 /* Se consulta la base de datos para verificar si el registro indicado ya existe */
                 DataSet ds = db.Select("SELECT project_id "
-                                     + " FROM staff_format WHERE project_id=" + this.project_id
+                                     + " FROM dboPrd.staff_format WHERE project_id=" + this.project_id
                                      + " AND staff_format_position = '" + this.staff_format_position + "'");
                 if (ds.Tables[0].Rows.Count == 1)
                 {
                     /* Creación de la sentencia de actualizacion */
-                    string updateProjectStaffFormat = "UPDATE staff_format SET ";
+                    string updateProjectStaffFormat = "UPDATE dboPrd.staff_format SET ";
 
                     updateProjectStaffFormat = updateProjectStaffFormat + "staff_format_name = '" + this.staff_format_name + "', ";
                     updateProjectStaffFormat = updateProjectStaffFormat + "staff_format_identification_number = '" + this.staff_format_identification_number + "', ";
@@ -151,7 +151,7 @@ namespace CineProducto.Bussines
                 else
                 {
                     /* Creación de la sentencia de actualizacion */
-                    string insertProjectStaffFormat = "INSERT INTO staff_format ("
+                    string insertProjectStaffFormat = "INSERT INTO dboPrd.staff_format ("
                                          + "project_id, "
                                          + "staff_format_position, "
                                          + "staff_format_name, "

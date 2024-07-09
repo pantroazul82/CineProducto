@@ -360,6 +360,8 @@
             $('#<%=cmbReconocimientoNal.ClientID %>').change(function () {
 
                 setReconocimientoVisibility();
+
+
             });
                 
             
@@ -551,11 +553,15 @@
 
         function setReconocimientoVisibility() {
             if ($('#<%=cmbReconocimientoNal.ClientID %>').val() == 'Si') {
-                 $('#DivReconocimiento').show();
+                $('#DivReconocimiento').show();
+                $('#divObligatorioReconocimiento').show();
+
              }
             else
             {
-                  $('#DivReconocimiento').hide();
+                $('#DivReconocimiento').hide();
+                $('#divObligatorioReconocimiento').hide();
+
              }
          }
 
@@ -944,7 +950,7 @@
                             </asp:DropDownList>
                             
                             
-                            <asp:SqlDataSource ID="SqlDataSourceIdioma" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_idioma], [nombre_idioma] FROM [idioma] order by [nombre_idioma]"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSourceIdioma" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [cod_idioma], [nombre_idioma] FROM dboPrd.[idioma] order by [nombre_idioma]"></asp:SqlDataSource>
                             
                             
                          </div>
@@ -1031,6 +1037,10 @@
                                 <asp:ListItem Text="No" Value="No" />
                             </asp:DropDownList>
                             </div>
+                         <br /><br />
+                        
+
+
                      </li>
                     <li>
                         <div class="field_label"> </div>
@@ -1041,12 +1051,21 @@
                                     </div>
                                <div>
                                <div class="field_label">Número de Resolución <span class="required_field_text">*</span>:</div>
-                               <asp:TextBox ID="txtNumeroResolucion" runat="server" Font-Names="txtNumeroResolucion" MaxLength="20" class="user-input"></asp:TextBox>
+                               <asp:TextBox ID="txtNumeroResolucion" runat="server" Font-Names="txtNumeroResolucion" MaxLength="6" class="user-input"></asp:TextBox>
                                 </div>    
                             </div>
+
                         
                     </li>
+
                     <li>
+
+
+                        <div id ="divObligatorioReconocimiento" class="warning" style="width:80%">Recuerde que debe registrar el número y año de Resolución inicial es aquella en la cual el o los productores son todos colombianos<br />
+                    
+                            </div>
+                        
+
                         <div class="field_label">
                             Tiene estímulos o premios de financiación (en cualquier etapa):<span class="required_field_text">*</span></div>
                          <div class="field_input">
@@ -1082,7 +1101,7 @@
                                        <asp:DropDownList ID="cmbTipoEstimulo" runat="server" AppendDataBoundItems="true" DataSourceID="SqlDataSourceTipoEstimulo" DataTextField="nombre" DataValueField="id_tipo_estimulo">
                                         <asp:ListItem Text="Seleccione..." Value="-1" />
                                     </asp:DropDownList>
-                                    <asp:SqlDataSource ID="SqlDataSourceTipoEstimulo" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT * FROM [tipo_estimulo]"></asp:SqlDataSource>
+                                    <asp:SqlDataSource ID="SqlDataSourceTipoEstimulo" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT * FROM dboPrd.[tipo_estimulo]"></asp:SqlDataSource>
                                     </td>
                                </tr>
                                <tr><th style="text-align:right">Nombre del estimulo<span class="required_field_text">*</span>:</th><td><asp:TextBox ID="txtNombreEstimulo" runat="server"></asp:TextBox></td></tr>
@@ -1121,8 +1140,8 @@
                     <SortedDescendingCellStyle BackColor="#FFFDF8" />
                     <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSourceEstimulos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select estimulo.id_estimulo, tipo_estimulo.nombre as tipo_estimulo, estimulo.nombre, estimulo.valor, estimulo.beneficiario from estimulo
-join tipo_estimulo on tipo_estimulo.id_tipo_estimulo = estimulo.id_tipo_estimulo
+                <asp:SqlDataSource ID="SqlDataSourceEstimulos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select estimulo.id_estimulo, tipo_estimulo.nombre as tipo_estimulo, estimulo.nombre, estimulo.valor, estimulo.beneficiario from dboPrd.estimulo
+join dboPrd.tipo_estimulo on tipo_estimulo.id_tipo_estimulo = estimulo.id_tipo_estimulo
 where estimulo.project_id = @project_id">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="project_id" PropertyName="Text" />
@@ -1185,7 +1204,7 @@ where estimulo.project_id = @project_id">
                                              <asp:ListItem Text="Seleccione..." Value="" />
                                             </asp:DropDownList>   
                                             
-                                         <asp:SqlDataSource ID="SqlDataSourcePais" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from localization where localization_father_id=-2 order by localization_name"></asp:SqlDataSource>
+                                         <asp:SqlDataSource ID="SqlDataSourcePais" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from dboPrd.localization where localization_father_id=-2 order by localization_name"></asp:SqlDataSource>
                                            
                                         </td>
                                     </tr>                                   
@@ -1197,7 +1216,7 @@ where estimulo.project_id = @project_id">
                                         <td><asp:DropDownList runat="server" AutoPostBack="true" ID="cmbDeptoLugar" AppendDataBoundItems="true" DataSourceID="SqlDataSourceDeptos" DataTextField="localization_name" DataValueField="localization_id" OnSelectedIndexChanged="cmbDeptoLugar_SelectedIndexChanged">
                                             <asp:ListItem Text="Seleccione..." Value="-1" />
                                             </asp:DropDownList>          
-                                         <asp:SqlDataSource ID="SqlDataSourceDeptos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from localization where localization_father_id=0"></asp:SqlDataSource>
+                                         <asp:SqlDataSource ID="SqlDataSourceDeptos" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from dboPrd.localization where localization_father_id=0"></asp:SqlDataSource>
 
                                         </td>
                                     </tr>
@@ -1206,7 +1225,7 @@ where estimulo.project_id = @project_id">
                                         <td> <asp:DropDownList runat="server" ID="cmbCiudadLugar" AppendDataBoundItems="false" DataSourceID="SqlDataSourceCitys" DataTextField="localization_name" DataValueField="localization_id">
                                             <asp:ListItem Text="Seleccione..." Value="-1" />
                                              </asp:DropDownList>          
-                                            <asp:SqlDataSource ID="SqlDataSourceCitys" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from localization where localization_father_id=@localizacion_id">
+                                            <asp:SqlDataSource ID="SqlDataSourceCitys" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select localization_id, localization_name from dboPrd.localization where localization_father_id=@localizacion_id">
                                                 <SelectParameters>
                                                     <asp:ControlParameter ControlID="cmbDeptoLugar" Name="localizacion_id" PropertyName="SelectedValue" />
                                                 </SelectParameters>
@@ -1284,7 +1303,7 @@ where estimulo.project_id = @project_id">
                                 AppendDataBoundItems="true" DataSourceID="SqlDataSourceFormatoPadre" DataTextField="format_name" DataValueField="format_id" OnSelectedIndexChanged="cmbFormatoPadre_SelectedIndexChanged">
                                 <asp:ListItem Text="Seleccione..." Value="0"></asp:ListItem>
                             </asp:DropDownList>                            
-                            <asp:SqlDataSource ID="SqlDataSourceFormatoPadre" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select format_id, format_name  from format where format_type_id = 1 and format_id in (22,23) order by format_name"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSourceFormatoPadre" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="select format_id, format_name  from dboPrd.format where format_type_id = 1 and format_id in (22,23) order by format_name"></asp:SqlDataSource>
                             
                             <asp:DropDownList ID="cmbFormatoRodaje"  class="user-input" runat="server" name="cmbFormatoRodaje" DataTextField="format_name" DataValueField="format_id">
                                 <asp:ListItem Text="Seleccione..." Value="0"></asp:ListItem>
