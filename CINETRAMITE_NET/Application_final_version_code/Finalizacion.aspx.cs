@@ -1173,10 +1173,15 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
 #endregion
             }
             if (Request.Form["enviaraclaraciones_field"] == "1")
-            {//cuando el productor responde las aclaraciones
+            {
+                lblErrorEnvirAclaraciones.Text = "";
+                lblErrorEnvirAclaraciones.Text = "Por reestructuración Técnica actualmente no está habilitada la plataforma para él envió de su trámite. \r\nMientras se habilita podrá realizar modificaciones a su información y/o adjuntos. Le recomendamos validar que se encuentren todos los adjuntos de su solicitud cargados. \r\nLe estaremos notificando una vez se reestablezca el servicio en su totalidad para el envío de su solicitud.";
+                return;
+                //PANDEMIA
+                //cuando el productor responde las aclaraciones
                 #region enviar aclaraciones
                 //el productor debio poner observaciones en los campos que le pidieron aclaraciones
-                string respuesta="";
+                string respuesta ="";
                 if (project.sectionDatosProyecto.revision_state_id == 10 && project.sectionDatosProyecto.aclaraciones_productor == string.Empty)
                 {
                     respuesta += "<br>No ingreso las aclaraciones para datos de la obra";
@@ -1516,6 +1521,10 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             }
             if (Request.Form["submit_field"] == "1")
             {
+                lblErrorEnviar.Text = "";
+                lblErrorEnviar.Text = "Por reestructuración Técnica actualmente no está habilitada la plataforma para él envió de su trámite. \r\nMientras se habilita podrá realizar modificaciones a su información y/o adjuntos. Le recomendamos validar que se encuentren todos los adjuntos de su solicitud cargados. \r\nLe estaremos notificando una vez se reestablezca el servicio en su totalidad para el envío de su solicitud.";
+                return;
+                //PANDEMIA
                 #region enviar proyecto
                 lblErrorEnviar.Text = "";
                 /* Acciones de persistencia de acuerdo al estado actual */

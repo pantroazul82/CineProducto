@@ -1221,6 +1221,10 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             }
             if (Request.Form["enviaraclaraciones_field"] == "1")
             {//cuando el productor responde las aclaraciones
+                lblErrorEnvirAclaraciones.Text = "";
+                lblErrorEnvirAclaraciones.Text = "Por reestructuración Técnica actualmente no está habilitada la plataforma para él envió de su trámite. \r\nMientras se habilita podrá realizar modificaciones a su información y/o adjuntos. Le recomendamos validar que se encuentren todos los adjuntos de su solicitud cargados. \r\nLe estaremos notificando una vez se reestablezca el servicio en su totalidad para el envío de su solicitud.";
+                return;
+                //PANDEMIA
                 #region enviar aclaraciones
                 //el productor debio poner observaciones en los campos que le pidieron aclaraciones
                 string respuesta = "";
@@ -1597,6 +1601,9 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             {
                 #region enviar proyecto
                 lblErrorEnviar.Text = "";
+                lblErrorEnviar.Text = "Por reestructuración Técnica actualmente no está habilitada la plataforma para él envió de su trámite. \r\nMientras se habilita podrá realizar modificaciones a su información y/o adjuntos. Le recomendamos validar que se encuentren todos los adjuntos de su solicitud cargados. \r\nLe estaremos notificando una vez se reestablezca el servicio en su totalidad para el envío de su solicitud.";
+                return;
+                //PANDEMIA
                 /* Acciones de persistencia de acuerdo al estado actual */
                 RequestForm form = new RequestForm(this.project_id);
                 if (form.path == null || form.path.Trim() == string.Empty)
