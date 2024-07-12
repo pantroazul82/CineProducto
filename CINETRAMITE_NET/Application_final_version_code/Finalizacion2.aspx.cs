@@ -197,7 +197,20 @@ namespace CineProducto
                 Response.Redirect("Default.aspx", true);
             }
 
-            if (Session["user_id"] != null && Convert.ToInt32(Session["user_id"]) == 22159)
+            List<int> permisosEspeciales = new List<int>();
+            permisosEspeciales.Add(22159);//cg
+            permisosEspeciales.Add(31916);
+            permisosEspeciales.Add(36547);
+            permisosEspeciales.Add(40932);
+            permisosEspeciales.Add(40953);
+            permisosEspeciales.Add(40969);
+            
+
+
+
+
+
+            if (Session["user_id"] != null && permisosEspeciales.Contains( Convert.ToInt32(Session["user_id"]) ))
             {
                 this.es_super_admin = 1;
             }
@@ -285,7 +298,7 @@ namespace CineProducto
                     {
                         if (project.state_id <= 1)
                         {
-                            Response.Redirect("Default.aspx", true);
+                           // Response.Redirect("Default.aspx", true);
                         }
                     }
                     else

@@ -234,6 +234,12 @@
     <Compile Include="Data\section.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\staff_format.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\staff_log.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\staff_option.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

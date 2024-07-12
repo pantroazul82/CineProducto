@@ -123,7 +123,7 @@ namespace CineProducto.Callbacks
 
             }
 
-            string Q = declarationDates + "SELECT COUNT(*) from project, state WHERE project.state_id = state.state_id " + searchQ;
+            string Q = declarationDates + "SELECT COUNT(*) from dboprd.project, state WHERE project.state_id = state.state_id " + searchQ;
 
 
             DataSet dset = db.Select(Q);
