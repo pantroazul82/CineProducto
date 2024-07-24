@@ -1061,7 +1061,7 @@
                     <li>
 
 
-                        <div id ="divObligatorioReconocimiento" class="warning" style="width:80%">Recuerde que debe registrar el número y año de Resolución inicial es aquella en la cual el o los productores son todos colombianos<br />
+                        <div id ="divObligatorioReconocimiento" class="warning" style="width:80%">Recuerde que debe registrar el número y año de Resolución inicial.<br />
                     
                             </div>
                         
