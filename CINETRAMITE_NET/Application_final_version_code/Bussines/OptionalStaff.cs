@@ -190,7 +190,7 @@ namespace CineProducto.Bussines
             {
                 /* Hace disponible la conexión a la base de datos */
                 DB db = new DB();
-                result = db.Execute("DELETE FROM project_optional_staff WHERE project_optional_staff_position_id = " + this.project_optional_staff_position_id);
+                result = db.Execute("DELETE FROM dboprd.project_optional_staff WHERE project_optional_staff_position_id = " + this.project_optional_staff_position_id);
             }
 
             return result;

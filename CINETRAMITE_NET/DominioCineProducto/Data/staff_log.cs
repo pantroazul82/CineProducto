@@ -12,10 +12,11 @@ namespace DominioCineProducto.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class state
+    public partial class staff_log
     {
-        public int state_id { get; set; }
-        public string state_name { get; set; }
-        public byte state_deleted { get; set; }
+        public int id { get; set; }
+        public string accion { get; set; }
+        public string detalle { get; set; }
+        public Nullable<System.DateTime> fecha { get; set; }
     }
 }

@@ -49,8 +49,8 @@
           <Property Name="attachment_foreing_producer" Type="int" />
           <Property Name="tooltip" Type="ntext" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_validation' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.attachment_validation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="attachment_validation">
           <Key>
             <PropertyRef Name="validation_id" />
@@ -403,6 +403,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="SUBSANACION_ENVIADA" Type="bit" />
           <Property Name="HOJA_TRANSFERENCIA" Type="varchar" MaxLength="1000" />
           <Property Name="municipio_lab_otro" Type="varchar" MaxLength="100" />
+          <Property Name="fecha_asignacion_responsable" Type="datetime" />
         </EntityType>
         <EntityType Name="project_attachment">
           <Key>
@@ -594,6 +595,35 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="section_name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="section_order" Type="int" />
           <Property Name="section_deleted" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staff_format">
+          <Key>
+            <PropertyRef Name="Id_new" />
+          </Key>
+          <Property Name="project_id" Type="int" />
+          <Property Name="staff_format_position" Type="nvarchar" MaxLength="200" />
+          <Property Name="staff_format_name" Type="nvarchar" MaxLength="250" />
+          <Property Name="staff_format_identification_number" Type="nvarchar" MaxLength="150" />
+          <Property Name="staff_format_address" Type="nvarchar" MaxLength="250" />
+          <Property Name="staff_format_localization_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="staff_format_country" Type="nvarchar" MaxLength="50" />
+          <Property Name="staff_format_state" Type="nvarchar" MaxLength="250" />
+          <Property Name="staff_format_email" Type="nvarchar" MaxLength="300" />
+          <Property Name="staff_format_phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="staff_format_movil" Type="nvarchar" MaxLength="50" />
+          <Property Name="staff_format_fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_new" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.staff_log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="staff_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="accion" Type="varchar" MaxLength="100" />
+          <Property Name="detalle" Type="varchar" MaxLength="1000" />
+          <Property Name="fecha" Type="datetime" />
         </EntityType>
         <EntityType Name="staff_option">
           <Key>
@@ -1136,6 +1166,18 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_staff_format_project">
+          <End Role="project" Type="Self.project" Multiplicity="0..1" />
+          <End Role="staff_format" Type="Self.staff_format" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="staff_format">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_staff_option_detail_position">
           <End Role="position" Type="Self.position" Multiplicity="1" />
           <End Role="staff_option_detail" Type="Self.staff_option_detail" Multiplicity="*" />
@@ -1228,6 +1270,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySet Name="role_assignment" EntityType="Self.role_assignment" Schema="dboPrd" store:Type="Tables" />
           <EntitySet Name="role_permission" EntityType="Self.role_permission" Schema="dboPrd" store:Type="Tables" />
           <EntitySet Name="section" EntityType="Self.section" Schema="dboPrd" store:Type="Tables" />
+          <EntitySet Name="staff_format" EntityType="Self.staff_format" Schema="dboPrd" store:Type="Tables" />
           <EntitySet Name="staff_option" EntityType="Self.staff_option" Schema="dboPrd" store:Type="Tables" />
           <EntitySet Name="staff_option_detail" EntityType="Self.staff_option_detail" Schema="dboPrd" store:Type="Tables" />
           <EntitySet Name="state" EntityType="Self.state" Schema="dboPrd" store:Type="Tables" />
@@ -1246,6 +1289,14 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
     [attachment_validation].[active] AS [active], 
     [attachment_validation].[prioridad] AS [prioridad]
     FROM [dboPrd].[attachment_validation] AS [attachment_validation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="staff_log" EntityType="Self.staff_log" store:Type="Tables" store:Schema="dboPrd">
+            <DefiningQuery>SELECT 
+    [staff_log].[id] AS [id], 
+    [staff_log].[accion] AS [accion], 
+    [staff_log].[detalle] AS [detalle], 
+    [staff_log].[fecha] AS [fecha]
+    FROM [dboPrd].[staff_log] AS [staff_log]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_adjunto_projecto_project" Association="Self.FK_adjunto_projecto_project">
             <End Role="project" EntitySet="project" />
@@ -1395,6 +1446,10 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             <End Role="role" EntitySet="role" />
             <End Role="role_permission" EntitySet="role_permission" />
           </AssociationSet>
+          <AssociationSet Name="FK_staff_format_project" Association="Self.FK_staff_format_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="staff_format" EntitySet="staff_format" />
+          </AssociationSet>
           <AssociationSet Name="FK_staff_option_detail_position" Association="Self.FK_staff_option_detail_position">
             <End Role="position" EntitySet="position" />
             <End Role="staff_option_detail" EntitySet="staff_option_detail" />
@@ -1435,6 +1490,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySet Name="identification_type" EntityType="cineModel.identification_type" />
           <EntitySet Name="idioma" EntityType="cineModel.idioma" />
           <EntitySet Name="letter" EntityType="cineModel.letter" />
+          <EntitySet Name="localization" EntityType="cineModel.localization" />
           <EntitySet Name="permission" EntityType="cineModel.permission" />
           <EntitySet Name="person_type" EntityType="cineModel.person_type" />
           <EntitySet Name="personal_type" EntityType="cineModel.personal_type" />
@@ -1450,6 +1506,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySet Name="project_optional_staff" EntityType="cineModel.project_optional_staff" />
           <EntitySet Name="project_producer" EntityType="cineModel.project_producer" />
           <EntitySet Name="project_responsable" EntityType="cineModel.project_responsable" />
+          <EntitySet Name="project_staff" EntityType="cineModel.project_staff" />
           <EntitySet Name="project_status" EntityType="cineModel.project_status" />
           <EntitySet Name="project_type" EntityType="cineModel.project_type" />
           <EntitySet Name="request_form" EntityType="cineModel.request_form" />
@@ -1458,6 +1515,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySet Name="role_assignment" EntityType="cineModel.role_assignment" />
           <EntitySet Name="role_permission" EntityType="cineModel.role_permission" />
           <EntitySet Name="section" EntityType="cineModel.section" />
+          <EntitySet Name="staff_format" EntityType="cineModel.staff_format" />
           <EntitySet Name="staff_option" EntityType="cineModel.staff_option" />
           <EntitySet Name="staff_option_detail" EntityType="cineModel.staff_option_detail" />
           <EntitySet Name="state" EntityType="cineModel.state" />
@@ -1466,6 +1524,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySet Name="usuario" EntityType="cineModel.usuario" />
           <EntitySet Name="ZONA_COLOMBIA" EntityType="cineModel.ZONA_COLOMBIA" />
           <EntitySet Name="attachment_validation" EntityType="cineModel.attachment_validation" />
+          <EntitySet Name="staff_log" EntityType="cineModel.staff_log" />
           <AssociationSet Name="FK_adjunto_projecto_project" Association="cineModel.FK_adjunto_projecto_project">
             <End Role="project" EntitySet="project" />
             <End Role="adjunto_projecto" EntitySet="adjunto_projecto" />
@@ -1514,6 +1573,14 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             <End Role="idioma" EntitySet="idioma" />
             <End Role="project" EntitySet="project" />
           </AssociationSet>
+          <AssociationSet Name="FK_producer_localization" Association="cineModel.FK_producer_localization">
+            <End Role="localization" EntitySet="localization" />
+            <End Role="producer" EntitySet="producer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_staff_localization" Association="cineModel.FK_project_staff_localization">
+            <End Role="localization" EntitySet="localization" />
+            <End Role="project_staff" EntitySet="project_staff" />
+          </AssociationSet>
           <AssociationSet Name="FK_producer_person_type" Association="cineModel.FK_producer_person_type">
             <End Role="person_type" EntitySet="person_type" />
             <End Role="producer" EntitySet="producer" />
@@ -1521,6 +1588,10 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <AssociationSet Name="FK_project_optional_staff_position" Association="cineModel.FK_project_optional_staff_position">
             <End Role="position" EntitySet="position" />
             <End Role="project_optional_staff" EntitySet="project_optional_staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_staff_position" Association="cineModel.FK_project_staff_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="project_staff" EntitySet="project_staff" />
           </AssociationSet>
           <AssociationSet Name="FK_staff_option_detail_position" Association="cineModel.FK_staff_option_detail_position">
             <End Role="position" EntitySet="position" />
@@ -1574,6 +1645,10 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             <End Role="staff_option" EntitySet="staff_option" />
             <End Role="project" EntitySet="project" />
           </AssociationSet>
+          <AssociationSet Name="FK_project_staff_project" Association="cineModel.FK_project_staff_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="project_staff" EntitySet="project_staff" />
+          </AssociationSet>
           <AssociationSet Name="FK_project_status_project" Association="cineModel.FK_project_status_project">
             <End Role="project" EntitySet="project" />
             <End Role="project_status" EntitySet="project_status" />
@@ -1589,6 +1664,10 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <AssociationSet Name="FK_resolution_project" Association="cineModel.FK_resolution_project">
             <End Role="project" EntitySet="project" />
             <End Role="resolution" EntitySet="resolution" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staff_format_project" Association="cineModel.FK_staff_format_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="staff_format" EntitySet="staff_format" />
           </AssociationSet>
           <AssociationSet Name="FK_project_status_section" Association="cineModel.FK_project_status_section">
             <End Role="section" EntitySet="section" />
@@ -1614,25 +1693,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             <End Role="staff_option" EntitySet="staff_option" />
             <End Role="staff_option_detail" EntitySet="staff_option_detail" />
           </AssociationSet>
-          <EntitySet Name="localization" EntityType="cineModel.localization" />
-          <EntitySet Name="project_staff" EntityType="cineModel.project_staff" />
-          <AssociationSet Name="FK_producer_localization" Association="cineModel.FK_producer_localization">
-            <End Role="localization" EntitySet="localization" />
-            <End Role="producer" EntitySet="producer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_staff_localization" Association="cineModel.FK_project_staff_localization">
-            <End Role="localization" EntitySet="localization" />
-            <End Role="project_staff" EntitySet="project_staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_staff_position" Association="cineModel.FK_project_staff_position">
-            <End Role="position" EntitySet="position" />
-            <End Role="project_staff" EntitySet="project_staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_project_staff_project" Association="cineModel.FK_project_staff_project">
-            <End Role="project" EntitySet="project" />
-            <End Role="project_staff" EntitySet="project_staff" />
-          </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
         <EntityType Name="adjunto_projecto">
           <Key>
             <PropertyRef Name="cod_adjunto_projecto" />
@@ -1814,6 +1875,21 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="letter_note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="letter_prefirma" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="localization">
+          <Key>
+            <PropertyRef Name="localization_id" />
+          </Key>
+          <Property Name="localization_id" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="localization_father_id" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="localization_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="localization_x_coord" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="localization_y_coord" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="localization_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="localization_deleted" Type="Byte" Nullable="false" />
+          <Property Name="COD_ZONA_COLOMBIA" Type="Int32" />
+          <NavigationProperty Name="producer" Relationship="cineModel.FK_producer_localization" FromRole="localization" ToRole="producer" />
+          <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_localization" FromRole="localization" ToRole="project_staff" />
+        </EntityType>
         <EntityType Name="permission">
           <Key>
             <PropertyRef Name="permission_id" />
@@ -1850,8 +1926,8 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="position_deleted" Type="Byte" Nullable="false" />
           <NavigationProperty Name="especialidad_cargo" Relationship="cineModel.FK_especialidad_cargo_position" FromRole="position" ToRole="especialidad_cargo" />
           <NavigationProperty Name="project_optional_staff" Relationship="cineModel.FK_project_optional_staff_position" FromRole="position" ToRole="project_optional_staff" />
-          <NavigationProperty Name="staff_option_detail" Relationship="cineModel.FK_staff_option_detail_position" FromRole="position" ToRole="staff_option_detail" />
           <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_position" FromRole="position" ToRole="project_staff" />
+          <NavigationProperty Name="staff_option_detail" Relationship="cineModel.FK_staff_option_detail_position" FromRole="position" ToRole="staff_option_detail" />
         </EntityType>
         <EntityType Name="producer">
           <Key>
@@ -1897,11 +1973,11 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <NavigationProperty Name="etnia" Relationship="cineModel.FK_producer_etnia" FromRole="producer" ToRole="etnia" />
           <NavigationProperty Name="genero" Relationship="cineModel.FK_producer_genero" FromRole="producer" ToRole="genero" />
           <NavigationProperty Name="identification_type" Relationship="cineModel.FK_producer_identification_type" FromRole="producer" ToRole="identification_type" />
+          <NavigationProperty Name="localization" Relationship="cineModel.FK_producer_localization" FromRole="producer" ToRole="localization" />
           <NavigationProperty Name="person_type" Relationship="cineModel.FK_producer_person_type" FromRole="producer" ToRole="person_type" />
           <NavigationProperty Name="producer_company_type" Relationship="cineModel.FK_producer_producer_company_type" FromRole="producer" ToRole="producer_company_type" />
           <NavigationProperty Name="producer_type" Relationship="cineModel.FK_producer_producer_type" FromRole="producer" ToRole="producer_type" />
           <NavigationProperty Name="project_producer" Relationship="cineModel.FK_project_producer_producer" FromRole="producer" ToRole="project_producer" />
-          <NavigationProperty Name="localization" Relationship="cineModel.FK_producer_localization" FromRole="producer" ToRole="localization" />
         </EntityType>
         <EntityType Name="producer_company_type">
           <Key>
@@ -2033,6 +2109,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="SUBSANACION_ENVIADA" Type="Boolean" />
           <Property Name="HOJA_TRANSFERENCIA" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="municipio_lab_otro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_asignacion_responsable" Type="DateTime" Precision="3" />
           <NavigationProperty Name="adjunto_projecto" Relationship="cineModel.FK_adjunto_projecto_project" FromRole="project" ToRole="adjunto_projecto" />
           <NavigationProperty Name="estimulo" Relationship="cineModel.FK_estimulo_project" FromRole="project" ToRole="estimulo" />
           <NavigationProperty Name="firma_tramite" Relationship="cineModel.FK_project_firma_tramite" FromRole="project" ToRole="firma_tramite" />
@@ -2045,11 +2122,12 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <NavigationProperty Name="project_producer" Relationship="cineModel.FK_project_producer_project" FromRole="project" ToRole="project_producer" />
           <NavigationProperty Name="project_responsable" Relationship="cineModel.FK_project_responsable_project" FromRole="project" ToRole="project_responsable" />
           <NavigationProperty Name="staff_option" Relationship="cineModel.FK_project_staff_option" FromRole="project" ToRole="staff_option" />
+          <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_project" FromRole="project" ToRole="project_staff" />
           <NavigationProperty Name="project_status" Relationship="cineModel.FK_project_status_project" FromRole="project" ToRole="project_status" />
           <NavigationProperty Name="project_type" Relationship="cineModel.FK_project_type" FromRole="project" ToRole="project_type" />
           <NavigationProperty Name="usuario" Relationship="cineModel.FK_project_usuario" FromRole="project" ToRole="usuario" />
           <NavigationProperty Name="resolution" Relationship="cineModel.FK_resolution_project" FromRole="project" ToRole="resolution" />
-          <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_project" FromRole="project" ToRole="project_staff" />
+          <NavigationProperty Name="staff_format" Relationship="cineModel.FK_staff_format_project" FromRole="project" ToRole="staff_format" />
         </EntityType>
         <EntityType Name="project_attachment">
           <Key>
@@ -2132,6 +2210,43 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="asignado_por" Type="Int32" />
           <Property Name="project_id" Type="Int32" />
           <NavigationProperty Name="project" Relationship="cineModel.FK_project_responsable_project" FromRole="project_responsable" ToRole="project" />
+        </EntityType>
+        <EntityType Name="project_staff">
+          <Key>
+            <PropertyRef Name="project_staff_id" />
+          </Key>
+          <Property Name="project_staff_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="project_staff_project_id" Type="Int32" Nullable="false" />
+          <Property Name="project_staff_firstname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_lastname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_identification_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_state" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_identification_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_cv_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_contract_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_position_id" Type="Int32" />
+          <Property Name="project_staff_identification_approved" Type="Byte" Nullable="false" />
+          <Property Name="project_staff_cv_approved" Type="Byte" Nullable="false" />
+          <Property Name="project_staff_contract_approved" Type="Byte" Nullable="false" />
+          <Property Name="project_staff_firstname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_lastname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_genero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="project_staff_localization_id" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="id_genero" Type="Int32" />
+          <Property Name="id_etnia" Type="Int32" />
+          <Property Name="identification_type_id" Type="Int32" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="id_grupo_poblacional" Type="Int32" />
+          <Property Name="id_especialidad_cargo" Type="Int32" />
+          <NavigationProperty Name="localization" Relationship="cineModel.FK_project_staff_localization" FromRole="project_staff" ToRole="localization" />
+          <NavigationProperty Name="position" Relationship="cineModel.FK_project_staff_position" FromRole="project_staff" ToRole="position" />
+          <NavigationProperty Name="project" Relationship="cineModel.FK_project_staff_project" FromRole="project_staff" ToRole="project" />
         </EntityType>
         <EntityType Name="project_status">
           <Key>
@@ -2228,6 +2343,25 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="section_order" Type="Int32" />
           <Property Name="section_deleted" Type="Byte" Nullable="false" />
           <NavigationProperty Name="project_status" Relationship="cineModel.FK_project_status_section" FromRole="section" ToRole="project_status" />
+        </EntityType>
+        <EntityType Name="staff_format">
+          <Key>
+            <PropertyRef Name="Id_new" />
+          </Key>
+          <Property Name="project_id" Type="Int32" />
+          <Property Name="staff_format_position" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_identification_number" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_localization_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_state" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="staff_format_fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_new" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="project" Relationship="cineModel.FK_staff_format_project" FromRole="staff_format" ToRole="project" />
         </EntityType>
         <EntityType Name="staff_option">
           <Key>
@@ -2347,6 +2481,15 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <Property Name="operator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="active" Type="Byte" />
           <Property Name="prioridad" Type="Int32" />
+        </EntityType>
+        <EntityType Name="staff_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="accion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="detalle" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_adjunto_projecto_project">
           <End Type="cineModel.project" Role="project" Multiplicity="0..1" />
@@ -2492,6 +2635,30 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_producer_localization">
+          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
+          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="localization">
+              <PropertyRef Name="localization_id" />
+            </Principal>
+            <Dependent Role="producer">
+              <PropertyRef Name="producer_localization_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_staff_localization">
+          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
+          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="localization">
+              <PropertyRef Name="localization_id" />
+            </Principal>
+            <Dependent Role="project_staff">
+              <PropertyRef Name="project_staff_localization_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_producer_person_type">
           <End Type="cineModel.person_type" Role="person_type" Multiplicity="0..1" />
           <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
@@ -2513,6 +2680,18 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             </Principal>
             <Dependent Role="project_optional_staff">
               <PropertyRef Name="project_optional_staff_position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_staff_position">
+          <End Type="cineModel.position" Role="position" Multiplicity="0..1" />
+          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="project_staff">
+              <PropertyRef Name="project_staff_position_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2672,6 +2851,18 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_project_staff_project">
+          <End Type="cineModel.project" Role="project" Multiplicity="1" />
+          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="project_staff">
+              <PropertyRef Name="project_staff_project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_project_status_project">
           <End Type="cineModel.project" Role="project" Multiplicity="1" />
           <End Type="cineModel.project_status" Role="project_status" Multiplicity="*" />
@@ -2716,6 +2907,18 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
               <PropertyRef Name="project_id" />
             </Principal>
             <Dependent Role="resolution">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staff_format_project">
+          <End Type="cineModel.project" Role="project" Multiplicity="0..1" />
+          <End Type="cineModel.staff_format" Role="staff_format" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="staff_format">
               <PropertyRef Name="project_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -2789,106 +2992,6 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
             </Principal>
             <Dependent Role="staff_option_detail">
               <PropertyRef Name="staff_option_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="localization">
-          <Key>
-            <PropertyRef Name="localization_id" />
-          </Key>
-          <Property Name="localization_id" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="localization_father_id" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="localization_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="localization_x_coord" Type="Decimal" Precision="18" Scale="10" />
-          <Property Name="localization_y_coord" Type="Decimal" Precision="18" Scale="10" />
-          <Property Name="localization_description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="localization_deleted" Type="Byte" Nullable="false" />
-          <Property Name="COD_ZONA_COLOMBIA" Type="Int32" />
-          <NavigationProperty Name="producer" Relationship="cineModel.FK_producer_localization" FromRole="localization" ToRole="producer" />
-          <NavigationProperty Name="project_staff" Relationship="cineModel.FK_project_staff_localization" FromRole="localization" ToRole="project_staff" />
-        </EntityType>
-        <EntityType Name="project_staff">
-          <Key>
-            <PropertyRef Name="project_staff_id" />
-          </Key>
-          <Property Name="project_staff_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="project_staff_project_id" Type="Int32" Nullable="false" />
-          <Property Name="project_staff_firstname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_lastname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_identification_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_state" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_identification_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_cv_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_contract_attachment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_position_id" Type="Int32" />
-          <Property Name="project_staff_identification_approved" Type="Byte" Nullable="false" />
-          <Property Name="project_staff_cv_approved" Type="Byte" Nullable="false" />
-          <Property Name="project_staff_contract_approved" Type="Byte" Nullable="false" />
-          <Property Name="project_staff_firstname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_lastname2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_genero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_staff_localization_id" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="id_genero" Type="Int32" />
-          <Property Name="id_etnia" Type="Int32" />
-          <Property Name="identification_type_id" Type="Int32" />
-          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
-          <Property Name="id_grupo_poblacional" Type="Int32" />
-          <Property Name="id_especialidad_cargo" Type="Int32" />
-          <NavigationProperty Name="localization" Relationship="cineModel.FK_project_staff_localization" FromRole="project_staff" ToRole="localization" />
-          <NavigationProperty Name="position" Relationship="cineModel.FK_project_staff_position" FromRole="project_staff" ToRole="position" />
-          <NavigationProperty Name="project" Relationship="cineModel.FK_project_staff_project" FromRole="project_staff" ToRole="project" />
-        </EntityType>
-        <Association Name="FK_producer_localization">
-          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
-          <End Type="cineModel.producer" Role="producer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="localization">
-              <PropertyRef Name="localization_id" />
-            </Principal>
-            <Dependent Role="producer">
-              <PropertyRef Name="producer_localization_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_staff_localization">
-          <End Type="cineModel.localization" Role="localization" Multiplicity="0..1" />
-          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="localization">
-              <PropertyRef Name="localization_id" />
-            </Principal>
-            <Dependent Role="project_staff">
-              <PropertyRef Name="project_staff_localization_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_staff_position">
-          <End Type="cineModel.position" Role="position" Multiplicity="0..1" />
-          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="position">
-              <PropertyRef Name="position_id" />
-            </Principal>
-            <Dependent Role="project_staff">
-              <PropertyRef Name="project_staff_position_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_project_staff_project">
-          <End Type="cineModel.project" Role="project" Multiplicity="1" />
-          <End Type="cineModel.project_staff" Role="project_staff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="project_staff">
-              <PropertyRef Name="project_staff_project_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3084,6 +3187,20 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="localization">
+            <EntityTypeMapping TypeName="cineModel.localization">
+              <MappingFragment StoreEntitySet="localization">
+                <ScalarProperty Name="COD_ZONA_COLOMBIA" ColumnName="COD_ZONA_COLOMBIA" />
+                <ScalarProperty Name="localization_deleted" ColumnName="localization_deleted" />
+                <ScalarProperty Name="localization_description" ColumnName="localization_description" />
+                <ScalarProperty Name="localization_y_coord" ColumnName="localization_y_coord" />
+                <ScalarProperty Name="localization_x_coord" ColumnName="localization_x_coord" />
+                <ScalarProperty Name="localization_name" ColumnName="localization_name" />
+                <ScalarProperty Name="localization_father_id" ColumnName="localization_father_id" />
+                <ScalarProperty Name="localization_id" ColumnName="localization_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="permission">
             <EntityTypeMapping TypeName="cineModel.permission">
               <MappingFragment StoreEntitySet="permission">
@@ -3195,6 +3312,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
           <EntitySetMapping Name="project">
             <EntityTypeMapping TypeName="cineModel.project">
               <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="fecha_asignacion_responsable" ColumnName="fecha_asignacion_responsable" />
                 <ScalarProperty Name="municipio_lab_otro" ColumnName="municipio_lab_otro" />
                 <ScalarProperty Name="HOJA_TRANSFERENCIA" ColumnName="HOJA_TRANSFERENCIA" />
                 <ScalarProperty Name="SUBSANACION_ENVIADA" ColumnName="SUBSANACION_ENVIADA" />
@@ -3373,6 +3491,41 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="project_staff">
+            <EntityTypeMapping TypeName="cineModel.project_staff">
+              <MappingFragment StoreEntitySet="project_staff">
+                <ScalarProperty Name="id_especialidad_cargo" ColumnName="id_especialidad_cargo" />
+                <ScalarProperty Name="id_grupo_poblacional" ColumnName="id_grupo_poblacional" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="identification_type_id" ColumnName="identification_type_id" />
+                <ScalarProperty Name="id_etnia" ColumnName="id_etnia" />
+                <ScalarProperty Name="id_genero" ColumnName="id_genero" />
+                <ScalarProperty Name="project_staff_localization_id" ColumnName="project_staff_localization_id" />
+                <ScalarProperty Name="project_staff_genero" ColumnName="project_staff_genero" />
+                <ScalarProperty Name="project_staff_lastname2" ColumnName="project_staff_lastname2" />
+                <ScalarProperty Name="project_staff_firstname2" ColumnName="project_staff_firstname2" />
+                <ScalarProperty Name="project_staff_contract_approved" ColumnName="project_staff_contract_approved" />
+                <ScalarProperty Name="project_staff_cv_approved" ColumnName="project_staff_cv_approved" />
+                <ScalarProperty Name="project_staff_identification_approved" ColumnName="project_staff_identification_approved" />
+                <ScalarProperty Name="project_staff_position_id" ColumnName="project_staff_position_id" />
+                <ScalarProperty Name="project_staff_contract_attachment" ColumnName="project_staff_contract_attachment" />
+                <ScalarProperty Name="project_staff_cv_attachment" ColumnName="project_staff_cv_attachment" />
+                <ScalarProperty Name="project_staff_identification_attachment" ColumnName="project_staff_identification_attachment" />
+                <ScalarProperty Name="project_staff_email" ColumnName="project_staff_email" />
+                <ScalarProperty Name="project_staff_movil" ColumnName="project_staff_movil" />
+                <ScalarProperty Name="project_staff_phone" ColumnName="project_staff_phone" />
+                <ScalarProperty Name="project_staff_address" ColumnName="project_staff_address" />
+                <ScalarProperty Name="project_staff_state" ColumnName="project_staff_state" />
+                <ScalarProperty Name="project_staff_city" ColumnName="project_staff_city" />
+                <ScalarProperty Name="project_staff_identification_number" ColumnName="project_staff_identification_number" />
+                <ScalarProperty Name="project_staff_identification_type" ColumnName="project_staff_identification_type" />
+                <ScalarProperty Name="project_staff_lastname" ColumnName="project_staff_lastname" />
+                <ScalarProperty Name="project_staff_firstname" ColumnName="project_staff_firstname" />
+                <ScalarProperty Name="project_staff_project_id" ColumnName="project_staff_project_id" />
+                <ScalarProperty Name="project_staff_id" ColumnName="project_staff_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="project_status">
             <EntityTypeMapping TypeName="cineModel.project_status">
               <MappingFragment StoreEntitySet="project_status">
@@ -3460,6 +3613,25 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
                 <ScalarProperty Name="section_order" ColumnName="section_order" />
                 <ScalarProperty Name="section_name" ColumnName="section_name" />
                 <ScalarProperty Name="section_id" ColumnName="section_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staff_format">
+            <EntityTypeMapping TypeName="cineModel.staff_format">
+              <MappingFragment StoreEntitySet="staff_format">
+                <ScalarProperty Name="Id_new" ColumnName="Id_new" />
+                <ScalarProperty Name="staff_format_fax" ColumnName="staff_format_fax" />
+                <ScalarProperty Name="staff_format_movil" ColumnName="staff_format_movil" />
+                <ScalarProperty Name="staff_format_phone" ColumnName="staff_format_phone" />
+                <ScalarProperty Name="staff_format_email" ColumnName="staff_format_email" />
+                <ScalarProperty Name="staff_format_state" ColumnName="staff_format_state" />
+                <ScalarProperty Name="staff_format_country" ColumnName="staff_format_country" />
+                <ScalarProperty Name="staff_format_localization_id" ColumnName="staff_format_localization_id" />
+                <ScalarProperty Name="staff_format_address" ColumnName="staff_format_address" />
+                <ScalarProperty Name="staff_format_identification_number" ColumnName="staff_format_identification_number" />
+                <ScalarProperty Name="staff_format_name" ColumnName="staff_format_name" />
+                <ScalarProperty Name="staff_format_position" ColumnName="staff_format_position" />
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3581,52 +3753,13 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC.dboPrd.attachment_valid
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="localization">
-            <EntityTypeMapping TypeName="cineModel.localization">
-              <MappingFragment StoreEntitySet="localization">
-                <ScalarProperty Name="COD_ZONA_COLOMBIA" ColumnName="COD_ZONA_COLOMBIA" />
-                <ScalarProperty Name="localization_deleted" ColumnName="localization_deleted" />
-                <ScalarProperty Name="localization_description" ColumnName="localization_description" />
-                <ScalarProperty Name="localization_y_coord" ColumnName="localization_y_coord" />
-                <ScalarProperty Name="localization_x_coord" ColumnName="localization_x_coord" />
-                <ScalarProperty Name="localization_name" ColumnName="localization_name" />
-                <ScalarProperty Name="localization_father_id" ColumnName="localization_father_id" />
-                <ScalarProperty Name="localization_id" ColumnName="localization_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="project_staff">
-            <EntityTypeMapping TypeName="cineModel.project_staff">
-              <MappingFragment StoreEntitySet="project_staff">
-                <ScalarProperty Name="id_especialidad_cargo" ColumnName="id_especialidad_cargo" />
-                <ScalarProperty Name="id_grupo_poblacional" ColumnName="id_grupo_poblacional" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="identification_type_id" ColumnName="identification_type_id" />
-                <ScalarProperty Name="id_etnia" ColumnName="id_etnia" />
-                <ScalarProperty Name="id_genero" ColumnName="id_genero" />
-                <ScalarProperty Name="project_staff_localization_id" ColumnName="project_staff_localization_id" />
-                <ScalarProperty Name="project_staff_genero" ColumnName="project_staff_genero" />
-                <ScalarProperty Name="project_staff_lastname2" ColumnName="project_staff_lastname2" />
-                <ScalarProperty Name="project_staff_firstname2" ColumnName="project_staff_firstname2" />
-                <ScalarProperty Name="project_staff_contract_approved" ColumnName="project_staff_contract_approved" />
-                <ScalarProperty Name="project_staff_cv_approved" ColumnName="project_staff_cv_approved" />
-                <ScalarProperty Name="project_staff_identification_approved" ColumnName="project_staff_identification_approved" />
-                <ScalarProperty Name="project_staff_position_id" ColumnName="project_staff_position_id" />
-                <ScalarProperty Name="project_staff_contract_attachment" ColumnName="project_staff_contract_attachment" />
-                <ScalarProperty Name="project_staff_cv_attachment" ColumnName="project_staff_cv_attachment" />
-                <ScalarProperty Name="project_staff_identification_attachment" ColumnName="project_staff_identification_attachment" />
-                <ScalarProperty Name="project_staff_email" ColumnName="project_staff_email" />
-                <ScalarProperty Name="project_staff_movil" ColumnName="project_staff_movil" />
-                <ScalarProperty Name="project_staff_phone" ColumnName="project_staff_phone" />
-                <ScalarProperty Name="project_staff_address" ColumnName="project_staff_address" />
-                <ScalarProperty Name="project_staff_state" ColumnName="project_staff_state" />
-                <ScalarProperty Name="project_staff_city" ColumnName="project_staff_city" />
-                <ScalarProperty Name="project_staff_identification_number" ColumnName="project_staff_identification_number" />
-                <ScalarProperty Name="project_staff_identification_type" ColumnName="project_staff_identification_type" />
-                <ScalarProperty Name="project_staff_lastname" ColumnName="project_staff_lastname" />
-                <ScalarProperty Name="project_staff_firstname" ColumnName="project_staff_firstname" />
-                <ScalarProperty Name="project_staff_project_id" ColumnName="project_staff_project_id" />
-                <ScalarProperty Name="project_staff_id" ColumnName="project_staff_id" />
+          <EntitySetMapping Name="staff_log">
+            <EntityTypeMapping TypeName="cineModel.staff_log">
+              <MappingFragment StoreEntitySet="staff_log">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
