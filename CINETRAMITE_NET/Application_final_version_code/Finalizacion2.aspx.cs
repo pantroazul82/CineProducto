@@ -2229,8 +2229,8 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         email = producer.producer_email;
                         website = producer.producer_website;
                         fax = producer.producer_fax;
-                        municipio = producer.producer_localization_id;
-                        departamento = producer.producer_localization_father_id;
+                        municipio = producer.productor_localizacion_contacto_id;
+                        departamento = producer.productor_localizacion_contacto_id_padre;
                         departamento_optional = producer.producer_country;
                         municipio_optional = producer.producer_city;
                     }
