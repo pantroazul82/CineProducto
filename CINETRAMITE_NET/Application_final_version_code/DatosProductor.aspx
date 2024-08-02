@@ -431,7 +431,7 @@
                             </asp:DropDownList>
                         </div>
                     </li>
-                    <!--li>
+                    <li>
                         <div class="field_label">
                             Porcentaje de participación:<span class="required_field_text">*</span></div>
                         <div class="field_input">
@@ -440,7 +440,7 @@
 
                         </div>
                        
-                    </li-->
+                    </li>
                      
                     <li id="persona_natural_field_group">
                         <div class="field_group">
@@ -452,24 +452,24 @@
                                 <div class="field_input">
                                     <input type="text" name="producer_firstname" id="producer_firstname" runat="server" /></div>
                             </li>
-                            <!--li>
+                            <li>
                                 <div class="field_label">
                                     Segundo Nombre:<span class="required_field_text"></span></div>
                                 <div class="field_input">
                                     <input type="text" name="producer_firstname2" id="producer_firstname2" runat="server" /></div>
-                            </li-->
+                            </li>
                             <li>
                                 <div class="field_label">
                                     Primer Apellido:<span class="required_field_text">*</span></div>
                                 <div class="field_input">
                                     <input type="text" name="producer_lastname" id="producer_lastname" runat="server" /></div>
                             </li>
-                             <!--li>
+                             <li>
                                 <div class="field_label">
                                    Segundo Apellido:<span class="required_field_text"></span></div>
                                 <div class="field_input">
                                     <input type="text" name="producer_lastname2" id="producer_lastname2" runat="server" /></div>
-                            </li-->
+                            </li>
                             <li>
                                 <div class="field_label">
                                     Número de c&eacute;dula de ciudadan&iacute;a:<span class="required_field_text">*</span></div>
@@ -477,14 +477,14 @@
                                     <input type="text" name="producer_identification_number" id="producer_identification_number"
                                         runat="server" onkeypress='return validaNumericos(event)' maxlength="10"/></div>
                             </li>
-                             <!--li>
+                             <li>
                                 <div class="field_label">
                                     Género:<span class="required_field_text">*</span></div>
                                 <div class="field_input">
                                     <asp:DropDownList ID="cmbGenero" runat="server" name="cmbGenero" AppendDataBoundItems="True" DataSourceID="SqlDataSourceGenero" DataTextField="nombre" DataValueField="id_genero">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM [genero]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceGenero" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_genero], [nombre] FROM dboPrd.[genero]"></asp:SqlDataSource>
                             
                                 </div>
                             </li>
@@ -495,10 +495,10 @@
                                      <asp:DropDownList ID="cmbEtnia" runat="server" name="cmbEtnia" AppendDataBoundItems="True" DataSourceID="SqlDataSourceEtnia" DataTextField="nombre" DataValueField="id_etnia">
                                             <asp:ListItem Text="Seleccione" Value="0"></asp:ListItem>
                                         </asp:DropDownList>    
-                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM [etnia]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource ID="SqlDataSourceEtnia" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="SELECT [id_etnia], [nombre] FROM dboPrd.[etnia]"></asp:SqlDataSource>
                               
                                     </div>
-                            </li-->
+                            </li>
                         </ul>
                     </li>
                     <li id="persona_juridica_field_group">
