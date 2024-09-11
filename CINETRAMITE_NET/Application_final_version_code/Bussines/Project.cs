@@ -144,7 +144,6 @@ namespace CineProducto.Bussines
         public Section sectionDatosProductoresAdicionales;
         public Section sectionDatosPersonal;
         public Section sectionDatosAdjuntos;
-        public Section sectionDatosFormatoPersonal;
         public Section sectionDatosFinalizacion;
 
         /* Constructor de la clase Project */
@@ -733,7 +732,6 @@ namespace CineProducto.Bussines
                     this.sectionDatosProductoresAdicionales.Save();
                     this.sectionDatosPersonal.Save();
                     this.sectionDatosAdjuntos.Save();
-                    this.sectionDatosFormatoPersonal.Save();
                     this.sectionDatosFinalizacion.Save();
 
                     /* Guarda la información registrada del personal del formato de personal */
@@ -934,7 +932,6 @@ WHERE project_staff.project_staff_project_id= " + this.project_id +
             this.sectionDatosProductoresAdicionales = new Section(3,this.project_id);
             this.sectionDatosPersonal = new Section(4,this.project_id);
             this.sectionDatosAdjuntos = new Section(5,this.project_id);
-            this.sectionDatosFormatoPersonal = new Section(7,this.project_id);
             this.sectionDatosFinalizacion = new Section(6, this.project_id);
         }
 

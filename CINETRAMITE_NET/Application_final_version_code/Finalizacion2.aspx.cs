@@ -529,7 +529,6 @@ namespace CineProducto
                     project.sectionDatosProyecto.tab_state_id = 1;
                     project.sectionDatosProductor.tab_state_id = 1;
                     project.sectionDatosProductoresAdicionales.tab_state_id = 1;
-                    project.sectionDatosFormatoPersonal.tab_state_id = 1;
                     project.sectionDatosPersonal.tab_state_id = 1;
                     project.sectionDatosAdjuntos.tab_state_id = 1;
                     project.sectionDatosFinalizacion.tab_state_id = 1;
@@ -547,10 +546,6 @@ namespace CineProducto
                     if (project.sectionDatosProductoresAdicionales.tab_state_id != 10 && project.sectionDatosProductoresAdicionales.tab_state_id != 9)
                     {
                         project.sectionDatosProductoresAdicionales.tab_state_id = 11;
-                    }
-                    if (project.sectionDatosFormatoPersonal.tab_state_id != 10 && project.sectionDatosFormatoPersonal.tab_state_id != 9)
-                    {
-                        project.sectionDatosFormatoPersonal.tab_state_id = 11;
                     }
                     if (project.sectionDatosPersonal.tab_state_id != 10 && project.sectionDatosPersonal.tab_state_id != 9)
                     {
@@ -672,44 +667,9 @@ namespace CineProducto
                     tab_productores_adicionales_css_class = "tab_hide";
                 }
                 /* Verifica si el proyecto es de tipo largometraje */
-                emtyform = project.validateNotInitForm("DatosFormatoPersonal");
-                if (project.project_type_id == 1 || project.project_type_id == 2)
-                {
-                    switch (project.sectionDatosFormatoPersonal.tab_state_id) /* Datos de los productores adicionales */
-                    {
-                        case 10:
-                            tab_datos_formato_personal_css_class = "tab_incompleto_inactive";
-                            break;
-                        case 11:
-                            tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                            break;
-                        case 9:
-                            tab_datos_formato_personal_css_class = "tab_completo_inactive";
-                            break;
-                        default:
-                            if (!emtyform)
-                            {
-                                 tab_datos_formato_personal_css_class = (project.ValidateProjectSection("DatosFormatoPersonal")) ? "tab_completo_inactive" : "tab_incompleto_inactive";
-                            }
-                            else
-                            {
-                                tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                            }
-                            break;
-                    }
-                    if (user_role <= 1)
-                    {
-                        if (project_state > 1 && project_state != 5)
-                        {
-                            tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                        }
-                    }
-                }
-                else
-                {
+
                     tab_datos_formato_personal_css_class = "tab_hide";
-                }
-                //SE PONE SIEMPRE OCULTA ESTRE TAB SOICITUD JMUTIS 01/02/2017
+                
                 tab_datos_formato_personal_css_class = "tab_hide";
                 emtyform = project.validateNotInitForm("DatosPersonal");
                 switch (project.sectionDatosPersonal.tab_state_id) /* Datos del personal */
@@ -847,17 +807,7 @@ namespace CineProducto
                         default:
                             break;
                     }
-                    switch (project.sectionDatosFormatoPersonal.revision_mark)
-                    {
-                        case "revisado":
-                            tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/error.png\">";
-                            break;
-                        case "aprobado":
-                            tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/aprobado.png\">";
-                            break;
-                        default:
-                            break;
-                    }
+                  
                     switch (project.sectionDatosPersonal.revision_mark)
                     {
                         case "revisado":
@@ -1159,7 +1109,6 @@ path_request_form == "tab_incompleto_inactive")
                     project.sectionDatosProyecto.revision_mark == "revisado" ||
 project.sectionDatosProductoresAdicionales.revision_mark == "revisado" ||
 project.sectionDatosProductor.revision_mark == "revisado" ||
-project.sectionDatosFormatoPersonal.revision_mark == "revisado" ||
 project.sectionDatosPersonal.revision_mark == "revisado" ||
 project.sectionDatosAdjuntos.revision_mark == "revisado"
                     )
@@ -1178,10 +1127,6 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     if (project.sectionDatosProductoresAdicionales.revision_mark == "revisado")
                     {
                         pestanas += "Coproductores, ";
-                    }
-                    if (project.sectionDatosFormatoPersonal.revision_mark == "revisado")
-                    {
-                        pestanas += " Formato Personal, ";
                     }
                     if (project.sectionDatosPersonal.revision_mark == "revisado")
                     {
@@ -1259,10 +1204,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 {
                     respuesta += "<br>No ingreso las aclaraciones para datos de personal";
                 }
-                if (project.sectionDatosFormatoPersonal.revision_state_id == 10 && project.sectionDatosFormatoPersonal.aclaraciones_productor == string.Empty)
-                {
-                    respuesta += "<br>No ingreso las aclaraciones para listado de personal";
-                }
+
 
                 if (respuesta != string.Empty)
                 {

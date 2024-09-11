@@ -1111,7 +1111,6 @@ namespace CineProducto
                 project.sectionDatosProyecto.tab_state_id = 1;
                 project.sectionDatosProductor.tab_state_id = 1;
                 project.sectionDatosProductoresAdicionales.tab_state_id = 1;
-                project.sectionDatosFormatoPersonal.tab_state_id = 1;
                 project.sectionDatosPersonal.tab_state_id = 1;
                 project.sectionDatosAdjuntos.tab_state_id = 1;
                 project.sectionDatosFinalizacion.tab_state_id = 1;
@@ -1129,9 +1128,9 @@ namespace CineProducto
                 {
                     project.sectionDatosProductoresAdicionales.tab_state_id = 11;
                 }
-                if (project.sectionDatosFormatoPersonal.tab_state_id != 10 && project.sectionDatosFormatoPersonal.tab_state_id != 9)
+                if (project.sectionDatosPersonal.tab_state_id != 10 && project.sectionDatosPersonal.tab_state_id != 9)
                 {
-                    project.sectionDatosFormatoPersonal.tab_state_id = 11;
+                    project.sectionDatosPersonal.tab_state_id = 11;
                 }
                 if (project.sectionDatosPersonal.tab_state_id != 10 && project.sectionDatosPersonal.tab_state_id != 9)
                 {
@@ -1255,7 +1254,7 @@ namespace CineProducto
             emtyform = project.validateNotInitForm("DatosFormatoPersonal");
             if (project.project_type_id == 1 || project.project_type_id == 2)
             {
-                switch (project.sectionDatosFormatoPersonal.tab_state_id) /* Datos de los productores adicionales */
+                switch (project.sectionDatosPersonal.tab_state_id) /* Datos de los productores adicionales */
                 {
                     case 10:
                         tab_datos_formato_personal_css_class = "tab_incompleto_inactive";
@@ -1473,7 +1472,7 @@ namespace CineProducto
                     default:
                         break;
                 }
-                switch (project.sectionDatosFormatoPersonal.revision_mark)
+                switch (project.sectionDatosPersonal.revision_mark)
                 {
                     case "revisado":
                         tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/error.png\">";

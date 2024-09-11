@@ -147,10 +147,7 @@ namespace CineProducto
             DatosPersonalRow["aclaraciones_productor"] = project.sectionDatosPersonal.aclaraciones_productor.Replace("\n", "<br>"); ;
             DatosPersonalRow["initial_observation"] = project.sectionDatosPersonal.observacion_inicial.Replace("\n", "<br>"); ;
 
-            DatosFormatoPersonalRow["section_name"] = "Datos del Formato Personal";
-            DatosFormatoPersonalRow["clarification_request"] = project.sectionDatosFormatoPersonal.solicitud_aclaraciones.Replace("\n", "<br>"); ;
-            DatosFormatoPersonalRow["aclaraciones_productor"] = project.sectionDatosFormatoPersonal.aclaraciones_productor.Replace("\n", "<br>"); ;
-            DatosFormatoPersonalRow["initial_observation"] = project.sectionDatosFormatoPersonal.observacion_inicial.Replace("\n", "<br>"); ;
+
 
             Texto_adicional_carta_de_aclaraciones.Text = project.complemento_carta_aclaraciones.Replace("\n", "<br>"); ;
             Texto_sustituto_carta_de_aclaraciones.Text= project.sustituto_carta_aclaracion.Replace("\n", "<br>");           

@@ -202,12 +202,6 @@ namespace CineProducto
                     res = res + "<br>" + project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;"); ;
                 }
 
-                if (project.sectionDatosFormatoPersonal.solicitud_aclaraciones.Trim() != string.Empty)
-                {
-                    res = res + "<br><br><b>" + "Registro de personal artístico y técnico</b>";
-                    res = res + "<br>" + project.sectionDatosFormatoPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;"); ;
-                }
-
 
                 #region  observaciones formulario
                 string tobservacionesFormulario = "<br><br><b>" + "Datos de formulario de solicitud</b>";

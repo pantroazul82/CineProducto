@@ -59,7 +59,6 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
             
             
             autosize($('#<%=informacion_correcta.ClientID %>'));
-            autosize($('#<%=producer_clarifications_field.ClientID %>'));
 
             habilitarTracker();              
 
@@ -159,7 +158,7 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
             <li class="<%=tab_productores_adicionales_css_class %>"><a href="ProductoresAdicionales.aspx">Coproductores<%=tab_datos_productores_adicionales_revision_mark_image %></a></li>
             
             <li class="<%=tab_datos_personal_css_class %>"><a href="DatosPersonal.aspx">Personal<%=tab_datos_personal_revision_mark_image %></a></li>
-            <li class="<%=tab_datos_formato_personal_css_class %>"><a href="DatosFormatoPersonal.aspx">Registro de personal <br />artístico y técnico   <%=tab_datos_formato_personal_revision_mark_image %></a></li>
+            
             <!-- <li class="<%--=tab_datos_adjuntos_css_class --%>"><a href="DatosAdjuntos.aspx">Adjuntos<%--=tab_datos_adjuntos_revision_mark_image --%></a></li> -->
             <li class="<%=tab_datos_finalizacion_css_class %>"><a href="Finalizacion.aspx">Finalizaci&oacute;n</a></li>
         </ul>
@@ -601,7 +600,7 @@ WHERE project_staff.project_staff_project_id= @pIdProjectExtran
               <div class="form-group col-sm-8">
                                 <div class ="row">
                                     <div class="form-group col-sm-12">
-                                        <label for="txtAclaraciones" class="control-label">Solicitud de Aclaraciones:</label>
+                                        <label for="txtAclaraciones" class="control-label">Solicitud de Aclaracionesx:</label>
                                          <asp:TextBox CssClass="form-control" TextMode="MultiLine" Rows="5" runat="server" ID="txtAclaraciones"></asp:TextBox>
                                     </div> 
                                 </div> 
@@ -680,7 +679,7 @@ WHERE project_staff.project_staff_project_id= @pIdProjectExtran
                          else
                          { %>
                          <li><h3>
-                                           <b> Solicitud de aclaraciones</b></h3><textarea  style="width:620px;min-height:200px;"  name="solicitud_aclaraciones" id="solicitud_aclaraciones" rows="5" cols="40" runat="server"></textarea></li>
+                                           <b> Solicitud de aclaracionesy</b></h3><textarea  style="width:620px;min-height:200px;"  name="solicitud_aclaraciones" id="solicitud_aclaraciones" rows="5" cols="40" runat="server"></textarea></li>
                          
                          <%} %>
                          <li><h3>Observaciones</h3>                             
@@ -707,7 +706,7 @@ WHERE project_staff.project_staff_project_id= @pIdProjectExtran
          
     <asp:Panel runat="server" ID="PanelAclaracionesProductor">
 
-    <h3><b>Solicitud de aclaraciones de la solicitud</b></h3>
+    <h3><b>Solicitud de aclaraciones de la solicitudf</b></h3>
     
      <div class="form-horizontal center" style="width:100%;padding:5px">  
           <div class ="row">
@@ -745,28 +744,7 @@ WHERE project_staff.project_staff_project_id= @pIdProjectExtran
 
 </asp:Panel>
 
-            <div id="registro_aclaraciones_form">
-                   <%  if (user_role <=1)  { %>
-                <ul>
-                    <li>
-                    <%--    <h3>Formulario de registro de aclaraciones</h3>--%>
-                            <div id="static_info">
-                           <h3>
-                                           <b> Solicitud de aclaraciones</b></h3>
-                                <div><asp:Literal ID="clarification_request" runat="server">No se han solicitado aclaraciones sobre esta pestaña</asp:Literal></div>
-                            </div>
-                    </li>
-                </ul>
-                <div id="input_info">
-                    <ul>
-                        <li>
-                            <h4>Escriba sus aclaraciones a continuación</h4>
-                            <textarea class="user-input"  style="width:620px;min-height:200px;"  maxlength="4000"   name="producer_clarifications_field" id="producer_clarifications_field" rows="5" cols="80" runat="server"></textarea>
-                        </li>
-                    </ul>
-                </div>
-                   <% } %>
-            </div>
+     
         <% 
         } %>
 

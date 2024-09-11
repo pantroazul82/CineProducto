@@ -512,61 +512,13 @@ namespace CineProducto
                 }
 
                 /* Hace la persistencia a la bd de la información de aclaraciones registrada por el productor */
-                if (producer_clarifications_field.Value != "")
-                {
-                    project.sectionDatosFormatoPersonal.aclaraciones_productor = producer_clarifications_field.Value;
-                    project.sectionDatosFormatoPersonal.aclaraciones_productor_date = DateTime.Now;
-                }
+
 
                 #region  Se pasan al objeto del proyecto los valores definidos en el formulario de administración para ser almacenados */
                 if (this.showAdvancedForm)
                 {
                     /* Interpretación del valor enviado del formulario para la gestión realizada */
-                    project.sectionDatosFormatoPersonal.revision_state_id = 0;
-
-                    if (gestion_realizada_sin_revisar.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_state_id = 11;
-                        project.sectionDatosFormatoPersonal.tab_state_id = 11;
-                    }
-                    if (gestion_realizada_solicitar_aclaraciones.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_state_id = 10;
-                        project.sectionDatosFormatoPersonal.tab_state_id = 10;
-                    }
-                    if (gestion_realizada_informacion_correcta.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_state_id = 9;
-                        project.sectionDatosFormatoPersonal.tab_state_id = 9;
-                    }
-
-                    /* Valida si se modificó el texto de la solicitud de aclaraciones para grabarla y actualizar la fecha */
-                    if (project.sectionDatosFormatoPersonal.solicitud_aclaraciones != solicitud_aclaraciones.Value)
-                    {
-                        project.sectionDatosFormatoPersonal.solicitud_aclaraciones = solicitud_aclaraciones.Value;
-                        project.sectionDatosFormatoPersonal.solicitud_aclaraciones_date = DateTime.Now;
-                    }
-                    /* Valida si se modificó el texto de la solicitud de la primera observación para grabarla y actualizar la fecha */
-                    if (project.sectionDatosFormatoPersonal.observacion_inicial != informacion_correcta.Value)
-                    {
-                        project.sectionDatosFormatoPersonal.observacion_inicial = informacion_correcta.Value;
-                        project.sectionDatosFormatoPersonal.observacion_inicial_date = DateTime.Now;
-                    }
-                    project.sectionDatosFormatoPersonal.modified = DateTime.Now;
-
-                    /* Se almacena la información registrada sobre el estado de revisión de la pestaña */
-                    if (estado_revision_sin_revisar.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_mark = "";
-                    }
-                    if (estado_revision_revisado.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_mark = "revisado";
-                    }
-                    if (estado_revision_aprobado.Checked)
-                    {
-                        project.sectionDatosFormatoPersonal.revision_mark = "aprobado";
-                    }
+             
                 }
 #endregion
                 /* Se guarda en la base de datos toda la información recuperada del formulario diligenciado pro el productor */
@@ -585,7 +537,7 @@ namespace CineProducto
             {
                 /* Guarda en la variable de la clase el estado de la variable */
                 this.project_state_id = project.state_id;
-                this.section_state_id = project.sectionDatosFormatoPersonal.tab_state_id;
+                this.section_state_id = project.sectionDatosPersonal.tab_state_id;
                 #region zona de estados de tabs
                 /* Si el proyecto aun esta en su primera etapa (estado creado - 1) se define el estilo
                  * de la pestaña de acuerdo al resultado de la validación del diligenciamiento de los
@@ -595,7 +547,6 @@ namespace CineProducto
                     project.sectionDatosProyecto.tab_state_id = 1;
                     project.sectionDatosProductor.tab_state_id = 1;
                     project.sectionDatosProductoresAdicionales.tab_state_id = 1;
-                    project.sectionDatosFormatoPersonal.tab_state_id = 1;
                     project.sectionDatosPersonal.tab_state_id = 1;
                     project.sectionDatosAdjuntos.tab_state_id = 1;
                     project.sectionDatosFinalizacion.tab_state_id = 1;
@@ -613,10 +564,7 @@ namespace CineProducto
                     {
                         project.sectionDatosProductoresAdicionales.tab_state_id = 11;
                     }
-                    if (project.sectionDatosFormatoPersonal.tab_state_id != 10 && project.sectionDatosFormatoPersonal.tab_state_id != 9)
-                    {
-                        project.sectionDatosFormatoPersonal.tab_state_id = 11;
-                    }
+                   
                     if (project.sectionDatosPersonal.tab_state_id != 10 && project.sectionDatosPersonal.tab_state_id != 9)
                     {
                         project.sectionDatosPersonal.tab_state_id = 11;
@@ -738,7 +686,7 @@ namespace CineProducto
                 emtyform = project.validateNotInitForm("DatosFormatoPersonal");
                 if (project.project_type_id == 1 || project.project_type_id == 2)
                 {
-                    switch (project.sectionDatosFormatoPersonal.tab_state_id) /* Datos de los productores adicionales */
+                    switch (project.sectionDatosPersonal.tab_state_id) /* Datos de los productores adicionales */
                     {
                         case 10:
                             tab_datos_formato_personal_css_class = "tab_incompleto_active";
@@ -1654,15 +1602,15 @@ namespace CineProducto
                     gestion_realizada_solicitar_aclaraciones.Checked = false;
                     gestion_realizada_informacion_correcta.Checked = false;
 
-                    if (project.sectionDatosFormatoPersonal.revision_state_id == 11)
+                    if (project.sectionDatosPersonal.revision_state_id == 11)
                     {
                         gestion_realizada_sin_revisar.Checked = true;
                     }
-                    if (project.sectionDatosFormatoPersonal.revision_state_id == 10)
+                    if (project.sectionDatosPersonal.revision_state_id == 10)
                     {
                         gestion_realizada_solicitar_aclaraciones.Checked = true;
                     }
-                    if (project.sectionDatosFormatoPersonal.revision_state_id == 9)
+                    if (project.sectionDatosPersonal.revision_state_id == 9)
                     {
                         gestion_realizada_informacion_correcta.Checked = true;
                     }
@@ -1674,15 +1622,15 @@ namespace CineProducto
                     estado_revision_revisado.Checked = false;
                     estado_revision_aprobado.Checked = false;
 
-                    if (project.sectionDatosFormatoPersonal.revision_mark == "")
+                    if (project.sectionDatosPersonal.revision_mark == "")
                     {
                         estado_revision_sin_revisar.Checked = true;
                     }
-                    if (project.sectionDatosFormatoPersonal.revision_mark == "revisado")
+                    if (project.sectionDatosPersonal.revision_mark == "revisado")
                     {
                         estado_revision_revisado.Checked = true;
                     }
-                    if (project.sectionDatosFormatoPersonal.revision_mark == "aprobado")
+                    if (project.sectionDatosPersonal.revision_mark == "aprobado")
                     {
                         estado_revision_aprobado.Checked = true;
                     }
@@ -1691,8 +1639,8 @@ namespace CineProducto
                      * Carga en el formulario los textos registrados por los
                      * administradores del trámite
                      */
-                    solicitud_aclaraciones.Value = project.sectionDatosFormatoPersonal.solicitud_aclaraciones;
-                    informacion_correcta.Value = project.sectionDatosFormatoPersonal.observacion_inicial;
+                    solicitud_aclaraciones.Value = project.sectionDatosPersonal.solicitud_aclaraciones;
+                    informacion_correcta.Value = project.sectionDatosPersonal.observacion_inicial;
 
                     /* Consulta el estado de la marca de revisión de cada formulario para presentar en la pestaña 
                     * el indicador correspondiente. */
@@ -1729,7 +1677,7 @@ namespace CineProducto
                         default:
                             break;
                     }
-                    switch (project.sectionDatosFormatoPersonal.revision_mark)
+                    switch (project.sectionDatosPersonal.revision_mark)
                     {
                         case "revisado":
                             tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/error.png\">";
@@ -1765,17 +1713,17 @@ namespace CineProducto
                 }
 
                 /* Agrega al formulario la información relacionada con la solicitud de aclaraciones */
-                if (project.sectionDatosFormatoPersonal.solicitud_aclaraciones != "")
+                if (project.sectionDatosPersonal.solicitud_aclaraciones != "")
                 {
-                    clarification_request.Text = project.sectionDatosFormatoPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    clarification_request.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                     if (user_role>1 && project_state_id >= 6 )
                     {
-                        clarification_request_summary.Text = project.sectionDatosFormatoPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-                        producer_clarification_summary.Text = project.sectionDatosFormatoPersonal.aclaraciones_productor.Replace("\r\n", "<br>");
+                        clarification_request_summary.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        producer_clarification_summary.Text = project.sectionDatosPersonal.aclaraciones_productor.Replace("\r\n", "<br>");
                     }
                 }
                 /* Recupera al formulario la información de aclaraciones registrada por el productor */
-                producer_clarifications_field.Value = project.sectionDatosFormatoPersonal.aclaraciones_productor;
+                producer_clarifications_field.Value = project.sectionDatosPersonal.aclaraciones_productor;
 
                 /* Aplica formatos especiales - campos requeridos vacios - a los campos presentados en el formulario 
                 director_name.Attributes["Class"] = (project.StaffFormatDirector.staff_format_name == "") ? "required_field" : "";

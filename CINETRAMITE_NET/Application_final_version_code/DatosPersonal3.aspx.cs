@@ -475,14 +475,7 @@ namespace CineProducto
                     //Se recarga la información para cargar en el formulario la información de personal guardada en la base de datos
                     project.LoadProject(project.project_id);
 
-                    /* Hace la persistencia a la bd de la información de aclaraciones registrada por el productor */
-                    //if (producer_clarifications_field.Value != "")
-                    //{
-                    //    project.sectionDatosPersonal.aclaraciones_productor = producer_clarifications_field.Value;
-                    //    project.sectionDatosPersonal.aclaraciones_productor_date = DateTime.Now;
-                    //}
-                    //project.obs_adicional_personal = comentarios_adicionales.Text;
-                    //project.Save();
+                    
                     /* Se pasan al objeto del proyecto los valores definidos en el formulario de administración para ser almacenados */
                     if (this.showAdvancedForm)
                     {
@@ -1178,7 +1171,6 @@ namespace CineProducto
                 project.sectionDatosProyecto.tab_state_id = 1;
                 project.sectionDatosProductor.tab_state_id = 1;
                 project.sectionDatosProductoresAdicionales.tab_state_id = 1;
-                project.sectionDatosFormatoPersonal.tab_state_id = 1;
                 project.sectionDatosPersonal.tab_state_id = 1;
                 project.sectionDatosAdjuntos.tab_state_id = 1;
                 project.sectionDatosFinalizacion.tab_state_id = 1;
@@ -1197,10 +1189,7 @@ namespace CineProducto
                 {
                     project.sectionDatosProductoresAdicionales.tab_state_id = 11;
                 }
-                if (project.sectionDatosFormatoPersonal.tab_state_id != 10 && project.sectionDatosFormatoPersonal.tab_state_id != 9)
-                {
-                    project.sectionDatosFormatoPersonal.tab_state_id = 11;
-                }
+
                 if (project.sectionDatosPersonal.tab_state_id != 10 && project.sectionDatosPersonal.tab_state_id != 9)
                 {
                     project.sectionDatosPersonal.tab_state_id = 11;
@@ -1320,43 +1309,7 @@ namespace CineProducto
                 tab_productores_adicionales_css_class = "tab_hide";
             }
             /* Verifica si el proyecto es de tipo largometraje */
-            emtyform = project.validateNotInitForm("DatosFormatoPersonal");
-            if (project.project_type_id == 1 || project.project_type_id == 2)
-            {
-                switch (project.sectionDatosFormatoPersonal.tab_state_id) /* Datos de los productores adicionales */
-                {
-                    case 10:
-                        tab_datos_formato_personal_css_class = "tab_incompleto_inactive";
-                        break;
-                    case 11:
-                        tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                        break;
-                    case 9:
-                        tab_datos_formato_personal_css_class = "tab_completo_inactive";
-                        break;
-                    default:
-                        if (!emtyform)
-                        {
-                            tab_datos_formato_personal_css_class = (project.ValidateProjectSection("DatosFormatoPersonal")) ? "tab_completo_inactive" : "tab_incompleto_inactive";
-                        }
-                        else
-                        {
-                            tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                        }
-                        break;
-                }
-                if (user_role <= 1)
-                {
-                    if (project_state_id > 1 && project_state_id != 5)
-                    {
-                        tab_datos_formato_personal_css_class = "tab_unmarked_inactive";
-                    }
-                }
-            }
-            else
-            {
-                tab_datos_formato_personal_css_class = "tab_hide";
-            }
+
             //SE PONE SIEMPRE OCULTA ESTRE TAB SOICITUD JMUTIS 01/02/2017
             tab_datos_formato_personal_css_class = "tab_hide";
 
@@ -1546,17 +1499,7 @@ namespace CineProducto
                     default:
                         break;
                 }
-                switch (project.sectionDatosFormatoPersonal.revision_mark)
-                {
-                    case "revisado":
-                        tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/error.png\">";
-                        break;
-                    case "aprobado":
-                        tab_datos_formato_personal_revision_mark_image = "<img style=\"width:14px;padding:0 0 0 5px;\" src=\"images/aprobado.png\">";
-                        break;
-                    default:
-                        break;
-                }
+
                 switch (project.sectionDatosPersonal.revision_mark)
                 {
                     case "revisado":
@@ -1583,17 +1526,17 @@ namespace CineProducto
             #endregion
             //comentarios_adicionales.Text = project.obs_adicional_personal;
             /* Agrega al formulario la información relacionada con la solicitud de aclaraciones */
-            //if (project.sectionDatosPersonal.solicitud_aclaraciones != "")
-            //{
-            //    clarification_request.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-            //    if (user_role > 1 && project_state_id >= 6)
-            //    {
-            //        clarification_request_summary.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-            //        producer_clarification_summary.Text = project.sectionDatosPersonal.aclaraciones_productor.Replace("\r\n", "<br>");
-            //    }
-            //}
+            if (project.sectionDatosPersonal.solicitud_aclaraciones != "")
+            {
+                txtAclaracionesProductor.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                if (user_role > 1 && project_state_id >= 6)
+                {
+                    clarification_request_summary.Text = project.sectionDatosPersonal.solicitud_aclaraciones.Replace("\r\n", "<br>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    producer_clarification_summary.Text = project.sectionDatosPersonal.aclaraciones_productor.Replace("\r\n", "<br>");
+                }
+            }
             /* Recupera al formulario la información de aclaraciones registrada por el productor */
-            //producer_clarifications_field.Value = project.sectionDatosPersonal.aclaraciones_productor;
+   
 
             if (!IsPostBack)
             {
