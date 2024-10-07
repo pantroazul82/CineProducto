@@ -4130,7 +4130,8 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
         public bool isPendienteRevision(List<project_status> registros, int cantidadProductores) {        
             bool isPendiente = false;
             foreach (project_status unPs in registros) {
-                if (unPs.project_status_revision_state_id == 11 && (unPs.project_status_section_id == 1 || unPs.project_status_section_id == 2 || unPs.project_status_section_id == 4 ))
+                if (unPs.project_status_revision_state_id == 11 &&
+                    (unPs.project_status_section_id == 1 || unPs.project_status_section_id == 2 || unPs.project_status_section_id == 4 ))
                 { 
                     isPendiente = true; 
                 }

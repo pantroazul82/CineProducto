@@ -1738,7 +1738,7 @@ body{ margin:0px; padding:0px; width:100%; }		</style>
                             cont++;
                             if (producer.fecha_nacimiento is null && producer.person_type_id == 1)
                             {
-                                this.section_validation_result = this.section_validation_result + "<li>No se ha  registrado la fecha de nacimineto</li>";
+                                this.section_validation_result = this.section_validation_result + "<li>No se ha  registrado la fecha de nacimiento</li>";
                                 verifycont++;
                             }
                             cont++;

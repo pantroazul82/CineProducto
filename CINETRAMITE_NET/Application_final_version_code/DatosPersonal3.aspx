@@ -600,7 +600,7 @@ WHERE project_staff.project_staff_project_id= @pIdProjectExtran
               <div class="form-group col-sm-8">
                                 <div class ="row">
                                     <div class="form-group col-sm-12">
-                                        <label for="txtAclaraciones" class="control-label">Solicitud de Aclaracionesx:</label>
+                                        <label for="txtAclaraciones" class="control-label">Solicitud de Aclaraciones:</label>
                                          <asp:TextBox CssClass="form-control" TextMode="MultiLine" Rows="5" runat="server" ID="txtAclaraciones"></asp:TextBox>
                                     </div> 
                                 </div> 

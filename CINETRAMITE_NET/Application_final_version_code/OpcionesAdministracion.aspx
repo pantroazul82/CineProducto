@@ -63,6 +63,10 @@
     %>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <div class="warning">
+        Atencion: al editar los formularios los combos cambian el valor cargado y se puede perder los datos, tenga cuidado al usar esta pantalla
+    </div>
+
     <h2>
         Opciones de administración
     </h2>

@@ -1194,6 +1194,8 @@ namespace CineProducto
                 {
                     project.sectionDatosPersonal.tab_state_id = 11;
                 }
+
+                project.sectionDatosAdjuntos.tab_state_id = 10;//esta seccion ya no existe a si que dejemosla siempre aprobada
                 if (project.sectionDatosAdjuntos.tab_state_id != 10 && project.sectionDatosAdjuntos.tab_state_id != 9)
                 {
                     project.sectionDatosAdjuntos.tab_state_id = 11;
@@ -1899,7 +1901,24 @@ namespace CineProducto
             ps.project_status_solicitud_aclaraciones_date = DateTime.Now;
             ps.project_status_aclaraciones_productor_date = DateTime.Now;
             ps.project_status_modified = DateTime.Now;
-            //ps.project_status_revision_state_id = 10;
+            /*
+                     <dx:ListEditItem Value="1" Text="Sin Revisar" />
+                          <dx:ListEditItem Value="2" Text="No Cumple" />
+                          <dx:ListEditItem Value="3" Text="Cumple" />
+             */
+            if (radiobRevisarInfo.Value.ToString() == "1")
+            {
+                ps.project_status_revision_state_id = 11;
+            }else
+            if (radiobRevisarInfo.Value.ToString() == "2")
+            {
+                ps.project_status_revision_state_id = 10;
+            }
+            else
+            if (radiobRevisarInfo.Value.ToString() == "3")
+            {
+                ps.project_status_revision_state_id = 9;
+            }
             //ps.project_status_tab_state_id = 10;
 
             neg.actualizarProjectStatus(ps);

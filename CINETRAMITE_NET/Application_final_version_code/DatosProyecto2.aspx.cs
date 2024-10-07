@@ -723,6 +723,7 @@ namespace CineProducto
                     {
                         project.sectionDatosPersonal.tab_state_id = 11;
                     }
+                    project.sectionDatosAdjuntos.tab_state_id = 10;//esta seccion ya no existe a si que dejemosla siempre aprobada
                     if (project.sectionDatosAdjuntos.tab_state_id != 10 && project.sectionDatosAdjuntos.tab_state_id != 9)
                     {
                         project.sectionDatosAdjuntos.tab_state_id = 11;
