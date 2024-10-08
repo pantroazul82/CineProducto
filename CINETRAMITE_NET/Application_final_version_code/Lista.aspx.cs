@@ -764,9 +764,9 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
             string body = @"Estimado productor: 
                            </br></br>
                              <p style='text-align:justify;'> 
-                            Con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, le informamos que su <u>solicitud se consideró como DESISTIDA</u>, toda vez que no se dio respuesta al requerimiento emitido por el Ministerio de Cultura dentro del plazo máximo establecido en dicha norma. 
+                            Con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, le informamos que su <u>solicitud se consideró como DESISTIDA</u>, toda vez que no se dio respuesta al requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes dentro del plazo máximo establecido en dicha norma. 
                             </br>
-                            Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de Cultura
+                            Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes
                             <br />
                         <br />
                         Si desea evaluar nuestro servicio lo invitamos a diligenciar una breve encuesta en el siguiente enlace <a href='https://forms.office.com/r/nnZ7UHd6kU'>Satisfacción Tramite en Línea</a>
@@ -839,7 +839,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     jpg.SpacingAfter = 1f;
                     jpg.Alignment = Element.ALIGN_RIGHT;
                     t.AddCell(new PdfPCell(jpg) { Rowspan = 5, PaddingLeft = 1, PaddingTop = 1 });
-                    t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMINISTERIO DE CULTURA DE COLOMBIA\n\n\n", boldFont))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
+                    t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMinisterio de las Culturas, las Artes y los Saberes DE COLOMBIA\n\n\n", boldFont))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                     t.AddCell(new PdfPCell(new Paragraph("\n" + myProject.numero_certificado.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                     document.Add(t);
                     document.Add(separtor);
@@ -888,7 +888,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     document.Add(phraseSubTitulo);
                     document.Add(separtor);
 
-                    var parag = new Paragraph(new Chunk("La Dirección de Audiovisuales, Cine y Medios Interactivos, del Ministerio de Cultura de la República de Colombia, de conformidad con lo previsto en el artículo 2.10.1.4. del Decreto 1080 de 2015, certifica el carácter de producto nacional a la siguiente obra cinematográfica:", boldFont));
+                    var parag = new Paragraph(new Chunk("La Dirección de Audiovisuales, Cine y Medios Interactivos, del Ministerio de las Culturas, las Artes y los Saberes de la República de Colombia, de conformidad con lo previsto en el artículo 2.10.1.4. del Decreto 1080 de 2015, certifica el carácter de producto nacional a la siguiente obra cinematográfica:", boldFont));
                     parag.Alignment = Element.ALIGN_JUSTIFIED;
                     parag.Font = boldFontTitulo;
                     document.Add(parag);

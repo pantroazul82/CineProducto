@@ -1194,7 +1194,7 @@ body{ margin:0px; padding:0px; width:100%; }		</style>
 								<tr>
 									<td align='left' valign='top' bgcolor='ffffff' style='padding:18px 20px 10px 20px;color:#3d3d3d;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:14px;border-top:1px solid #afafaf'>
 									Dirección de Audiovisuales, Cine y Medios Interactivos <br>
-									Ministerio de Cultura<br>
+									Ministerio de las Culturas, las Artes y los Saberes<br>
 									<a href='www.mincultura.gov.co'>www.mincultura.gov.co</a><br>
 									Cra. 8 No 8-55  Bogotá, Colombia
                                     

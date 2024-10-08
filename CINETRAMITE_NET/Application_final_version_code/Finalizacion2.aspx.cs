@@ -899,7 +899,7 @@ namespace CineProducto
                         }
                         if (mailTo != "")
                         {
-                            string cuerpo = "Ha sido cancelada su solicitud del Trámite de Solicitud de Reconocimiento Como Obra Nacional del Ministerio de Cultura.";
+                            string cuerpo = "Ha sido cancelada su solicitud del Trámite de Solicitud de Reconocimiento Como Obra Nacional del Ministerio de las Culturas, las Artes y los Saberes.";
                             string subject = System.Configuration.ConfigurationManager.AppSettings["CANCELED_MAIL_SUBJECT"];
                             string body = System.Configuration.ConfigurationManager.AppSettings["CANCELED_MAIL_BODY_SALUDO"] + "<br>" + producerName;
                             body = body + "<br/><br/>" + cuerpo;// System.Configuration.ConfigurationManager.AppSettings["CANCELED_BODY_MENSAJE"];                            
@@ -997,9 +997,9 @@ namespace CineProducto
                         " + producerName + @"
                         </br>
                         <p style='text-align:justify;'>
-                        El Ministerio de Cultura informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de Cultura no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
+                        El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
                         </br></br>
-                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de Cultura.
+                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
                         
                         <br />
                         <br />
@@ -2469,7 +2469,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 phraseAut.Add(new Chunk("", normal));
                 document.Add(phraseAut);
 
-                Paragraph ParagAutNotification = new Paragraph("Con la firma de este formulario autorizo al Ministerio de Cultura para que me notifique por medio de correo electrónico de cualquier decisión o requerimiento correspondiente a mi solicitud de nacionalidad de la pelicula.", FontFactory.GetFont("Arial", 8));
+                Paragraph ParagAutNotification = new Paragraph("Con la firma de este formulario autorizo al Ministerio de las Culturas, las Artes y los Saberes para que me notifique por medio de correo electrónico de cualquier decisión o requerimiento correspondiente a mi solicitud de nacionalidad de la pelicula.", FontFactory.GetFont("Arial", 8));
                 ParagAutNotification.SetLeading(1.0f, 1.5f);
                 ParagAutNotification.Alignment = Element.ALIGN_JUSTIFIED;
                 ParagAutNotification.Font = FontFactory.GetFont("Arial", 8);
@@ -2722,7 +2722,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         </br></br>
                         <p style='text-align:justify;'>
 
-                        El Ministerio de Cultura informa que su solicitud de reconocimiento como obra nacional ha sido APROBADA, por lo que lo invitamos a consultar su Certificado de Producto Nacional (CPN) ingresando al aplicativo <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña. 
+                        El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido APROBADA, por lo que lo invitamos a consultar su Certificado de Producto Nacional (CPN) ingresando al aplicativo <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña. 
 
                         
                         <br />
@@ -2749,9 +2749,9 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         " + producerName + @"
                         </br>
                         <p style='text-align:justify;'>
-                        El Ministerio de Cultura informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de Cultura no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
+                        El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
                         </br></br>
-                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de Cultura.
+                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
                         
                         <br />
                         <br />
@@ -3247,7 +3247,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     jpg.SpacingAfter = 1f;
                     jpg.Alignment = Element.ALIGN_RIGHT;
                     t.AddCell(new PdfPCell(jpg) { Rowspan = 5, PaddingLeft = 1, PaddingTop = 1 });
-                    t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMINISTERIO DE CULTURA DE COLOMBIA\n\n\n", boldFont))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
+                    t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMinisterio de las Culturas, las Artes y los Saberes DE COLOMBIA\n\n\n", boldFont))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                     t.AddCell(new PdfPCell(new Paragraph("\n" + myProject.numero_certificado.ToString())) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                     document.Add(t);
                     document.Add(separtor);
@@ -3296,7 +3296,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     document.Add(phraseSubTitulo);
                     document.Add(separtor);
 
-                    var parag = new Paragraph(new Chunk("La Dirección de Audiovisuales, Cine y Medios Interactivos, del Ministerio de Cultura de la República de Colombia, de conformidad con lo previsto en el artículo 2.10.1.4. del Decreto 1080 de 2015, certifica el carácter de producto nacional a la siguiente obra cinematográfica:", boldFont));
+                    var parag = new Paragraph(new Chunk("La Dirección de Audiovisuales, Cine y Medios Interactivos, del Ministerio de las Culturas, las Artes y los Saberes de la República de Colombia, de conformidad con lo previsto en el artículo 2.10.1.4. del Decreto 1080 de 2015, certifica el carácter de producto nacional a la siguiente obra cinematográfica:", boldFont));
                     parag.Alignment = Element.ALIGN_JUSTIFIED;
                     parag.Font = boldFontTitulo;
                     document.Add(parag);
@@ -3718,7 +3718,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         </br></br>
                         <p style='text-align:justify;'>
 
-                        El Ministerio de Cultura informa que su solicitud de reconocimiento como obra nacional ha sido APROBADA, por lo que lo invitamos a consultar su Certificado de Producto Nacional (CPN) ingresando al aplicativo <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña. 
+                        El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido APROBADA, por lo que lo invitamos a consultar su Certificado de Producto Nacional (CPN) ingresando al aplicativo <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña. 
                         <br />
                         <br />
                         Si desea evaluar nuestro servicio lo invitamos a diligenciar una breve encuesta en el siguiente enlace <a href='https://forms.office.com/r/nnZ7UHd6kU'>Satisfacción Tramite en Línea</a>
@@ -3794,7 +3794,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 jpg.SpacingAfter = 1f;
                 jpg.Alignment = Element.ALIGN_RIGHT;
                 t.AddCell(new PdfPCell(jpg) { Rowspan = 5, PaddingLeft = 1, PaddingTop = 1 });
-                t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMINISTERIO DE CULTURA DE COLOMBIA\n\n\n", boldFontBlue))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
+                t.AddCell(new PdfPCell(new Paragraph(new Chunk("\nMinisterio de las Culturas, las Artes y los Saberes DE COLOMBIA\n\n\n", boldFontBlue))) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                 t.AddCell(new PdfPCell(new Paragraph("\n")) { HorizontalAlignment = Element.ALIGN_CENTER, Rowspan = 5 });
                 document.Add(t);
                 document.Add(separtor);
@@ -3884,7 +3884,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
 
 
                 string FIrmaDIrector = "Dirección de Audiovisuales, Cine y Medios Interactivos";
-                string FIrmaDIrectorCargo = "Ministerio de Cultura";
+                string FIrmaDIrectorCargo = "Ministerio de las Culturas, las Artes y los Saberes";
 
                 phrase3.Add(new Chunk(FIrmaDIrector));
                 phrase3.Add(separtor);
@@ -4093,9 +4093,9 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         " + producerName + @"
                         </br>
                         <p style='text-align:justify;'>
-                        El Ministerio de Cultura informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de Cultura no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
+                        El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
                         </br></br>
-                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de Cultura.
+                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
                          
                         <br />
                         <br />
@@ -4256,7 +4256,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 cuerpo += "<br>Tipo de obra: " + generoProduccion.project_genre_name;
                 cuerpo += "<br>" + tipoObra.project_type_name;
                 cuerpo += "<br>";
-                cuerpo += "<br>Han sido enviadas las correciones de la subsanación del trámite de solicitud de reconocimiento como producto nacional del Ministerio de Cultura ";
+                cuerpo += "<br>Han sido enviadas las correciones de la subsanación del trámite de solicitud de reconocimiento como producto nacional del Ministerio de las Culturas, las Artes y los Saberes ";
                 cuerpo += "<br>";
                 cuerpo += "<br>Recuerde ingresar al portal para validar los respectivos ajustes ";
 

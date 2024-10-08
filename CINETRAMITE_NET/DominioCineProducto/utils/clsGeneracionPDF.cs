@@ -73,7 +73,7 @@ namespace DominioCineProducto.utils
             server.LoadDocument(rutaFinal);
             //
             PdfExportOptions options = new PdfExportOptions();
-            options.DocumentOptions.Author = "Ministerio de Cultura";
+            options.DocumentOptions.Author = "Ministerio de las Culturas, las Artes y los Saberes";
             options.Compressed = true;
             options.ImageQuality = PdfJpegImageQuality.Highest;
             //Export the document to the stream: 

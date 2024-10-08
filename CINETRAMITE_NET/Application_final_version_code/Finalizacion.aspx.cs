@@ -887,7 +887,7 @@ namespace CineProducto
                         }
                         if (mailTo != "")
                         {
-                            string cuerpo = "Ha sido cancelada su solicitud del Trámite de Solicitud de Reconocimiento Como Obra Nacional del Ministerio de Cultura.";
+                            string cuerpo = "Ha sido cancelada su solicitud del Trámite de Solicitud de Reconocimiento Como Obra Nacional del Ministerio de las Culturas, las Artes y los Saberes.";
                             string subject = System.Configuration.ConfigurationManager.AppSettings["CANCELED_MAIL_SUBJECT"];
                             string body = System.Configuration.ConfigurationManager.AppSettings["CANCELED_MAIL_BODY_SALUDO"] +"<br>"+ producerName;
                             body = body + "<br/><br/>" + cuerpo;// System.Configuration.ConfigurationManager.AppSettings["CANCELED_BODY_MENSAJE"];                            
