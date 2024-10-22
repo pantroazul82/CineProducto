@@ -3197,20 +3197,22 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
 
 
             string fileName = "Certificado_" + myProject.numero_certificado.ToString() + ".pdf";
-            if (myProject.state_id == 9 && (myProject.ruta_certificado != null && myProject.ruta_certificado != string.Empty))
-            {
                 System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
                 string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();
                 string ruta = "~/" + pathArchivosPermanente + "/";
+            if (myProject.state_id == 9 && (myProject.ruta_certificado != null && myProject.ruta_certificado != string.Empty)
+                && System.IO.File.Exists(Server.MapPath(ruta + myProject.ruta_certificado))
+                )
+            {
 
-                string rutaCompleta = Server.MapPath(ruta + myProject.ruta_certificado);
+                string rutaCompleta = ruta + myProject.ruta_certificado;
                 Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.AddHeader("Content-Disposition", "attachment; filename=" + System.IO.Path.GetFileName( rutaCompleta));
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + myProject.ruta_certificado);
                 Response.ContentType = "application/pdf";
                 Response.Buffer = true;
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                var bytes = System.IO.File.ReadAllBytes(rutaCompleta);
+                var bytes = System.IO.File.ReadAllBytes(Server.MapPath( rutaCompleta));
                 Response.BinaryWrite(bytes);
                 Response.End();
                 Response.Close();
@@ -3605,23 +3607,37 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     memoryStream.Close();
 
 
-                    if (myProject.state_id == 9 && ( myProject.ruta_certificado == null    ||  myProject.ruta_certificado == string.Empty)) {
-                        System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
-                        string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();                        
-                        string ruta = Server.MapPath("~/" + pathArchivosPermanente + "/");
-                        if (!Directory.Exists(ruta))
+                    if (myProject.state_id == 9 && ( myProject.ruta_certificado == null    ||  myProject.ruta_certificado == string.Empty ||System.IO.File.Exists(Server.MapPath(ruta + myProject.ruta_certificado)) == false)
+                         
+                        ) {
+                        
+                       
+                        if (!Directory.Exists(Server.MapPath(ruta)))
                         {
-                            Directory.CreateDirectory(ruta);
+                            Directory.CreateDirectory(Server.MapPath(ruta));
                         }
                         ruta = ruta + fileName;
-                        System.IO.File.WriteAllBytes(ruta, bytes);
+                        System.IO.File.WriteAllBytes(Server.MapPath(ruta), bytes);
                         
                         myProject.ruta_certificado = fileName;
 
                         NegocioCineProducto neg1 = new NegocioCineProducto();
                         neg1.ActualizarRutaCertificadoProject(myProject);
 
-                        return ruta;
+                        string rutaCompleta = ruta + myProject.ruta_certificado;
+                        Response.Clear();
+                        Response.ContentType = "application/pdf";
+                        Response.AddHeader("Content-Disposition", "attachment; filename=" + myProject.ruta_certificado);
+                        Response.ContentType = "application/pdf";
+                        Response.Buffer = true;
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.BinaryWrite(bytes);
+                        Response.End();
+                        Response.Close();
+
+
+
+                        //                        return ruta;
 
                     }
 
@@ -3642,10 +3658,6 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                     else
                     {
 
-                        System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
-                        string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();
-                        string pathArchivosTemp = ar.GetValue("pathArchivosTemp", typeof(string)).ToString();
-                        string ruta = Server.MapPath("~/" + pathArchivosTemp + "/");
                         if (!Directory.Exists(ruta))
                         {
                             Directory.CreateDirectory(ruta);
