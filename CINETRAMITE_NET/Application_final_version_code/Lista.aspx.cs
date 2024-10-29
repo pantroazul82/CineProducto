@@ -777,7 +777,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
         }
 
         
-        public void VerCertificado(int id_projecto_param)
+        public string VerCertificado(int id_projecto_param)
         {
             Project project = new Project();
             project.LoadProject(id_projecto_param);
@@ -788,35 +788,36 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
 
 
             string fileName = "Certificado_" + myProject.numero_certificado.ToString() + ".pdf";
-
-            if (myProject.state_id == 9 && (myProject.ruta_certificado != null && myProject.ruta_certificado != string.Empty))
+            System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
+            string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();
+            string ruta = "~/" + pathArchivosPermanente + "/";
+            if (myProject.state_id == 9 && (myProject.ruta_certificado != null && myProject.ruta_certificado != string.Empty)
+                && System.IO.File.Exists(Server.MapPath(ruta + myProject.ruta_certificado))
+                )
             {
-                System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
-                string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();
-                string ruta = "~/" + pathArchivosPermanente + "/";
 
-                string rutaCompleta = Server.MapPath(ruta + myProject.ruta_certificado);
+                string rutaCompleta = ruta + myProject.ruta_certificado;
                 Response.Clear();
                 Response.ContentType = "application/pdf";
-                Response.AddHeader("Content-Disposition", "attachment; filename=" + System.IO.Path.GetFileName(rutaCompleta));
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + myProject.ruta_certificado);
                 Response.ContentType = "application/pdf";
                 Response.Buffer = true;
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                var bytes = System.IO.File.ReadAllBytes(rutaCompleta);
+                var bytes = System.IO.File.ReadAllBytes(Server.MapPath(rutaCompleta));
                 Response.BinaryWrite(bytes);
                 Response.End();
                 Response.Close();
-                
+                return "";
             }
             else
             {
 
-            if (myProject.numero_certificado == null)
-            {
-                fileName = Guid.NewGuid().ToString() + ".pdf";
-            }
+                if (myProject.numero_certificado == null)
+                {
+                    fileName = Guid.NewGuid().ToString() + ".pdf";
+                }
 
-            Document document = new Document(PageSize.LEGAL, 50, 50, 15, 25);
+                Document document = new Document(PageSize.LEGAL, 50, 50, 15, 25);
                 using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
                 {
                     PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
@@ -952,7 +953,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number));
                             }
                             tP.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))) { Colspan = 3 });
-                            tP.AddCell(new PdfPCell(new Paragraph("Colombia")) { Colspan = 2 });                            
+                            tP.AddCell(new PdfPCell(new Paragraph("Colombia")) { Colspan = 2 });
 
                             //var phraseProductor = new Phrase();
                             //phraseProductor.Add(unProjectProducer.producer.producer_firstname+" " +unProjectProducer.producer.producer_lastname + ", C.C. " + unProjectProducer.producer.producer_identification_number + " ("+unProjectProducer.producer.producer_type.producer_type_name+")");
@@ -983,7 +984,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             }
                             else
                             {
-                                tP.AddCell(new PdfPCell(new Paragraph("NIT " + nitCompleto)) { Colspan = 3 });
+                                tP.AddCell(new PdfPCell(new Paragraph("NIT " + nitCompleto.Replace(",", "."))) { Colspan = 3 });
                                 tP.AddCell(new PdfPCell(new Paragraph("Colombia")) { Colspan = 2 });
                             }
 
@@ -1027,19 +1028,26 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                                 tP2.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unProjectProducer.producer.producer_firstname + segundoNombre + " " + unProjectProducer.producer.producer_lastname + " " + unProjectProducer.producer.producer_lastname2))) { Colspan = 2 });
 
                                 string ccCompleto = "";
-                                if (unProjectProducer.producer.producer_identification_number != null && unProjectProducer.producer.producer_identification_number != "")
-                                {
-                                    ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number.Replace(",", ".")));
-                                }
+
                                 if (unProjectProducer.producer.producer_type_id == 2)
                                 {
+                                    ccCompleto = unProjectProducer.producer.producer_identification_number.Replace(",", ".");
                                     //tP2.AddCell(new PdfPCell(new Paragraph("")));
                                 }
                                 else
                                 {
-                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))));
+                                    if (unProjectProducer.producer.producer_identification_number != null && unProjectProducer.producer.producer_identification_number != "")
+                                    {
+                                        ccCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_identification_number));
+                                    }
+                                    tP2.AddCell(new PdfPCell(new Paragraph("C.C. " + ccCompleto.Replace(",", "."))) { Colspan = 2 });
                                 }
-                                tP2.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
+                                string ps = unProjectProducer.producer.producer_country;
+                                if (ps == null || ps.Trim() == string.Empty)
+                                {
+                                    ps = unProjectProducer.producer.PRODUCTOR_PAIS_CONTACTO;
+                                }
+                                tP2.AddCell(new PdfPCell(new Paragraph(ps)) { Colspan = 2 });
 
                                 //var phraseProductor = new Phrase();
                                 //phraseProductor.Add(unProjectProducer.producer.producer_firstname+" " +unProjectProducer.producer.producer_lastname + ", C.C. " + unProjectProducer.producer.producer_identification_number + " ("+unProjectProducer.producer.producer_type.producer_type_name+")");
@@ -1050,22 +1058,35 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                             else
                             {
                                 string nitCompleto = "";
-                                if (unProjectProducer.producer.producer_type_id != 2 && unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
+                                if (unProjectProducer.producer.producer_type_id == 2)
                                 {
-                                    nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit.Replace(",", ".")));
-                                    nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();
+                                    nitCompleto = unProjectProducer.producer.producer_nit.Replace(",", ".");
                                 }
-
+                                else
+                                {
+                                    if (unProjectProducer.producer.producer_nit_dig_verif != null && unProjectProducer.producer.producer_nit != null && unProjectProducer.producer.producer_nit != "")
+                                    {
+                                        nitCompleto = string.Format("{0:n0}", Convert.ToInt64(unProjectProducer.producer.producer_nit.Replace(",", ".")));
+                                        nitCompleto += "-" + unProjectProducer.producer.producer_nit_dig_verif.ToString();
+                                    }
+                                }
                                 string producerTipoEmpresaMostrar = "";
                                 if (unProjectProducer.producer.producer_company_type_id != null && unProjectProducer.producer.producer_company_type_id < 5)
                                 {
                                     producerTipoEmpresaMostrar = " " + unProjectProducer.producer.producer_company_type.producer_company_type_name;
                                 }
+                                if (unProjectProducer.producer.producer_type_id == 2) producerTipoEmpresaMostrar = "";
+
                                 tP2.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unProjectProducer.producer.producer_name) + producerTipoEmpresaMostrar)) { Colspan = 2 });
                                 if (unProjectProducer.producer.producer_type_id == 2)
                                 {
-                                    //tP2.AddCell(new PdfPCell(new Paragraph("")));
-                                    tP2.AddCell(new PdfPCell(new Paragraph(unProjectProducer.producer.producer_country)) { Colspan = 2 });
+                                    //tP2.AddCell(new PdfPCell(new Paragraph("" + nitCompleto)));
+                                    string ps = unProjectProducer.producer.producer_country;
+                                    if (ps == null || ps.Trim() == string.Empty)
+                                    {
+                                        ps = unProjectProducer.producer.PRODUCTOR_PAIS_CONTACTO;
+                                    }
+                                    tP2.AddCell(new PdfPCell(new Paragraph(ps)) { Colspan = 2 });
                                 }
                                 else
                                 {
@@ -1085,7 +1106,7 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     }
 
                     var phraseParticipacion = new Phrase();
-                    phraseParticipacion.Add("Con un porcentaje de participación económica nacional del " + Convert.ToInt32(myProject.project_percentage).ToString() + "% ");
+                    phraseParticipacion.Add("Con un porcentaje de participación económica nacional del " + Convert.ToDouble(myProject.project_percentage).ToString() + "% ");
                     document.Add(phraseParticipacion);
                     document.Add(separtor);
 
@@ -1103,7 +1124,8 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     }
 
 
-                    
+
+
                     foreach (project_staff unPersonal in myProject.project_staff.OrderBy(x => x.project_staff_position_id))
                     {
                         string segundoNombre = "";
@@ -1111,18 +1133,24 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                         {
                             segundoNombre = " " + unPersonal.project_staff_firstname2;
                         }
-
-                        tPers.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unPersonal.project_staff_firstname + segundoNombre + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2))));
-                        tPers.AddCell(new PdfPCell(new Paragraph(unPersonal.position.position_name)));
+                        foreach (var staffMember in project.staff)
+                        {
+                            if (staffMember.project_staff_id == unPersonal.project_staff_id)
+                            {
+                                tPers.AddCell(new PdfPCell(new Paragraph(StringExtensors.ToNombrePropio(unPersonal.project_staff_firstname + segundoNombre + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2))));
+                                tPers.AddCell(new PdfPCell(new Paragraph(unPersonal.position.position_name)));
+                            }
+                        }
 
                         //var phraseProductor = new Phrase();
                         //phraseProductor.Add(unPersonal.project_staff_firstname + " " + unPersonal.project_staff_firstname2 + " " + unPersonal.project_staff_lastname + " " + unPersonal.project_staff_lastname2 + ", "+ unPersonal.position.position_name);
                         //document.Add(phraseProductor);              
                         //document.Add(Chunk.NEWLINE);
-                        
+
                     }
                     document.Add(tPers);
                     document.Add(separtor);
+
 
 
                     var phraseFecha = new Phrase();
@@ -1169,40 +1197,79 @@ and p.project_name like '%" + txtTitulo.Text.Trim().Replace("'","%")+@"%' "+filt
                     byte[] bytes = memoryStream.ToArray();
                     memoryStream.Close();
 
-                    if (myProject.state_id == 9 && (myProject.ruta_certificado == null || myProject.ruta_certificado == string.Empty))
+
+                    if (myProject.state_id == 9 && (myProject.ruta_certificado == null || myProject.ruta_certificado == string.Empty || System.IO.File.Exists(Server.MapPath(ruta + myProject.ruta_certificado)) == false)
+
+                        )
                     {
-                        System.Configuration.AppSettingsReader ar = new System.Configuration.AppSettingsReader();
-                        string pathArchivosPermanente = ar.GetValue("pathArchivosPermanente", typeof(string)).ToString();
-                        string ruta = Server.MapPath("~/" + pathArchivosPermanente + "/");
-                        if (!Directory.Exists(ruta))
+
+
+                        if (!Directory.Exists(Server.MapPath(ruta)))
                         {
-                            Directory.CreateDirectory(ruta);
+                            Directory.CreateDirectory(Server.MapPath(ruta));
                         }
                         ruta = ruta + fileName;
-                        System.IO.File.WriteAllBytes(ruta, bytes);
+                        System.IO.File.WriteAllBytes(Server.MapPath(ruta), bytes);
 
                         myProject.ruta_certificado = fileName;
 
                         NegocioCineProducto neg1 = new NegocioCineProducto();
                         neg1.ActualizarRutaCertificadoProject(myProject);
 
-                        //return ruta;
+                        string rutaCompleta = ruta + myProject.ruta_certificado;
+                        Response.Clear();
+                        Response.ContentType = "application/pdf";
+                        Response.AddHeader("Content-Disposition", "attachment; filename=" + myProject.ruta_certificado);
+                        Response.ContentType = "application/pdf";
+                        Response.Buffer = true;
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.BinaryWrite(bytes);
+                        Response.End();
+                        Response.Close();
+
+
+
+                        //                        return ruta;
 
                     }
 
-                    Response.Clear();
-                    Response.ContentType = "application/pdf";
-                    Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
-                    Response.ContentType = "application/pdf";
-                    Response.Buffer = true;
-                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                    Response.BinaryWrite(bytes);
-                    Response.End();
-                    Response.Close();
+                    
+                        Response.Clear();
+                        Response.ContentType = "application/pdf";
+                        Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
+                        Response.ContentType = "application/pdf";
+                        Response.Buffer = true;
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.BinaryWrite(bytes);
+                        Response.End();
+                        Response.Close();
+                        return "";
+
+                   
 
                 }
-
             }
+        }
+
+        public string generarCodicoSHA1(string cadena)
+        {
+            UTF8Encoding enc = new UTF8Encoding();
+            byte[] data = enc.GetBytes(cadena);
+            byte[] result;
+
+            SHA1CryptoServiceProvider sha = new SHA1CryptoServiceProvider();
+            result = sha.ComputeHash(data);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (result[i] < 16)
+                {
+                    sb.Append("0");
+                }
+                sb.Append(result[i].ToString("x"));
+            }
+            return sb.ToString().ToUpper();
         }
 
 
