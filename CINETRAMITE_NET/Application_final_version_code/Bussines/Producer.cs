@@ -50,6 +50,7 @@ namespace CineProducto.Bussines
         public string segundo_nombre_sup;
         public string primer_apellido_sup;
         public string segundo_apellido_sup;
+        public string num_id_sup;
                         
 
         /* Constructor de la clase Producer */
@@ -80,7 +81,7 @@ namespace CineProducto.Bussines
                                  + "producer_name, producer_nit, producer_nit_dig_verif, producer_company_type_id, "
                                  + "producer_type_id, producer_identification_number, "
                                  + "producer_firstname, producer_firstname2, producer_lastname, producer_lastname2, producer_localization_id, "
-                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
+                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,num_id_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id,"
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
                                  + "FROM dboPrd.producer WHERE producer_user_id=" + user_id.ToString());
@@ -109,6 +110,7 @@ namespace CineProducto.Bussines
                 this.segundo_nombre_sup = ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() : "";
                 this.primer_apellido_sup = ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() : "";
                 this.segundo_apellido_sup = ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() : "";
+                this.num_id_sup = ds.Tables[0].Rows[0]["num_id_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["num_id_sup"].ToString() : "";
 
                 if (ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString() != "")
                     this.fecha_nacimiento = DateTime.Parse(ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString());
@@ -159,7 +161,7 @@ namespace CineProducto.Bussines
                                  + "producer_name, producer_nit, producer_nit_dig_verif, producer_company_type_id, "
                                  + "producer_type_id, producer_identification_number, "
                                  + "producer_firstname, producer_firstname2, producer_lastname, producer_lastname2, producer_localization_id, "
-                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
+                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,num_id_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id,"
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
                                  + "FROM dboPrd.producer WHERE producer_user_id=" + user_id.ToString());
@@ -203,6 +205,7 @@ namespace CineProducto.Bussines
                 this.segundo_nombre_sup = ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() : "";
                 this.primer_apellido_sup = ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() : "";
                 this.segundo_apellido_sup = ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() : "";
+                this.num_id_sup = ds.Tables[0].Rows[0]["num_id_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["num_id_sup"].ToString() : "";
 
                 if (ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString() != "")
                     this.fecha_nacimiento = DateTime.Parse(ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString());
@@ -240,7 +243,7 @@ namespace CineProducto.Bussines
                                  + "producer_name, producer_nit, producer_nit_dig_verif, producer_company_type_id, "
                                  + "producer_type_id, producer_identification_number, "
                                  + "producer_firstname, producer_firstname2, producer_lastname, producer_lastname2, producer_localization_id, "
-                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,"
+                                 + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,num_id_sup,"
                                  + "producer_country, producer_city, producer_address, producer_phone, productor_pais_contacto, productor_ciudad_contacto, productor_localizacion_contacto_id, "
                                  + "producer_fax, producer_movil, producer_email, producer_website, producer_user_id "
                                  + "FROM dboPrd.producer WHERE producer_id=" + producer_id.ToString());
@@ -288,6 +291,7 @@ namespace CineProducto.Bussines
                 this.segundo_nombre_sup = ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_nombre_sup"].ToString() : "";
                 this.primer_apellido_sup = ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["primer_apellido_sup"].ToString() : "";
                 this.segundo_apellido_sup = ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["segundo_apellido_sup"].ToString() : "";
+                this.num_id_sup = ds.Tables[0].Rows[0]["num_id_sup"].ToString() != "" ? ds.Tables[0].Rows[0]["num_id_sup"].ToString() : "";
 
                 if (ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString() != "")
                     this.fecha_nacimiento = DateTime.Parse(ds.Tables[0].Rows[0]["fecha_nacimiento"].ToString());
@@ -474,7 +478,7 @@ namespace CineProducto.Bussines
                 insertProducer = insertProducer + "producer_company_type_id, producer_type_id, ";
                 insertProducer = insertProducer + "producer_identification_number, producer_firstname, producer_firstname2, ";                
                 insertProducer = insertProducer + "producer_lastname, producer_lastname2, producer_localization_id, ";
-                insertProducer = insertProducer + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,";
+                insertProducer = insertProducer + "id_grupo_poblacional, fecha_nacimiento,abreviatura, primer_nombre_sup,segundo_nombre_sup,primer_apellido_sup,segundo_apellido_sup,num_id_sup,";
                 insertProducer = insertProducer + "producer_country, producer_city, ";
                 insertProducer = insertProducer + "productor_localizacion_contacto_id,productor_pais_contacto, productor_ciudad_contacto, ";
                 insertProducer = insertProducer + "producer_address, producer_phone, ";
@@ -503,6 +507,7 @@ namespace CineProducto.Bussines
                 insertProducer = insertProducer + " '" + StringExtensors.ToNombrePropio(this.segundo_nombre_sup).ToUpper() + "', ";
                 insertProducer = insertProducer + " '" + StringExtensors.ToNombrePropio(this.primer_apellido_sup).ToUpper() + "', ";
                 insertProducer = insertProducer + " '" + StringExtensors.ToNombrePropio(this.segundo_apellido_sup).ToUpper() + "', ";
+                insertProducer = insertProducer + " '" + StringExtensors.ToNombrePropio(this.num_id_sup).ToUpper() + "', ";
 
                 insertProducer = insertProducer + " '" + this.producer_country + "', ";
                 insertProducer = insertProducer + " '" + this.producer_city + "', ";

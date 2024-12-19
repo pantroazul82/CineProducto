@@ -268,6 +268,8 @@ namespace CineProducto
                     newProducer.segundo_nombre_sup = segundo_nombre_sup.Value.ToUpper();
                     newProducer.primer_apellido_sup = primer_apellido_sup.Value.ToUpper();
                     newProducer.segundo_apellido_sup = segundo_apellido_sup.Value.ToUpper();
+                    newProducer.num_id_sup = num_id_sup.Value.ToUpper();
+                   
 
                     //if (fecha_nacimiento.Value != "")
                     //    newProducer.fecha_nacimiento = Convert.ToDateTime(fecha_nacimiento.Value, new CultureInfo("es-CO"));
@@ -312,6 +314,8 @@ namespace CineProducto
                     newProducer.producer_city = producer_city.Value;
                     newProducer.productor_ciudad_contacto = producer_city_contact.Value;
 
+                    newProducer.productor_pais_contacto = producer_country_contact.Value;
+                    newProducer.productor_ciudad_contacto = producer_city_contact.Value;
 
                     newProducer.producer_address = producer_address.Value;
                     newProducer.producer_phone = producer_phone.Value;
@@ -425,6 +429,9 @@ namespace CineProducto
                     if (localization_out_of_colombia_contact.Checked)
                     {
                         project.producer[requesterProducer].productor_localizacion_contacto_id = "0";
+                        project.producer[requesterProducer].productor_pais_contacto = "aqui";
+                        project.producer[requesterProducer].productor_ciudad_contacto = "aqui";
+
                     }
                     else
                     {
@@ -843,6 +850,7 @@ namespace CineProducto
                         segundo_nombre_sup.Value = producer.segundo_nombre_sup;
                         primer_apellido_sup.Value = producer.primer_apellido_sup;
                         segundo_apellido_sup.Value = producer.segundo_apellido_sup;
+                        num_id_sup.Value = producer.num_id_sup;
 
 
                         cmbGenero.SelectedValue = producer.id_genero.ToString();
@@ -863,6 +871,10 @@ namespace CineProducto
                         identification_number_juridica.Value = producer.producer_identification_number;
                         producer_country.Value = producer.producer_country;
                         producer_city.Value = producer.producer_city;
+
+                        producer_country_contact.Value = producer.productor_pais_contacto;
+                        producer_city_contact.Value = producer.productor_ciudad_contacto;
+
                         producer_address.Value = producer.producer_address;
                         producer_phone.Value = producer.producer_phone;
                         producer_movil.Value = producer.producer_movil;
@@ -1090,6 +1102,10 @@ namespace CineProducto
                         municipioDDL_contact.Attributes["Class"] = (municipioDDL_contact.SelectedValue == "0") ? "required_field" : "";
                         producer_country.Attributes["Class"] = (producer.producer_country == "") ? "required_field" : "";
                         producer_city.Attributes["Class"] = (producer.producer_city == "") ? "required_field" : "";
+
+                        producer_country_contact.Attributes["Class"] = (producer.productor_pais_contacto == "") ? "required_field" : "";
+                        producer_city_contact.Attributes["Class"] = (producer.productor_ciudad_contacto == "") ? "required_field" : "";
+
                         producer_address.Attributes["Class"] = (producer.producer_address == "") ? "required_field" : "";
                         producer_phone.Attributes["Class"] = (producer.producer_phone == "") ? "required_field" : "";
                         //producer_movil.Attributes["Class"] = (producer.producer_movil == "") ? "required_field" : "";
