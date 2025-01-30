@@ -2208,8 +2208,14 @@ body{ margin:0px; padding:0px; width:100%; }		</style>
 
                         /* Crea el objeto que gestiona la información del personal */
                         Staff staff = new Staff();
+                        int porcentaje = (int)this.project_percentage;
+                        if (this.project_percentage - (int)this.project_percentage > 0)//esto se pone por si tiene 30.4 que de una escale en las opciones a 31
+                        {
+                            porcentaje++;
+                        }
+
                         DataSet staffOptionDS = staff.getStaffOptions(this.project_type_id, this.production_type_id, 
-                            this.project_genre_id, this.project_has_domestic_director, (int)this.project_percentage, 
+                            this.project_genre_id, this.project_has_domestic_director, porcentaje, 
                         this.project_personal_type);
                         //resulta que la opcion puede cambiar de acuerdo a lo que seleccionen en datos de la obra, la validacion
                         //no se debe hacer basado en lo que tiene seleccionado, si no basado en lo que deberia seleccionar en el combo

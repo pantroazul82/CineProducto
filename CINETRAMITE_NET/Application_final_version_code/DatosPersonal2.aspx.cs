@@ -336,7 +336,14 @@ namespace CineProducto
                 if (project.project_type_id > 0 && project.production_type_id > 0 && project.project_genre_id > 0)
                 {
                     /* Crea las opciones para el select de opciones de personal */
-                    DataSet staffOptionDS = staff.getStaffOptions(project.project_type_id, project.production_type_id, project.project_genre_id, project.project_has_domestic_director, (int)project.project_percentage, project.project_personal_type);
+                    
+                    int porcentaje = (int)project.project_percentage;
+                    if (project.project_percentage - (int)project.project_percentage > 0)//esto se pone por si tiene 30.4 que de una escale en las opciones a 31
+                    {
+                        porcentaje++;
+                    }
+
+                    DataSet staffOptionDS = staff.getStaffOptions(project.project_type_id, project.production_type_id, project.project_genre_id, project.project_has_domestic_director, porcentaje, project.project_personal_type);
                     if (!Page.IsPostBack || staffOptionDDL.Items.Count == 0)
                     {
                         //staffOptionDDL.Items.Add(new ListItem("Seleccione", "0"));
