@@ -49,8 +49,8 @@
           <Property Name="attachment_foreing_producer" Type="int" />
           <Property Name="tooltip" Type="ntext" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.attachment_validation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.attachment_validation' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="attachment_validation">
           <Key>
             <PropertyRef Name="validation_id" />
@@ -521,7 +521,7 @@ warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.attachment_va
           <Property Name="project_status_revision_state_id" Type="int" Nullable="false" />
           <Property Name="project_status_tab_state_id" Type="int" />
           <Property Name="project_status_revision_mark" Type="nvarchar" MaxLength="50" />
-          <Property Name="project_status_solicitud_aclaraciones" Type="nvarchar" MaxLength="4000" />
+          <Property Name="project_status_solicitud_aclaraciones" Type="varchar" MaxLength="5000" />
           <Property Name="project_status_solicitud_aclaraciones_date" Type="datetime" />
           <Property Name="project_status_observacion_inicial" Type="nvarchar" MaxLength="4000" />
           <Property Name="project_status_observacion_inicial_date" Type="datetime" />
@@ -614,8 +614,8 @@ warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.attachment_va
           <Property Name="staff_format_fax" Type="nvarchar" MaxLength="50" />
           <Property Name="Id_new" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.staff_log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.staff_log' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="staff_log">
           <Key>
             <PropertyRef Name="id" />
@@ -2258,7 +2258,7 @@ warning 6002: The table/view 'Cinematografia_SIREC_soportes.dboPrd.staff_log' do
           <Property Name="project_status_revision_state_id" Type="Int32" Nullable="false" />
           <Property Name="project_status_tab_state_id" Type="Int32" />
           <Property Name="project_status_revision_mark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="project_status_solicitud_aclaraciones" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="project_status_solicitud_aclaraciones" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="project_status_solicitud_aclaraciones_date" Type="DateTime" Precision="3" />
           <Property Name="project_status_observacion_inicial" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="project_status_observacion_inicial_date" Type="DateTime" Precision="3" />
