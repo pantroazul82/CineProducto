@@ -122,6 +122,7 @@ namespace DominioCineProducto
         {
             Data.project registro = model.project.Find(p.project_id);
             registro.razones_rechazo = p.razones_rechazo;
+            registro.parrafo_final_negacion = p.parrafo_final_negacion;
             model.SaveChanges();
         }
 

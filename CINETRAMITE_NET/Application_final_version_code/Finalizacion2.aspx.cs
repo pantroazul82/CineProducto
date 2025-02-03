@@ -386,6 +386,7 @@ namespace CineProducto
                 lblFechaNotificacion.Text = "Fecha de Notificación: "+ myProject.fecha_notificacion_certificado.ToString();
                 if (!IsPostBack) { 
                     txtRazonesRechazo.Text = myProject.razones_rechazo;
+                    txtParrafo_final_negacion.Text = myProject.parrafo_final_negacion;
                 }
                 btnHabilitarSubsanacion.Visible = false;
                 lblSubsanado.Visible = false;
@@ -998,9 +999,10 @@ namespace CineProducto
                         </br>
                         <p style='text-align:justify;'>
                         El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
-                        </br></br>
-                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
-                        
+                        </br></br>"+
+                        //Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
+                        project.parrafo_final_negacion
+                        +@"
                         <br />
                         <br />
                         Si desea evaluar nuestro servicio lo invitamos a diligenciar una breve encuesta en el siguiente enlace <a href='https://forms.office.com/r/nnZ7UHd6kU'>Satisfacción Tramite en Línea</a>
@@ -1011,7 +1013,8 @@ namespace CineProducto
 
                             /* Envío de notificación al productor solicitante */
                             List<string> ruta = new List<string>();
-                            //ruta.Add(verGuardarCartaRechazo(true));                            
+                            //ruta.Add(verGuardarCartaRechazo(true));
+                            ////mailTo = "pantroazul@gmail.com";
                             project.sendMailNotificationResolucion(mailTo, subject, body, Server, ruta);
                         }
 
@@ -1899,7 +1902,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             }
 
             if (project.state_id == 9 || project.state_id == 10) {  //restringir todo 
-                txtRazonesRechazo.Enabled = false;
+                txtRazonesRechazo.Enabled = false; txtParrafo_final_negacion.Enabled = false;
                 schedulefilmview_result2.Enabled = false;
                 btnGuardarCarta.Visible = false;
                 btnGuardarInfoAdicional.Visible = false;
@@ -3765,6 +3768,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
             NegocioCineProducto neg = new NegocioCineProducto();
             project myProject = neg.getProject((int)Session["project_id"]);
             myProject.razones_rechazo = txtRazonesRechazo.Text;
+            myProject.parrafo_final_negacion = txtParrafo_final_negacion.Text;
             neg.ActualizarRazonesRechazo(myProject);
             lblMsgRazonesRechazo.Text = "La información se guardo correctamente!";
             txtRazonesRechazo.Focus();
@@ -3886,7 +3890,7 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                 var phrase3 = new Phrase();
                 phrase3.Add(separtor);
                 document.Add(phrase3);
-                document.Add(GetParagraphJustificado("Usted puede solicitar nuevamente el reconocimiento de caracter de producto nacional a la obra, creando una nueva solicitud.", normal));                
+                document.Add(GetParagraphJustificado(myProject.parrafo_final_negacion, normal));                
                 phrase3.Add(separtor);
                 phrase3.Add(separtor);
                 phrase3.Add(new Chunk("Atentamente,"));
@@ -4106,8 +4110,11 @@ project.sectionDatosAdjuntos.revision_mark == "revisado"
                         </br>
                         <p style='text-align:justify;'>
                         El Ministerio de las Culturas, las Artes y los Saberes informa que su solicitud de reconocimiento como obra nacional ha sido RECHAZADA, con fundamento en el artículo 2.10.1.4 del Decreto 1080 de 2015 modificado por el Decreto 525 de 2021, toda vez que el requerimiento emitido por el Ministerio de las Culturas, las Artes y los Saberes no ha sido debidamente subsanado. Lo invitamos a consultar las razones de rechazo ingresando al aplicativo  <a href='https://cineproducto.mincultura.gov.co/'>Cineproducto</a> con su usuario y contraseña.
-                        </br></br>
-                        Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
+                        </br></br>"+
+                        //Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.
+                        project.parrafo_final_negacion+
+                        @"
+                        
                          
                         <br />
                         <br />

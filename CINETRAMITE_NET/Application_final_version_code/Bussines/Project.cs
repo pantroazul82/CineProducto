@@ -103,6 +103,7 @@ namespace CineProducto.Bussines
         public string obs_adicional_otros_prd;
         public string obs_adicional_personal;
         public string obs_adicional_finalizacion;
+        public string parrafo_final_negacion;
 
         public bool? tiene_premio;
         public string premio;
@@ -194,7 +195,7 @@ namespace CineProducto.Bussines
                                  + ",tiene_premio,premio,fecha_revisor_editor,fecha_editor_director,fecha_revisor_editor2,fecha_editor_director2,fecha_cancelacion,sustituto_carta_aclaracion "
                                  + ",obs_adicional_obra,obs_adicional_productor,obs_adicional_otros_prd,obs_adicional_personal,obs_adicional_finalizacion,carta_aclaraciones_generada,version "
                                  + ",pagina_web,pagina_facebook, tiene_reconocimiento,ano_resolucion,num_resolucion,tiene_estimulos,fdc,fdc_especificacion,ibermedia,otros_estimulos,ibermedia_especificacion,"
-                                 + "inf_visualizacion,fecha_notificacion_certificado "
+                                 + "inf_visualizacion,fecha_notificacion_certificado,parrafo_final_negacion "
                                  + " FROM dboPrd.project "
                                  + "WHERE project_id=" + project_id.ToString());
             if (ds.Tables[0].Rows.Count == 1)
@@ -287,6 +288,7 @@ namespace CineProducto.Bussines
                 this.obs_adicional_otros_prd = (ds.Tables[0].Rows[0]["obs_adicional_otros_prd"] != null && ds.Tables[0].Rows[0]["obs_adicional_otros_prd"] != System.DBNull.Value) ? ds.Tables[0].Rows[0]["obs_adicional_otros_prd"].ToString() : "";
                 this.obs_adicional_personal = (ds.Tables[0].Rows[0]["obs_adicional_personal"] != null && ds.Tables[0].Rows[0]["obs_adicional_personal"] != System.DBNull.Value) ? ds.Tables[0].Rows[0]["obs_adicional_personal"].ToString() : "";
                 this.obs_adicional_finalizacion = (ds.Tables[0].Rows[0]["obs_adicional_finalizacion"] != null && ds.Tables[0].Rows[0]["obs_adicional_finalizacion"] != System.DBNull.Value) ? ds.Tables[0].Rows[0]["obs_adicional_finalizacion"].ToString() : "";
+                this.parrafo_final_negacion = (ds.Tables[0].Rows[0]["parrafo_final_negacion"] != null && ds.Tables[0].Rows[0]["parrafo_final_negacion"] != System.DBNull.Value) ? ds.Tables[0].Rows[0]["parrafo_final_negacion"].ToString() : "";
 
                 this.carta_aclaraciones_generada = (ds.Tables[0].Rows[0]["carta_aclaraciones_generada"] != null && ds.Tables[0].Rows[0]["carta_aclaraciones_generada"] != System.DBNull.Value) ? ds.Tables[0].Rows[0]["carta_aclaraciones_generada"].ToString() : "";
 
@@ -624,6 +626,15 @@ namespace CineProducto.Bussines
                 parametroobs_adicional_finalizacion.SqlDbType = SqlDbType.VarChar;
                 listaParametros.Add(parametroobs_adicional_finalizacion);
 
+
+                updateProject = updateProject + "parrafo_final_negacion = @parrafo_final_negacion ,";
+                System.Data.SqlClient.SqlParameter parametroparrafo_final_negacion = new System.Data.SqlClient.SqlParameter();
+                parametroparrafo_final_negacion.Value = parrafo_final_negacion;
+                parametroparrafo_final_negacion.ParameterName = "@parrafo_final_negacion";
+                parametroparrafo_final_negacion.Direction = ParameterDirection.Input;
+                parametroparrafo_final_negacion.SqlDbType = SqlDbType.VarChar;
+                listaParametros.Add(parametroparrafo_final_negacion);
+
                 updateProject = updateProject + "carta_aclaraciones_generada = @carta_aclaraciones_generada ";
                 System.Data.SqlClient.SqlParameter parametrocarta_aclaraciones_generada = new System.Data.SqlClient.SqlParameter();
                 parametrocarta_aclaraciones_generada.Value = carta_aclaraciones_generada;
@@ -764,8 +775,8 @@ namespace CineProducto.Bussines
             else if(this.project_name != "" && this.project_idusuario > 0) //Se inserta el registro para crear una nueva solicitud
             {
                 /* Creación de la sentencia de actualizacion */
-                string insertProject = "INSERT INTO dboPrd.project (project_name, state_id, project_idusuario) "
-                                      + " VALUES ('"+ this.project_name +"',1,'"+ this.project_idusuario +"')";
+                string insertProject = "INSERT INTO dboPrd.project (project_name, state_id, project_idusuario,parrafo_final_negacion) "
+                                      + " VALUES ('"+ this.project_name +"',1,'"+ this.project_idusuario + "','"+ this.parrafo_final_negacion +"')";
                 
                 /* Si se actualizó correctamente la tabla del proyecto, se procede a actualizar la tabla de formatos del proyecto */
                 if (db.Execute(insertProject))

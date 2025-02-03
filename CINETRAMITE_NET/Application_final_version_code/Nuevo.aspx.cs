@@ -43,6 +43,7 @@ namespace CineProducto
 
                     project.project_name = Request.Form["project_name"].ToUpper();
                     project.project_idusuario = Convert.ToInt32(Session["user_id"]);
+                    project.parrafo_final_negacion = "Tenga en cuenta que, en caso de tener interés en ello, podrá solicitar nuevamente el reconocimiento de la nacionalidad de esta obra cinematográfica, para lo cual deberá presentar una nueva solicitud y allegar la información y documentos allí requeridos en consonancia con la Ley 397 de 1997, el Decreto 1080 de 2015 y la Resolución 1021 de 2016 del Ministerio de las Culturas, las Artes y los Saberes.";
                     Producer producer = new Producer();
                     if (!project.Save(true))
                     {

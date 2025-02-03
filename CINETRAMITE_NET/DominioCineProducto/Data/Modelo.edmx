@@ -49,8 +49,8 @@
           <Property Name="attachment_foreing_producer" Type="int" />
           <Property Name="tooltip" Type="ntext" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.attachment_validation' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinematografia_SIREC.dboPrd.attachment_validation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="attachment_validation">
           <Key>
             <PropertyRef Name="validation_id" />
@@ -404,6 +404,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.attachm
           <Property Name="HOJA_TRANSFERENCIA" Type="varchar" MaxLength="1000" />
           <Property Name="municipio_lab_otro" Type="varchar" MaxLength="100" />
           <Property Name="fecha_asignacion_responsable" Type="datetime" />
+          <Property Name="parrafo_final_negacion" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="project_attachment">
           <Key>
@@ -614,8 +615,8 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.attachm
           <Property Name="staff_format_fax" Type="nvarchar" MaxLength="50" />
           <Property Name="Id_new" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.staff_log' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cinematografia_SIREC.dboPrd.staff_log' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="staff_log">
           <Key>
             <PropertyRef Name="id" />
@@ -2128,6 +2129,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.staff_l
           <NavigationProperty Name="usuario" Relationship="cineModel.FK_project_usuario" FromRole="project" ToRole="usuario" />
           <NavigationProperty Name="resolution" Relationship="cineModel.FK_resolution_project" FromRole="project" ToRole="resolution" />
           <NavigationProperty Name="staff_format" Relationship="cineModel.FK_staff_format_project" FromRole="project" ToRole="staff_format" />
+          <Property Name="parrafo_final_negacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="project_attachment">
           <Key>
@@ -3312,6 +3314,7 @@ advertencia 6002: La tabla o vista 'Cinematografia_SIREC_soportes.dboPrd.staff_l
           <EntitySetMapping Name="project">
             <EntityTypeMapping TypeName="cineModel.project">
               <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="parrafo_final_negacion" ColumnName="parrafo_final_negacion" />
                 <ScalarProperty Name="fecha_asignacion_responsable" ColumnName="fecha_asignacion_responsable" />
                 <ScalarProperty Name="municipio_lab_otro" ColumnName="municipio_lab_otro" />
                 <ScalarProperty Name="HOJA_TRANSFERENCIA" ColumnName="HOJA_TRANSFERENCIA" />

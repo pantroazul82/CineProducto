@@ -859,8 +859,14 @@
                     <div class="form-item" style="width: 90%px">
 
                         <asp:TextBox ID="txtRazonesRechazo" runat="server" Enabled="true" Width="98%" Height="200px" MaxLength="2000" TextMode="MultiLine"></asp:TextBox>
+                        <br />
+                        <label for="txtParrafo_final_negacion">Parrafo final negación <span class="form-required"></span></label>
+                        <asp:TextBox ID="txtParrafo_final_negacion" runat="server" Enabled="true" Width="98%" Height="70px" MaxLength="250" TextMode="MultiLine"></asp:TextBox>
+
                         <asp:Button CssClass="boton" runat="server" Font-Size="16px" ID="btnVerCarta" Text="Ver carta" OnClick="btnVerCarta_Click" />
                         <asp:Button CssClass="boton" runat="server" Font-Size="16px" ID="btnGuardarCarta" Text="Guardar" OnClick="btnGuardarCarta_Click" />
+
+
                         <br />
                         <span style="color: red;">
                             <asp:Label ID="lblMsgRazonesRechazo" runat="server"></asp:Label></span>
