@@ -70,11 +70,25 @@
     <h2>
         Opciones de administración
     </h2>
-    <p>
+  
+    </br>
+    
+    <asp:panel runat ="server" id="pnlInicial">
+          
+        <div><p>
         <a href="~/Lista.aspx" runat="server" type="text/asp"><< Volver al listado de solicitudes</a>
     </p>
-    
-    <%
+        Ingrese el password:
+        <asp:textbox runat="server" id="txtPassword" textmode="password"></asp:textbox>
+        <asp:button runat="server" id="btnContinuar" text="Continuar" onclick="btnContinuar_Click" /><br />
+        <asp:label runat="server" id="lblError" forecolor="red"></asp:label>
+</div>
+    </asp:panel>
+
+    <asp:panel runat ="server" id="pnlconfiguracion" visible="false">  <p>
+        <a href="~/Lista.aspx" runat="server" type="text/asp"><< Volver al listado de solicitudes</a>
+    </p>
+  <%
     if (currentForm == "configuraciongeneral")
     { %>
         <div>Interfaz de configuración general de la aplicación<br />
@@ -263,5 +277,7 @@
     <%
     } 
     %>
+    </asp:panel>
+  
 
 </asp:Content>

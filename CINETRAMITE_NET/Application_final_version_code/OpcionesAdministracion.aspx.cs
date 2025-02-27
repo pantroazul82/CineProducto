@@ -27,7 +27,7 @@ namespace CineProducto
                     Response.Redirect("Default.aspx", true);
                 }
             }
-            else 
+            else
             {
                 Response.Redirect("Default.aspx", true);
             }
@@ -45,21 +45,34 @@ namespace CineProducto
                         break;
                 }
             }
-            if (!IsPostBack) {
+            if (!IsPostBack)
+            {
                 if (Session["versionFiltro"] != null)
                 {
                     this.versionFiltro = Session["versionFiltro"].ToString();
                     cmbVersion2.SelectedValue = versionFiltro;
                 }
             }
-            
-            
+
+
         }
 
         protected void cmbVersion2_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["versionFiltro"] = cmbVersion2.SelectedValue;
             Response.Redirect("OpcionesAdministracion.aspx?form=administracionopcionespersonal");
+        }
+
+        protected void btnContinuar_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.Text == "config#2025minc")
+            {
+                pnlconfiguracion.Visible = true;
+                pnlInicial.Visible = false;
+            }
+            else {
+                lblError.Text = "Password invalido.";
+            }
         }
     }
 }
