@@ -503,53 +503,73 @@ EnableScriptLocalization="true" ></asp:ScriptManager>
             </Columns>
     </dx:ASPxGridView>        
         <asp:SqlDataSource ID="SqlDSExt" runat="server" ConnectionString="<%$ ConnectionStrings:cineConnectionString %>" SelectCommand="
-set dateformat dmy
-select * from (
-
-select
-project_staff_id,
-case when position.position_father_id = 0 then position.position_name else p2.position_name end as TipoCargo,
-case when position.position_father_id = 0 then '' else position.position_name end as Position,
-case when position.position_father_id = 0 then position.position_id else p2.position_id end pid,
-ROW_NUMBER() OVER (PARTITION BY case when position.position_father_id = 0 then position.position_name else p2.position_name end order by project_staff_id) AS cnt 
-,st.staff_option_detail_quantity,
-project_staff_firstname + ' ' + isnull(project_staff_firstname2,'')+' '+project_staff_lastname+' '+project_staff_lastname2  as 'Nombre',
-identification_type.identification_type_name as tipo_identificacion,
-[project_staff_identification_number] 'Identificacion',
-[project_staff_city] 'Ciudad' ,
-fecha_nacimiento,
-project_staff_address 'Direccion', 
-project_staff_phone 'Telefono', 
-project_staff_movil 'Celular', 
-project_staff_email 'Email', 
-project_staff.project_staff_project_id,
-genero.nombre as genero,
-etnia.nombre as etnia,
-grupo_poblacional.nombre as grupo_poblacional
-from dboPrd.project_staff  
-left join dboPrd.position on position.position_id =  project_staff.project_staff_position_id
-left join dboPrd.position p2 on position.position_father_id =  p2.position_id
-left join dboPrd.genero on genero.id_genero = project_staff.id_genero
-left join dboPrd.etnia on etnia.id_etnia = project_staff.id_etnia
-left join dboPrd.grupo_poblacional on grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
-left join dboPrd.identification_type on identification_type.identification_type_id = project_staff.identification_type_id
-join(
-select p.project_id,position.position_id,
-position.position_name,staff_option_detail.[staff_option_detail_quantity]
- from dboPrd.project p 
-join dboPrd.staff_option on staff_option.project_type_id = p.project_type_id and
-staff_option.project_type_id = p.project_type_id and staff_option.project_genre_id = p.project_genre_id and 
-staff_option.staff_option_has_domestic_director = p.project_has_domestic_director and 
-p.project_percentage between staff_option.staff_option_percentage_init and  staff_option.staff_option_percentage_end
-and staff_option.staff_option_deleted=0
-join dboPrd.staff_option_detail on staff_option_detail.staff_option_id= staff_option.staff_option_id and staff_option_detail.version = p.version and staff_option_detail.staff_option_detail_deleted=0
-join dboPrd.position on position.position_id= staff_option_detail.position_id
-
-) st on st.project_id = project_staff.project_staff_project_id and st.position_id = (case when position.position_father_id = 0 then position.position_id else p2.position_id end)
-
-WHERE project_staff.project_staff_project_id= @pIdProjectExtran 
-
-)ss where ss.cnt<= staff_option_detail_quantity">
+              SET DATEFORMAT DMY;
+                SELECT * FROM (
+                    SELECT
+                        project_staff_id,
+                        CASE WHEN position.position_father_id = 0 THEN position.position_name ELSE p2.position_name END AS TipoCargo,
+                        CASE WHEN position.position_father_id = 0 THEN '' ELSE position.position_name END AS Position,
+                        CASE WHEN position.position_father_id = 0 THEN position.position_id ELSE p2.position_id END AS pid,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY CASE WHEN position.position_father_id = 0 THEN position.position_name ELSE p2.position_name END 
+                            ORDER BY project_staff_id
+                        ) AS cnt,
+                        st.staff_option_detail_quantity,  
+                        project_staff_firstname + ' ' + ISNULL(project_staff_firstname2, '') + ' ' + project_staff_lastname + ' ' + project_staff_lastname2 AS Nombre,
+                        identification_type.identification_type_name AS tipo_identificacion,
+                        project_staff_identification_number AS Identificacion,
+                        project_staff_city AS Ciudad,
+                        fecha_nacimiento,
+                        project_staff_address AS Direccion,
+                        project_staff_phone AS Telefono,
+                        project_staff_movil AS Celular,
+                        project_staff_email AS Email,
+                        project_staff.project_staff_project_id,
+                        genero.nombre AS genero,
+                        etnia.nombre AS etnia,
+                        grupo_poblacional.nombre AS grupo_poblacional
+                    FROM dboPrd.project_staff  
+                    LEFT JOIN dboPrd.position ON position.position_id = project_staff.project_staff_position_id
+                    LEFT JOIN dboPrd.position p2 ON position.position_father_id = p2.position_id
+                    LEFT JOIN dboPrd.genero ON genero.id_genero = project_staff.id_genero
+                    LEFT JOIN dboPrd.etnia ON etnia.id_etnia = project_staff.id_etnia
+                    LEFT JOIN dboPrd.grupo_poblacional ON grupo_poblacional.id_grupo_poblacional = project_staff.id_grupo_poblacional
+                    LEFT JOIN dboPrd.identification_type ON identification_type.identification_type_id = project_staff.identification_type_id
+                    JOIN (
+                    SELECT 
+                        sub.project_id, 
+                        sub.position_id, 
+                        sub.position_name, 
+                        sub.staff_option_detail_quantity
+                    FROM (
+                        SELECT 
+                            p.project_id, 
+                            position.position_id,
+                            position.position_name, 
+                            staff_option_detail.staff_option_detail_quantity,
+                            ROW_NUMBER() OVER (
+                                PARTITION BY p.project_id, position.position_id
+                                ORDER BY staff_option_detail.staff_option_detail_quantity DESC
+                            ) AS rn
+                        FROM dboPrd.project p 
+                        JOIN dboPrd.staff_option 
+                            ON staff_option.project_type_id = p.project_type_id 
+                            AND staff_option.project_genre_id = p.project_genre_id 
+                            AND staff_option.staff_option_has_domestic_director = p.project_has_domestic_director 
+                            AND p.project_percentage BETWEEN staff_option.staff_option_percentage_init AND staff_option.staff_option_percentage_end
+                            AND staff_option.staff_option_deleted = 0
+                        JOIN dboPrd.staff_option_detail 
+                            ON staff_option_detail.staff_option_id = staff_option.staff_option_id 
+                            AND staff_option_detail.version = p.version 
+                            AND staff_option_detail.staff_option_detail_deleted = 0
+                        JOIN dboPrd.position ON position.position_id = staff_option_detail.position_id
+                    ) sub 
+                    WHERE sub.rn = 1 
+                ) st ON st.project_id = project_staff.project_staff_project_id 
+                    AND st.position_id = (CASE WHEN position.position_father_id = 0 THEN position.position_id ELSE p2.position_id END)
+                    WHERE project_staff.project_staff_project_id = @pIdProjectExtran
+                ) ss 
+                WHERE ss.cnt <= staff_option_detail_quantity;">
             <SelectParameters>
                 <asp:ControlParameter ControlID="lblCodProyecto" DefaultValue="0" Name="pIdProjectExtran" PropertyName="Text" />
             </SelectParameters>
