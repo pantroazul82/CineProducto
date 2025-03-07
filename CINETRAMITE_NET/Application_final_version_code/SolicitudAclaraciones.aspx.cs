@@ -117,7 +117,7 @@ namespace CineProducto
             string res = "";
             
             //res = res + "<br><br>Solicitud de Aclaraciones"  ;
-            if (project.sustituto_carta_aclaracion != null && project.sustituto_carta_aclaracion != string.Empty)
+            if (!string.IsNullOrWhiteSpace(project.sustituto_carta_aclaracion))
             {
                 res = project.sustituto_carta_aclaracion.Replace("\r\n","<br>");
             }else{
